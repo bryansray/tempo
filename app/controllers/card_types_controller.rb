@@ -1,7 +1,7 @@
 class CardTypesController < ApplicationController
 
   def index
-    @project1 = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id])
   end
 
   def show
