@@ -33,9 +33,9 @@ ActiveRecord::Schema.define(:version => 37) do
     t.datetime "created_at"
   end
 
-  add_index "audits", ["auditable_id", "auditable_type"], :name => "auditable_index"
-  add_index "audits", ["user_id", "user_type"], :name => "user_index"
   add_index "audits", ["created_at"], :name => "index_audits_on_created_at"
+  add_index "audits", ["user_id", "user_type"], :name => "user_index"
+  add_index "audits", ["auditable_id", "auditable_type"], :name => "auditable_index"
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(:version => 37) do
 
   create_table "cards", :force => true do |t|
     t.string   "title"
-    t.text     "description"
+    t.text     "description",  :limit => 255
     t.integer  "project_id"
     t.integer  "iteration_id"
     t.integer  "team_id"
@@ -202,8 +202,8 @@ ActiveRecord::Schema.define(:version => 37) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
   add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
 
   create_table "tags", :force => true do |t|
     t.string  "name"
