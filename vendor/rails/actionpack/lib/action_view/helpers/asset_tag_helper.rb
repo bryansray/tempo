@@ -50,8 +50,10 @@ module ActionView
     #   stylesheet_include_tag("application")
     #     => <link href="http://assets1.example.com/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
     #
-    # The proc takes a single <tt>source</tt> parameter which is the path of the source asset. This can be used to
-    # generate a particular asset host depending on the asset path.
+    # The proc takes a <tt>source</tt> parameter (which is the path of the source asset) and an optional
+    # <tt>request</tt> parameter (which is an entire instance of an <tt>ActionController::AbstractRequest</tt>
+    # subclass). This can be used to generate a particular asset host depending on the asset path and the particular
+    # request.
     #
     #    ActionController::Base.asset_host = Proc.new { |source|
     #      if source.starts_with?('/images')
@@ -64,6 +66,19 @@ module ActionView
     #     => <img src="http://images.example.com/images/rails.png" alt="Rails" />
     #   stylesheet_include_tag("application")
     #     => <link href="http://assets.example.com/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+    #
+    # The optional <tt>request</tt> parameter to the proc is useful in particular for serving assets from an
+    # SSL-protected page. The example proc below disables asset hosting for HTTPS connections, while still sending
+    # assets for plain HTTP requests from asset hosts. This is useful for avoiding mixed media warnings when serving
+    # non-HTTP assets from HTTPS web pages when you don't have an SSL certificate for each of the asset hosts.
+    #
+    #   ActionController::Base.asset_host = Proc.new { |source, request|
+    #     if request.ssl?
+    #       "#{request.protocol}#{request.host_with_port}"
+    #     else
+    #       "#{request.protocol}assets.example.com"
+    #     end
+    #   }
     #
     # === Using asset timestamps
     #
@@ -217,7 +232,7 @@ module ActionView
       #     <script type="text/javascript" src="/javascripts/cart.js"></script>
       #     <script type="text/javascript" src="/javascripts/checkout.js"></script>
       #
-      #   javascript_include_tag "prototype", "cart", "checkout", :cache => "shop" # when ActionController::Base.perform_caching is false =>
+      #   javascript_include_tag "prototype", "cart", "checkout", :cache => "shop" # when ActionController::Base.perform_caching is true =>
       #     <script type="text/javascript" src="/javascripts/shop.js"></script>
       def javascript_include_tag(*sources)
         options = sources.extract_options!.stringify_keys
@@ -383,7 +398,7 @@ module ActionView
         options.symbolize_keys!
 
         options[:src] = path_to_image(source)
-        options[:alt] ||= File.basename(options[:src], '.*').split('.').first.capitalize
+        options[:alt] ||= File.basename(options[:src], '.*').split('.').first.to_s.capitalize
 
         if size = options.delete(:size)
           options[:width], options[:height] = size.split("x") if size =~ %r{^\d+x\d+$}
@@ -435,9 +450,11 @@ module ActionView
               else
                 source = "/#{dir}/#{source}" unless source[0] == ?/
                 if has_request
-                  source = "#{@controller.request.relative_url_root}#{source}"
+                  unless source =~ %r{^#{@controller.request.relative_url_root}/}
+                    source = "#{@controller.request.relative_url_root}#{source}"
+                  end
                 end
-                rewrite_asset_path!(source)
+                source = rewrite_asset_path(source)
 
                 if include_host
                   host = compute_asset_host(source)
@@ -461,9 +478,14 @@ module ActionView
         def compute_asset_host(source)
           if host = ActionController::Base.asset_host
             if host.is_a?(Proc)
-              host.call(source)
+              case host.arity
+              when 2
+                host.call(source, @controller.request)
+              else
+                host.call(source)
+              end
             else
-              host % (source.hash % 4)
+              (host =~ /%d/) ? host % (source.hash % 4) : host
             end
           end
         end
@@ -484,11 +506,15 @@ module ActionView
           end
         end
 
-        # Break out the asset path rewrite so you wish to put the asset id
+        # Break out the asset path rewrite in case plugins wish to put the asset id
         # someplace other than the query string.
-        def rewrite_asset_path!(source)
+        def rewrite_asset_path(source)
           asset_id = rails_asset_id(source)
-          source << "?#{asset_id}" if !asset_id.blank?
+          if asset_id.blank?
+            source
+          else
+            source + "?#{asset_id}"
+          end
         end
 
         def javascript_src_tag(source, options)
