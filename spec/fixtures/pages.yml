@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  user: one
+  description: This is my description for Page 1
+  deprecated: false
+  created_at: 2007-10-10 15:42:04
+  updated_at: 2007-10-10 15:42:04
+two:
+  user: one
+  description: This is my description for Page 2
+  deprecated: true
+  created_at: 2007-10-10 15:42:04
+  updated_at: 2007-10-10 15:42:04

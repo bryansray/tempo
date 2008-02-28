@@ -1,0 +1,27 @@
+<div id="Main">
+	<div class="inner">
+		<div class="inner_left">
+			<div class="panel">
+				<h2>Create New Property</h2>
+				<p>These properties will be applied to all cards created in the system.</p>
+				<% form_remote_for :property, @property, :url => property_path(@property), :html => {:id => "prop_form"} do |f| %>
+				<table>
+					<tfoot>
+						<tr>
+							<td>&nbsp;</td>
+							<td><%= f.submit "Create" %></td>
+						</tr>
+					</tfoot>
+				<%= render :partial => "form", :locals => { :f => f } %>
+				</table>
+				<% end %>
+			</div>
+		</div>
+		<div class="inner_right">
+			<div class="panel">
+				<h2>System Level Properties</h2>
+				<%= render :partial => "list", :object => @properties %>
+			</div>
+		</div>
+	</div>
+</div>

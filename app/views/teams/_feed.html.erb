@@ -1,0 +1,9 @@
+<div class="panel" id="teams">
+  <h2>Teams</h2>
+  <div class="Toolbar">
+    <%= link_to "New Team", new_team_path, :class => "icon icon_new_team" %>
+  </div>
+  <% feed.each do |team| %>
+    <div class="Team"><%= link_to team.title, team_path(team) %></div>
+  <% end %>
+</div>

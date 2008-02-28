@@ -1,0 +1,1457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RSpec results</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-size: 80%;
+  }
+  </style>
+</head>
+<body>
+<div class="rspec-report">
+  <script type="text/javascript">
+    // <![CDATA[
+function moveProgressBar(percentDone) {
+  document.getElementById("rspec-header").style.width = percentDone +"%";
+}
+function makeRed(element_id) {
+  document.getElementById(element_id).style.background = '#C40D0D';
+  document.getElementById(element_id).style.color = '#FFFFFF';
+}
+
+function makeYellow(element_id) {
+  if (element_id == "rspec-header" && document.getElementById(element_id).style.background != '#C40D0D')
+  {
+    document.getElementById(element_id).style.background = '#FAF834';
+    document.getElementById(element_id).style.color = '#000000';
+  }
+  else
+  {
+    document.getElementById(element_id).style.background = '#FAF834';
+    document.getElementById(element_id).style.color = '#000000';
+  }
+}
+
+    // ]]>
+  </script>
+  <style type="text/css">
+#rspec-header {
+  background: #65C400; color: #fff;
+}
+
+.rspec-report h1 {
+  margin: 0px 10px 0px 10px;
+  padding: 10px;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+  font-size: 1.8em;
+}
+
+#summary {
+  margin: 0; padding: 5px 10px;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+  text-align: right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+#summary p {
+  margin: 0 0 0 2px;
+}
+
+#summary #totals {
+  font-size: 1.2em;
+}
+
+.example_group {
+  margin: 0 10px 5px;
+  background: #fff;
+}
+
+dl {
+  margin: 0; padding: 0 0 5px;
+  font: normal 11px "Lucida Grande", Helvetica, sans-serif;
+}
+
+dt {
+  padding: 3px;
+  background: #65C400;
+  color: #fff;
+  font-weight: bold;
+}
+
+dd {
+  margin: 5px 0 5px 5px;
+  padding: 3px 3px 3px 18px;
+}
+
+dd.spec.passed {
+  border-left: 5px solid #65C400;
+  border-bottom: 1px solid #65C400;
+  background: #DBFFB4; color: #3D7700;
+}
+
+dd.spec.failed {
+  border-left: 5px solid #C20000;
+  border-bottom: 1px solid #C20000;
+  color: #C20000; background: #FFFBD3;
+}
+
+dd.spec.not_implemented {
+  border-left: 5px solid #FAF834;
+  border-bottom: 1px solid #FAF834;
+  background: #FCFB98; color: #131313;
+}
+
+dd.spec.pending_fixed {
+  border-left: 5px solid #0000C2;
+  border-bottom: 1px solid #0000C2;
+  color: #0000C2; background: #D3FBFF;
+}
+
+.backtrace {
+  color: #000;
+  font-size: 12px;
+}
+
+a {
+  color: #BE5C00;
+}
+
+/* Ruby code, style similar to vibrant ink */
+.ruby {
+  font-size: 12px;
+  font-family: monospace;
+  color: white;
+  background-color: black;
+  padding: 0.1em 0 0.2em 0;
+}
+
+.ruby .keyword { color: #FF6600; }
+.ruby .constant { color: #339999; }
+.ruby .attribute { color: white; }
+.ruby .global { color: white; }
+.ruby .module { color: white; }
+.ruby .class { color: white; }
+.ruby .string { color: #66FF00; }
+.ruby .ident { color: white; }
+.ruby .method { color: #FFCC00; }
+.ruby .number { color: white; }
+.ruby .char { color: white; }
+.ruby .comment { color: #9933CC; }
+.ruby .symbol { color: white; }
+.ruby .regex { color: #44B4CC; }
+.ruby .punct { color: white; }
+.ruby .escape { color: white; }
+.ruby .interp { color: white; }
+.ruby .expr { color: white; }
+
+.ruby .offending { background-color: gray; }
+.ruby .linenum {
+  width: 75px;
+  padding: 0.1em 1em 0.2em 0;
+  color: #000000;
+  background-color: #FFFBD3;
+}
+
+  </style>
+
+<div id="rspec-header">
+  <h1>RSpec Results</h1>
+
+  <div id="summary">
+    <p id="totals">&nbsp;</p>
+    <p id="duration">&nbsp;</p>
+  </div>
+</div>
+
+<div class="results">
+<div class="example_group">
+  <dl>
+  <dt id="example_group_1">BlogsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('0.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'blogs', :action =&gt; 'index' } to /blogs</span></dd>
+    <script type="text/javascript">moveProgressBar('0.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'blogs', :action =&gt; 'new' } to /blogs/new</span></dd>
+    <script type="text/javascript">moveProgressBar('0.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'blogs', :action =&gt; 'show', :id =&gt; 1 } to /blogs/1</span></dd>
+    <script type="text/javascript">moveProgressBar('1.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'blogs', :action =&gt; 'edit', :id =&gt; 1 } to /blogs/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('1.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'blogs', :action =&gt; 'update', :id =&gt; 1} to /blogs/1</span></dd>
+    <script type="text/javascript">moveProgressBar('1.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'blogs', :action =&gt; 'destroy', :id =&gt; 1 } to /blogs/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_2">BlogsController handling GET /blogs</dt>
+    <script type="text/javascript">moveProgressBar('1.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('2.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the published posts for the requested blog</span></dd>
+    <script type="text/javascript">moveProgressBar('2.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the index template</span></dd>
+    <script type="text/javascript">moveProgressBar('2.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the published posts to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_3">BlogsController handling GET /blogs/1</dt>
+    <script type="text/javascript">moveProgressBar('2.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('3.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the blog requested</span></dd>
+    <script type="text/javascript">moveProgressBar('3.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the show template</span></dd>
+    <script type="text/javascript">moveProgressBar('3.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the blog to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_4">BlogsController handling GET /blogs/new</dt>
+    <script type="text/javascript">moveProgressBar('3.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_5">BlogsController handling GET /blogs/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('4.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('4.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render edit template</span></dd>
+    <script type="text/javascript">moveProgressBar('4.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the blog requested</span></dd>
+    <script type="text/javascript">moveProgressBar('4.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found Blog for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_6">BlogsController handling POST /blogs</dt>
+    <script type="text/javascript">moveProgressBar('5.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create the blog for the current_user</span></dd>
+    <script type="text/javascript">moveProgressBar('5.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the new blog on successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('5.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'new' on failed save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_7">BlogsController handling PUT /blogs/1</dt>
+    <script type="text/javascript">moveProgressBar('5.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the blog requested</span></dd>
+    <script type="text/javascript">moveProgressBar('6.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update the found blog</span></dd>
+    <script type="text/javascript">moveProgressBar('6.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found blog for the view</span></dd>
+    <script type="text/javascript">moveProgressBar('6.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the blog on successful update</span></dd>
+    <script type="text/javascript">moveProgressBar('6.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'edit' on failed update</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_8">BlogsController handling DELETE /blogs/1</dt>
+    <script type="text/javascript">moveProgressBar('7.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the blog requested</span></dd>
+    <script type="text/javascript">moveProgressBar('7.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should call destroy on the found blog</span></dd>
+    <script type="text/javascript">moveProgressBar('7.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the blogs list</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_9">CardsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('7.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'cards', :action =&gt; 'index', :project_id =&gt; 1 } to /projects/1/cards</span></dd>
+    <script type="text/javascript">moveProgressBar('8.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'cards', :action =&gt; 'edit', :project_id =&gt; 1 } to /projects/1/cards/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('8.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'cards', :action =&gt; 'new', :project_id =&gt; 1 } to /projects/1/cards/new</span></dd>
+    <script type="text/javascript">moveProgressBar('8.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'cards', :action =&gt; 'show', :id =&gt; 1, :project_id =&gt; 1 } to /projects/1/cards/1</span></dd>
+    <script type="text/javascript">moveProgressBar('8.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'cards', :action =&gt; 'destroy', :id =&gt; 1, :project_id =&gt; 1 } to /projects/1/cards/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_10">CardTypesController#routes_for</dt>
+    <script type="text/javascript">moveProgressBar('9.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'card_types', :action =&gt; 'show', :id =&gt; 1, :project_id =&gt; 1 } to /projects/1/card_types/1</span></dd>
+    <script type="text/javascript">moveProgressBar('9.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'card_types', :action =&gt; 'index', :project_id =&gt; 1 } to /projects/1/card_types</span></dd>
+    <script type="text/javascript">moveProgressBar('9.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'card_types', :action =&gt; 'create', :project_id =&gt; 1 } to /projects/1/card_types</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_11">CardTypesController handling GET /projects/1/card_types</dt>
+    <script type="text/javascript">moveProgressBar('9.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">GET 'index' should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('10.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the proejct to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_12">CardTypesController handling GET /projects/1/card_types/1</dt>
+    <script type="text/javascript">moveProgressBar('10.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_13">CardTypesController handling GET/projects/1/card_types/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('10.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the request card type to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_14">CardTypesController handling GET /projects/1/card_types/new</dt>
+    <script type="text/javascript">moveProgressBar('10.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('11.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new card type</span></dd>
+    <script type="text/javascript">moveProgressBar('11.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the card_type to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_15">CardTypesController handling POST /projects/1/card_types</dt>
+    <script type="text/javascript">moveProgressBar('11.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the specified project</span></dd>
+    <script type="text/javascript">moveProgressBar('12.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should build a new card type for the project</span></dd>
+    <script type="text/javascript">moveProgressBar('12.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the card type that was created on successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('12.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should populate the flash notice on a successful save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_16">CommentsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('12.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'comments', :action =&gt; 'new' } to /comments/new</span></dd>
+    <script type="text/javascript">moveProgressBar('13.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'comments', :action =&gt; 'edit', :page_id =&gt; 1, :id =&gt; 1 } to /pages/1/comments/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('13.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'comments', :action =&gt; 'update', :page_id =&gt; 1, :id =&gt; 1} to /pages/1/comments/1</span></dd>
+    <script type="text/javascript">moveProgressBar('13.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'comments', :action =&gt; 'destroy', :page_id =&gt; 1, :id =&gt; 1} to /pages/1/comments/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_17">CommentsController handling GET /pages/1/comments/new</dt>
+    <script type="text/javascript">moveProgressBar('13.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('14.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render new template</span></dd>
+    <script type="text/javascript">moveProgressBar('14.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create an new comment</span></dd>
+    <script type="text/javascript">moveProgressBar('14.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not save the new comment</span></dd>
+    <script type="text/javascript">moveProgressBar('14.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the new comment for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_18">CommentsController handling GET /pages/1/comments/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('15.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('15.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render edit template</span></dd>
+    <script type="text/javascript">moveProgressBar('15.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the comment requested</span></dd>
+    <script type="text/javascript">moveProgressBar('15.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found Comment for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_19">CommentsController handling POST /pages/1/comments</dt>
+    <script type="text/javascript">moveProgressBar('16.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be redirected</span></dd>
+    <script type="text/javascript">moveProgressBar('16.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should populate the flash[:notice] after successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('16.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect back to the page after successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('16.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect back to the page after failed save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_20">CommentsController handling POST /posts/1/comments</dt>
+    <script type="text/javascript">moveProgressBar('17.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new comment for a post and redirect back to the post</span></dd>
+    <script type="text/javascript">moveProgressBar('17.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new comment for a post and populate the flash[:notice]</span></dd>
+    <script type="text/javascript">moveProgressBar('17.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the post after successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('17.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should populate flash[:notice] on successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('18.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-direct back to the post on failed save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_21">CommentsController handling PUT /posts/1/comments/1</dt>
+    <script type="text/javascript">moveProgressBar('18.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the comment requested</span></dd>
+    <script type="text/javascript">moveProgressBar('18.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update the found comment</span></dd>
+    <script type="text/javascript">moveProgressBar('18.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found comment for the view</span></dd>
+    <script type="text/javascript">moveProgressBar('19.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the comment on successful update</span></dd>
+    <script type="text/javascript">moveProgressBar('19.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'edit' on failed update</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_22">CommentsController handling DELETE /posts/1/comments/1</dt>
+    <script type="text/javascript">moveProgressBar('19.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the comment requested</span></dd>
+    <script type="text/javascript">moveProgressBar('19.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should call destroy on the found comment</span></dd>
+    <script type="text/javascript">moveProgressBar('20.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the comments list</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_23">ContentsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('20.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'contents', :action =&gt; 'index' } to /contents</span></dd>
+    <script type="text/javascript">moveProgressBar('20.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'contents', :action =&gt; 'new' } to /contents/new</span></dd>
+    <script type="text/javascript">moveProgressBar('20.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'contents', :action =&gt; 'show', :id =&gt; 1 } to /contents/1</span></dd>
+    <script type="text/javascript">moveProgressBar('21.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'contents', :action =&gt; 'edit', :id =&gt; 1 } to /contents/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('21.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'contents', :action =&gt; 'update', :id =&gt; 1} to /contents/1</span></dd>
+    <script type="text/javascript">moveProgressBar('21.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'contents', :action =&gt; 'destroy', :id =&gt; 1} to /contents/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_24">ContentsController handling GET /contents/1 associated with a page</dt>
+    <script type="text/javascript">moveProgressBar('21.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be redirected</span></dd>
+    <script type="text/javascript">moveProgressBar('22.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to page the content is associated with</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_25">ContentsController handling GET /contents/1 associated with a post</dt>
+    <script type="text/javascript">moveProgressBar('22.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be redirected</span></dd>
+    <script type="text/javascript">moveProgressBar('22.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to page the content is associated with</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_26">DepartmentsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('23.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'departments', :action =&gt; 'index' } to /departments</span></dd>
+    <script type="text/javascript">moveProgressBar('23.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'departments', :action =&gt; 'new' } to /portals/departments/new</span></dd>
+    <script type="text/javascript">moveProgressBar('23.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'departments', :action =&gt; 'show', :id =&gt; 1 } to /portals/departments/1</span></dd>
+    <script type="text/javascript">moveProgressBar('23.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'departments', :action =&gt; 'edit', :id =&gt; 1 } to /portals/departments/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('24.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'departments', :action =&gt; 'update', :id =&gt; 1} to /portals/departments/1</span></dd>
+    <script type="text/javascript">moveProgressBar('24.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'departments', :action =&gt; 'destroy', :id =&gt; 1} to /portals/departments/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_27">DepartmentsController handling GET /departments</dt>
+    <script type="text/javascript">moveProgressBar('24.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('24.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render index template</span></dd>
+    <script type="text/javascript">moveProgressBar('25.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find all departments</span></dd>
+    <script type="text/javascript">moveProgressBar('25.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found departments for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_28">DepartmentsController handling GET /departments.xml</dt>
+    <script type="text/javascript">moveProgressBar('25.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('25.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find all departments</span></dd>
+    <script type="text/javascript">moveProgressBar('26.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the found departments as xml</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_29">DepartmentsController handling GET /departments/1</dt>
+    <script type="text/javascript">moveProgressBar('26.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('26.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render show template</span></dd>
+    <script type="text/javascript">moveProgressBar('26.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the department requested</span></dd>
+    <script type="text/javascript">moveProgressBar('27.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found department for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_30">DepartmentsController handling GET /departments/1.xml</dt>
+    <script type="text/javascript">moveProgressBar('27.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('27.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the department requested</span></dd>
+    <script type="text/javascript">moveProgressBar('27.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the found department as xml</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_31">DepartmentsController handling GET /departments/new</dt>
+    <script type="text/javascript">moveProgressBar('28.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('28.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render new template</span></dd>
+    <script type="text/javascript">moveProgressBar('28.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create an new department</span></dd>
+    <script type="text/javascript">moveProgressBar('28.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not save the new department</span></dd>
+    <script type="text/javascript">moveProgressBar('29.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the new department for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_32">DepartmentsController handling GET /departments/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('29.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('29.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render edit template</span></dd>
+    <script type="text/javascript">moveProgressBar('29.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the department requested</span></dd>
+    <script type="text/javascript">moveProgressBar('30.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found Department for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_33">DepartmentsController handling POST /departments</dt>
+    <script type="text/javascript">moveProgressBar('30.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new department</span></dd>
+    <script type="text/javascript">moveProgressBar('30.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the new department on successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('30.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'new' on failed save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_34">DepartmentsController handling PUT /departments/1</dt>
+    <script type="text/javascript">moveProgressBar('31.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the department requested</span></dd>
+    <script type="text/javascript">moveProgressBar('31.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update the found department</span></dd>
+    <script type="text/javascript">moveProgressBar('31.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found department for the view</span></dd>
+    <script type="text/javascript">moveProgressBar('31.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the department on successful update</span></dd>
+    <script type="text/javascript">moveProgressBar('32.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'edit' on failed update</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_35">DepartmentsController handling DELETE /departments/1</dt>
+    <script type="text/javascript">moveProgressBar('32.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the department requested</span></dd>
+    <script type="text/javascript">moveProgressBar('32.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should call destroy on the found department</span></dd>
+    <script type="text/javascript">moveProgressBar('32.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the departments list</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_36">HomesController#routes_for</dt>
+    <script type="text/javascript">moveProgressBar('33.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'homes', :action =&gt; 'show' } to /home</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_37">HomesController handling GET /home</dt>
+    <script type="text/javascript">moveProgressBar('33.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('33.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the show template</span></dd>
+    <script type="text/javascript">moveProgressBar('34.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign an array of content to the associated view</span></dd>
+    <script type="text/javascript">moveProgressBar('34.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign an array of links to the associated view</span></dd>
+    <script type="text/javascript">moveProgressBar('34.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign an array of visits to the associated view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_38">LinksController handling POST /links</dt>
+    <script type="text/javascript">moveProgressBar('34.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new link</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_39">PagesController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('35.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'pages', :action =&gt; 'index' } to /pages</span></dd>
+    <script type="text/javascript">moveProgressBar('35.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'pages', :action =&gt; 'show', :id =&gt; 1 } to /pages/1</span></dd>
+    <script type="text/javascript">moveProgressBar('35.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'pages', :action =&gt; 'new' } to /pages/new</span></dd>
+    <script type="text/javascript">moveProgressBar('35.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'pages', :action =&gt; 'edit', :id =&gt; 1 } to /pages/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('36.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'pages', :action =&gt; 'update', :id =&gt; 1 } to /pages/1</span></dd>
+    <script type="text/javascript">moveProgressBar('36.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'pages', :action =&gt; 'destroy', :id =&gt; 1 } to /pages/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_40">PagesController handling GET /pages</dt>
+    <script type="text/javascript">moveProgressBar('36.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('36.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the index template</span></dd>
+    <script type="text/javascript">moveProgressBar('37.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find all published pages</span></dd>
+    <script type="text/javascript">moveProgressBar('37.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found pages to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_41">PagesController handling GET /pages/1</dt>
+    <script type="text/javascript">moveProgressBar('37.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('37.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the show template</span></dd>
+    <script type="text/javascript">moveProgressBar('38.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the page requested</span></dd>
+    <script type="text/javascript">moveProgressBar('38.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the last five versions that this page has</span></dd>
+    <script type="text/javascript">moveProgressBar('38.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should log a visit if the user is logged in and the page is published</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_42">PagesController handling GET /pages/1 PagesController with ?version_id=1</dt>
+    <script type="text/javascript">moveProgressBar('38.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('39.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the requested version to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_43">PagesController handling GET /pages/new</dt>
+    <script type="text/javascript">moveProgressBar('39.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the login page if you attempt to create a new page and are not logged in</span></dd>
+    <script type="text/javascript">moveProgressBar('39.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the flash variable if you attempt to create a new page while not logged in</span></dd>
+    <script type="text/javascript">moveProgressBar('39.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('40.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the new template</span></dd>
+    <script type="text/javascript">moveProgressBar('40.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new page</span></dd>
+    <script type="text/javascript">moveProgressBar('40.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not save the new page</span></dd>
+    <script type="text/javascript">moveProgressBar('40.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the new page for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_44">PagesController handling GET /pages/1/edit_tags</dt>
+    <script type="text/javascript">moveProgressBar('41.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('41.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the requested page</span></dd>
+    <script type="text/javascript">moveProgressBar('41.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found page to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_45">PagesController handling GET /pages/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('41.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect if user is not authorized</span></dd>
+    <script type="text/javascript">moveProgressBar('42.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign a flash notice if the user is not authorized</span></dd>
+    <script type="text/javascript">moveProgressBar('42.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('42.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the edit template</span></dd>
+    <script type="text/javascript">moveProgressBar('42.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the page requested</span></dd>
+    <script type="text/javascript">moveProgressBar('43.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the requested page to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_46">PagesController handling POST /pages</dt>
+    <script type="text/javascript">moveProgressBar('43.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new page</span></dd>
+    <script type="text/javascript">moveProgressBar('43.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the new page on successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('43.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render the 'new' template on failed save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_47">PagesController handling PUT /pages/1</dt>
+    <script type="text/javascript">moveProgressBar('44.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the current_user to page.content.user</span></dd>
+    <script type="text/javascript">moveProgressBar('44.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the page requested</span></dd>
+    <script type="text/javascript">moveProgressBar('44.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found page for the view</span></dd>
+    <script type="text/javascript">moveProgressBar('45.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the page on successful update</span></dd>
+    <script type="text/javascript">moveProgressBar('45.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'edit' on failed update</span></dd>
+    <script type="text/javascript">moveProgressBar('45.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the tags to the pages content</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_48">PagesController handling DELETE /pages/1</dt>
+    <script type="text/javascript">moveProgressBar('45.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the page requested</span></dd>
+    <script type="text/javascript">moveProgressBar('46.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should call destroy on the page requested</span></dd>
+    <script type="text/javascript">moveProgressBar('46.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the list of pages</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_49">PostsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('46.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'posts', :action =&gt; 'index' } to /posts</span></dd>
+    <script type="text/javascript">moveProgressBar('46.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'posts', :action =&gt; 'edit' } to /posts/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('47.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'posts', :action =&gt; 'new' } to /posts/new</span></dd>
+    <script type="text/javascript">moveProgressBar('47.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'posts', :action =&gt; 'show', :id =&gt; 1 } to /posts/1</span></dd>
+    <script type="text/javascript">moveProgressBar('47.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'posts', :action =&gt; 'destroy', :id =&gt; 1 } to /posts/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_50">PostsController handling GET /posts</dt>
+    <script type="text/javascript">moveProgressBar('47.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('48.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render an index template</span></dd>
+    <script type="text/javascript">moveProgressBar('48.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find all posts</span></dd>
+    <script type="text/javascript">moveProgressBar('48.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the post to the associated view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_51">PostsController handling GET /posts/1 with a user that is not logged in</dt>
+    <script type="text/javascript">moveProgressBar('48.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('49.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the show template</span></dd>
+    <script type="text/javascript">moveProgressBar('49.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the post requested</span></dd>
+    <script type="text/javascript">moveProgressBar('49.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not log the page view if the user is not logged in</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_52">PostsController handling GET /posts/1 with a user that is not logged in PostsController with ?version_id=1</dt>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_52');</script>
+    <script type="text/javascript">moveProgressBar('49.8');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should be successful (PENDING: Not Yet Implemented)</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_52');</script>
+    <script type="text/javascript">moveProgressBar('50.1');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should find the requested version of the post (PENDING: Not Yet Implemented)</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_52');</script>
+    <script type="text/javascript">moveProgressBar('50.3');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should assign the correct version to the requesting view (PENDING: Not Yet Implemented)</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_53">PostsController handling GET /posts/1 with a user that is logged in</dt>
+    <script type="text/javascript">moveProgressBar('50.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('50.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should log the page view for the currently logged in user</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_54">PostsController handling GET /posts/new</dt>
+    <script type="text/javascript">moveProgressBar('51.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_55">PostsController handling GET /posts/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('51.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('51.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the post if user is not authorized</span></dd>
+    <script type="text/javascript">moveProgressBar('51.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign a flash notice if current_ser is not authorized to edit the post</span></dd>
+    <script type="text/javascript">moveProgressBar('52.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render 'edit' template</span></dd>
+    <script type="text/javascript">moveProgressBar('52.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the post that was requested</span></dd>
+    <script type="text/javascript">moveProgressBar('52.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the post to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_56">PostsController handling POST /posts</dt>
+    <script type="text/javascript">moveProgressBar('52.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new post</span></dd>
+    <script type="text/javascript">moveProgressBar('53.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should set the published_at date</span></dd>
+    <script type="text/javascript">moveProgressBar('53.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to post on successful save</span></dd>
+    <script type="text/javascript">moveProgressBar('53.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render 'new' on failed save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_57">PostsController handling PUT /posts/1</dt>
+    <script type="text/javascript">moveProgressBar('53.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should save the logged in user as the last person who edited the content</span></dd>
+    <script type="text/javascript">moveProgressBar('54.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the requested post</span></dd>
+    <script type="text/javascript">moveProgressBar('54.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update the post and content that was found</span></dd>
+    <script type="text/javascript">moveProgressBar('54.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the post on successful update</span></dd>
+    <script type="text/javascript">moveProgressBar('54.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the 'edit' template on failed save</span></dd>
+    <script type="text/javascript">moveProgressBar('55.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the 'edit' template on failed content save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_58">PostsController handling DELETE /posts/1</dt>
+    <script type="text/javascript">moveProgressBar('55.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the post requested</span></dd>
+    <script type="text/javascript">moveProgressBar('55.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should call destroy on the found post</span></dd>
+    <script type="text/javascript">moveProgressBar('56.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the list of posts for the blog</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_59">ProjectsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('56.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'index' } to /projects</span></dd>
+    <script type="text/javascript">moveProgressBar('56.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'show', :id =&gt; 1 } to /projects/1</span></dd>
+    <script type="text/javascript">moveProgressBar('56.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'edit', :id =&gt; 1 ) to /projects/1/edit</span></dd>
+    <script type="text/javascript">moveProgressBar('57.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'new', :id =&gt; 1 ) to /projects/new</span></dd>
+    <script type="text/javascript">moveProgressBar('57.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'create' ) to /projects/1</span></dd>
+    <script type="text/javascript">moveProgressBar('57.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'update', :id =&gt; 1 ) to /projects/1</span></dd>
+    <script type="text/javascript">moveProgressBar('57.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should map { :controller =&gt; 'projects', :action =&gt; 'destroy', :id =&gt; 1 ) to /projects/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_60">ProjectsController handlng GET /projects/index</dt>
+    <script type="text/javascript">moveProgressBar('58.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('58.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the index template</span></dd>
+    <script type="text/javascript">moveProgressBar('58.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find all the projects</span></dd>
+    <script type="text/javascript">moveProgressBar('58.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign all the projects to the associated view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_61">TagsController#route_for</dt>
+    <script type="text/javascript">moveProgressBar('59.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">{ :controller =&gt; 'tags', :action =&gt; 'index' } should map to '/tags'</span></dd>
+    <script type="text/javascript">moveProgressBar('59.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">{ :controller =&gt; 'tags', :action =&gt; 'show', :id =&gt; 1 } should map to /tags/1</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_62">TagsController handling GET /tags</dt>
+    <script type="text/javascript">moveProgressBar('59.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign all the tags to the view</span></dd>
+    <script type="text/javascript">moveProgressBar('59.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the tag_counts for the Content model</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_63">UsersController handling GET /users</dt>
+    <script type="text/javascript">moveProgressBar('60.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should use UsersController</span></dd>
+    <script type="text/javascript">moveProgressBar('60.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('60.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render index template</span></dd>
+    <script type="text/javascript">moveProgressBar('60.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find all users</span></dd>
+    <script type="text/javascript">moveProgressBar('61.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found users for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_64">UsersController handling GET /users/1 with owner logged in</dt>
+    <script type="text/javascript">moveProgressBar('61.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('61.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign an array of posts and pages (draft and published) to the view</span></dd>
+    <script type="text/javascript">moveProgressBar('61.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render the show template</span></dd>
+    <script type="text/javascript">moveProgressBar('62.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the user that was requested</span></dd>
+    <script type="text/javascript">moveProgressBar('62.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should return the last 15 pieces of content sorted in descending order</span></dd>
+    <script type="text/javascript">moveProgressBar('62.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should make a call to retrieve all posts and pages</span></dd>
+    <script type="text/javascript">moveProgressBar('62.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the users contents to the view</span></dd>
+    <script type="text/javascript">moveProgressBar('63.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign posts and pages to the associated view</span></dd>
+    <script type="text/javascript">moveProgressBar('63.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign which content the requested user has visited to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_65">UsersController handling GET /users/1 with owner not logged in</dt>
+    <script type="text/javascript">moveProgressBar('63.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('63.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render show template</span></dd>
+    <script type="text/javascript">moveProgressBar('64.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the user requested</span></dd>
+    <script type="text/javascript">moveProgressBar('64.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found user to the view</span></dd>
+    <script type="text/javascript">moveProgressBar('64.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should make a call to get the posts and pages that are published only</span></dd>
+    <script type="text/javascript">moveProgressBar('64.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign pages and posts for the requested user to the associated view</span></dd>
+    <script type="text/javascript">moveProgressBar('65.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign visits for the requested user to the associated view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_66">UsersController handling GET /users/new</dt>
+    <script type="text/javascript">moveProgressBar('65.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('65.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render new template</span></dd>
+    <script type="text/javascript">moveProgressBar('65.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new user</span></dd>
+    <script type="text/javascript">moveProgressBar('66.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the new user for the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_67">UsersController handling GET /users/1/edit</dt>
+    <script type="text/javascript">moveProgressBar('66.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+    <script type="text/javascript">moveProgressBar('66.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should render edit template</span></dd>
+    <script type="text/javascript">moveProgressBar('67.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the user requested</span></dd>
+    <script type="text/javascript">moveProgressBar('67.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should assign the found user to the view</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_68">UsersController handling POST /users</dt>
+    <script type="text/javascript">moveProgressBar('67.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new user and assign a default blog</span></dd>
+    <script type="text/javascript">moveProgressBar('67.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the new user on successful save</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_69">UsersController handling PUT /users/1</dt>
+    <script type="text/javascript">moveProgressBar('68.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the user requested</span></dd>
+    <script type="text/javascript">moveProgressBar('68.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update the located user</span></dd>
+    <script type="text/javascript">moveProgressBar('68.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the user on successful update</span></dd>
+    <script type="text/javascript">moveProgressBar('68.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should re-render the 'edit' template on failed update</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_70">UsersController handling DELETE /users/1</dt>
+    <script type="text/javascript">moveProgressBar('69.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should find the requested user</span></dd>
+    <script type="text/javascript">moveProgressBar('69.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should call destroy on the located user</span></dd>
+    <script type="text/javascript">moveProgressBar('69.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to the list of users after delete</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_71">VersionsController handling GET /contents/:content_id/versions</dt>
+    <script type="text/javascript">moveProgressBar('69.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be successful</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_72">CardsHelper</dt>
+    <script type="text/javascript">moveProgressBar('70.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should include the CardsHelper</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_73">CardTypesHelper</dt>
+    <script type="text/javascript">moveProgressBar('70.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should include the CardTypesHelper</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_74">HomesHelper</dt>
+    <script type="text/javascript">moveProgressBar('70.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should include the HomesHelper</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_75">ProjectsHelper</dt>
+    <script type="text/javascript">moveProgressBar('70.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should include the ProjectsHelper</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_76">TagsHelper</dt>
+    <script type="text/javascript">moveProgressBar('71.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should include the TagsHelper</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_77">VersionsHelper</dt>
+    <script type="text/javascript">moveProgressBar('71.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should include the VersionsHelper</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_78">Blog with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('71.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('71.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a specific user</span></dd>
+    <script type="text/javascript">moveProgressBar('72.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have two posts</span></dd>
+    <script type="text/javascript">moveProgressBar('72.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid without a name</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_79">CardProperty</dt>
+    <script type="text/javascript">moveProgressBar('72.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_80">Card with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('72.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('73.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid without a title</span></dd>
+    <script type="text/javascript">moveProgressBar('73.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid without a description</span></dd>
+    <script type="text/javascript">moveProgressBar('73.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have many types</span></dd>
+    <script type="text/javascript">moveProgressBar('73.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should only belong to one project</span></dd>
+    <script type="text/javascript">moveProgressBar('74.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have tags associated with it</span></dd>
+    <script type="text/javascript">moveProgressBar('74.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have two properties associated with it</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_81">CardType with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('74.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_81');</script>
+    <script type="text/javascript">moveProgressBar('74.9');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should belong to a specific card (PENDING: Not Yet Implemented)</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_81');</script>
+    <script type="text/javascript">moveProgressBar('75.1');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should belong to a specific type (PENDING: Not Yet Implemented)</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_81');</script>
+    <script type="text/javascript">moveProgressBar('75.4');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should belong to a specific project (PENDING: Not Yet Implemented)</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_82">Comment with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('75.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('75.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a piece of content</span></dd>
+    <script type="text/javascript">moveProgressBar('76.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a user</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_83">Content with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('76.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('76.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be published</span></dd>
+    <script type="text/javascript">moveProgressBar('76.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be published</span></dd>
+    <script type="text/javascript">moveProgressBar('77.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid with a nil title field</span></dd>
+    <script type="text/javascript">moveProgressBar('77.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid with a nil text field</span></dd>
+    <script type="text/javascript">moveProgressBar('77.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have an owner of class Post</span></dd>
+    <script type="text/javascript">moveProgressBar('78.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">can be assigned to a specific Post</span></dd>
+    <script type="text/javascript">moveProgressBar('78.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have an owner of class Page</span></dd>
+    <script type="text/javascript">moveProgressBar('78.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be assigned to a specific Page</span></dd>
+    <script type="text/javascript">moveProgressBar('78.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have two tags associated with it</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_84">Department</dt>
+    <script type="text/javascript">moveProgressBar('79.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_85">Iteration</dt>
+    <script type="text/javascript">moveProgressBar('79.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_86">Link</dt>
+    <script type="text/javascript">moveProgressBar('79.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('79.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a url function</span></dd>
+    <script type="text/javascript">moveProgressBar('80.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a description property that refers to content.text model</span></dd>
+    <script type="text/javascript">moveProgressBar('80.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a title property that refers to content.title model</span></dd>
+    <script type="text/javascript">moveProgressBar('80.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if url is empty or nil</span></dd>
+    <script type="text/javascript">moveProgressBar('80.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should require a title to be valid</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_87">Member with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('81.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a team</span></dd>
+    <script type="text/javascript">moveProgressBar('81.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a user that is the member of the team</span></dd>
+    <script type="text/javascript">moveProgressBar('81.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be assigned to work on a project</span></dd>
+    <script type="text/javascript">moveProgressBar('81.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_88">Page</dt>
+    <script type="text/javascript">moveProgressBar('82.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a text property that returns content.text</span></dd>
+    <script type="text/javascript">moveProgressBar('82.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a text property that will set content.text</span></dd>
+    <script type="text/javascript">moveProgressBar('82.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a title property that returns content.title</span></dd>
+    <script type="text/javascript">moveProgressBar('82.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a title property that will set the content.title</span></dd>
+    <script type="text/javascript">moveProgressBar('83.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a published? property that will return whether or not the page is published</span></dd>
+    <script type="text/javascript">moveProgressBar('83.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a tags property that refers to a content.tags</span></dd>
+    <script type="text/javascript">moveProgressBar('83.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a tag_list property that refers to a content.tag_list</span></dd>
+    <script type="text/javascript">moveProgressBar('83.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('84.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have content</span></dd>
+    <script type="text/javascript">moveProgressBar('84.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if content is invalid</span></dd>
+    <script type="text/javascript">moveProgressBar('84.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be created by a user</span></dd>
+    <script type="text/javascript">moveProgressBar('84.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should return false for deprecated?</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_89">Post with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('85.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('85.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a title property that returns content.title</span></dd>
+    <script type="text/javascript">moveProgressBar('85.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a title= property that will set content.title</span></dd>
+    <script type="text/javascript">moveProgressBar('85.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a text property that will return content.text</span></dd>
+    <script type="text/javascript">moveProgressBar('86.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a text= property that will set content.text</span></dd>
+    <script type="text/javascript">moveProgressBar('86.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a published? property that returns whether or not the content is published</span></dd>
+    <script type="text/javascript">moveProgressBar('86.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a published_at property that it gets from its associated content</span></dd>
+    <script type="text/javascript">moveProgressBar('86.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a tags property that refers to content.tags</span></dd>
+    <script type="text/javascript">moveProgressBar('87.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a blog</span></dd>
+    <script type="text/javascript">moveProgressBar('87.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a specific user</span></dd>
+    <script type="text/javascript">moveProgressBar('87.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have content assigned to it</span></dd>
+    <script type="text/javascript">moveProgressBar('87.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have content of class type Post</span></dd>
+    <script type="text/javascript">moveProgressBar('88.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new comment</span></dd>
+    <script type="text/javascript">moveProgressBar('88.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a number_of_comments that returns zero</span></dd>
+    <script type="text/javascript">moveProgressBar('88.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be commentless</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_90">Project with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('89.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('89.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid without a name</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_90');</script>
+    <script type="text/javascript">moveProgressBar('89.5');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should have a page assigned to it (PENDING: Not Yet Implemented)</span></dd>
+    <script type="text/javascript">moveProgressBar('89.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have an owner that is in charge of the project</span></dd>
+    <script type="text/javascript">moveProgressBar('90.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple tags</span></dd>
+    <script type="text/javascript">moveProgressBar('90.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple teams that are assigned to the project</span></dd>
+    <script type="text/javascript">moveProgressBar('90.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple users that are working on the project</span></dd>
+    <script type="text/javascript">moveProgressBar('90.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple cards</span></dd>
+    <script type="text/javascript">moveProgressBar('91.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple card types</span></dd>
+    <script type="text/javascript">moveProgressBar('91.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple card properties</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_91">Property with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('91.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('91.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid without a name</span></dd>
+    <script type="text/javascript">moveProgressBar('92.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a specific project</span></dd>
+    <script type="text/javascript">moveProgressBar('92.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be assigned to multiple cards</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_92">Team with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('92.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('92.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have members who are currently on the team</span></dd>
+    <script type="text/javascript">moveProgressBar('93.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple iterations</span></dd>
+    <script type="text/javascript">moveProgressBar('93.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have multiple members assigned to it</span></dd>
+    <script type="text/javascript">moveProgressBar('93.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have users who members of this team</span></dd>
+    <script type="text/javascript">makeYellow('rspec-header');</script>
+    <script type="text/javascript">makeYellow('example_group_92');</script>
+    <script type="text/javascript">moveProgressBar('93.8');</script>
+    <dd class="spec not_implemented"><span class="not_implemented_spec_name">should have multiple cards assigned to it (PENDING: Not Yet Implemented)</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_93">Type</dt>
+    <script type="text/javascript">moveProgressBar('94.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('94.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have many cards associated with it</span></dd>
+    <script type="text/javascript">moveProgressBar('94.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid without a name</span></dd>
+    <script type="text/javascript">moveProgressBar('94.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should belong to a specific project</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_94">User with fixtures loaded</dt>
+    <script type="text/javascript">moveProgressBar('95.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('95.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have visited pieces of content</span></dd>
+    <script type="text/javascript">moveProgressBar('95.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should own pieces of published content</span></dd>
+    <script type="text/javascript">moveProgressBar('95.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a blogs assigned to them</span></dd>
+    <script type="text/javascript">moveProgressBar('96.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if login is nil</span></dd>
+    <script type="text/javascript">moveProgressBar('96.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if first_name is nil</span></dd>
+    <script type="text/javascript">moveProgressBar('96.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if email address is nil</span></dd>
+    <script type="text/javascript">moveProgressBar('96.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if an password is not entered</span></dd>
+    <script type="text/javascript">moveProgressBar('97.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid if password and password_confirmation do not match</span></dd>
+    <script type="text/javascript">moveProgressBar('97.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should authenticate the user</span></dd>
+    <script type="text/javascript">moveProgressBar('97.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not authenticate the user on an invalid password</span></dd>
+    <script type="text/javascript">moveProgressBar('97.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should return to_s in a 'FirstName LastName' format</span></dd>
+    <script type="text/javascript">moveProgressBar('98.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid with a login of more than 40 characters</span></dd>
+    <script type="text/javascript">moveProgressBar('98.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not be valid with an email address over 100</span></dd>
+    <script type="text/javascript">moveProgressBar('98.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not allow users to have the same email address</span></dd>
+    <script type="text/javascript">moveProgressBar('98.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should own one published wiki page</span></dd>
+    <script type="text/javascript">moveProgressBar('99.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be a member of a team</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_95">Visit</dt>
+    <script type="text/javascript">moveProgressBar('99.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be valid</span></dd>
+    <script type="text/javascript">moveProgressBar('99.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a user who visited</span></dd>
+    <script type="text/javascript">moveProgressBar('100.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have a piece of content thatw as visited</span></dd>
+  </dl>
+</div>
+<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>4.39 seconds</strong>";</script>
+<script type="text/javascript">document.getElementById('totals').innerHTML = "391 examples, 0 failures, 8 pending";</script>
+</div>
+</div>
+</body>
+</html>

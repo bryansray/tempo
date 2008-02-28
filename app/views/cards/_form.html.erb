@@ -1,0 +1,18 @@
+<tbody>
+	<tr>
+		<td>Title</td>
+		<td><%= f.text_field :title %></td>
+	</tr>
+	<tr>
+		<td>Estimate</td>
+		<td><%= f.text_field :estimated, :size => 6, :style => "width: 50px;" %> (In hours not donuts)</td>
+	</tr>
+	<tr>
+		<td>Actual</td>
+		<td><%= f.text_field :actual, :size => 6, :style => "width: 50px;" %></td>
+	</tr>
+	<tr>
+		<td valign="top">Description</td>
+		<td><%= f.text_area :description, :rows => 8 %></td>
+	</tr>
+</tbody>

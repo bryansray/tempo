@@ -1,0 +1,91 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  user: one
+  title: Title 2
+  text: This is a content string for a Post (1)
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: one (Post)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+two:
+  user: one
+  title: Page 1 Title
+  text: This is content for a page
+  keywords: 
+  published: true
+  owner: two (Page)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+three:
+  user: one
+  title: Title 3
+  text: This is a content string for Post (2)
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: two (Post)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+four:
+  user: two
+  title: Title 4
+  text: This is a content string for a Comment
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: one (Comment)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+five:
+  user: one
+  title: Page 1 Title
+  text: This is content for a page
+  keywords: Keyword 1, Keyword 2
+  published: false
+  owner: one (Page)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+six:
+  user: one
+  title: Link Title
+  text: Link Text
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: one (Link)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+seven:
+  user: one
+  title: Link Title 2
+  text: Link Text 2
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: two (Link)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+eight:
+  user: two
+  title: Title 4
+  text: This is a content string for a Comment
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: two (Comment)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+nine:
+  user: one
+  title: Comment 3
+  text: This is a content string for a Comment
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: three (Comment)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26

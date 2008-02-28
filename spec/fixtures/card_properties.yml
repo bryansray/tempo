@@ -1,0 +1,16 @@
+one:
+  card: one
+  property: status
+  option: open
+two:
+  card: two
+  property: status
+  option: complete
+three:
+  card: one
+  property: priority
+  option: high
+four:
+  card: three
+  property: status
+  option: open

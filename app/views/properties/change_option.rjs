@@ -1,0 +1,3 @@
+page["card_prop#{@card_prop.id}"].replace_html @card_prop.option || "Select..."
+page["val_select#{@card_prop.id}"].hide
+page["card_prop#{@card_prop.id}"].show

@@ -1,0 +1,67 @@
+<div id="Main">
+  <div class="inner">
+	<h2>New team</h2>
+
+	<%= error_messages_for :team %>
+
+<script>
+    Ext.onReady(function() {
+        var reader = new Ext.data.JsonReader({}, [
+         {name: 'member'},
+         {name: 'team_count', type: 'int'},
+         {name: 'title'},
+         ]);
+        var xg = Ext.grid;
+        var sm = new xg.CheckboxSelectionModel();
+        var grid2 = new xg.GridPanel({
+            store: new Ext.data.Store({
+             reader: reader,
+             data: xg.dummyData
+             }),
+             cm: new xg.ColumnModel([
+             sm,
+             {id:'member',header: "Member", width: 200, sortable: true, dataIndex: 'member'},
+             {header: "Team Count", width: 120, sortable: true, dataIndex: 'team_count'},
+             {header: "Title", width: 120, sortable: true, dataIndex: 'title'}
+             ]),
+             sm: sm,
+             autoWidth: true,
+             autoHeight: true,
+             frame:true,
+             iconCls:'icon-grid',
+             renderTo: 'member-grid'
+             });
+    });
+// Array data for the grids
+Ext.grid.dummyData = <%= @users.to_json %>;
+</script>
+
+<% form_for(@team) do |f| %>
+  
+<table width="100%">
+  <tr>
+    <td width="49%">
+      
+            <p>
+                  <%= f.label :title %>
+                  <%= f.text_field :title %>
+            </p>
+            <p>
+                  <%= f.label :description %>
+                  <%= f.text_area :description, :cols => 30, :rows => 10 %>
+            </p>
+            <p>
+                  <%= f.submit "Create" %> | <%= link_to 'Back', teams_path %>
+            </p>
+          
+    </td>
+    <td valign="top">
+      <h2>Team Members</h2>
+      <div id="member-grid"></div>
+    </td>
+  </tr>
+</table>
+    <% end %>
+	
+  </div>
+</div>

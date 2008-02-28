@@ -1,0 +1,32 @@
+one:
+  tag: one
+  taggable: one (Content)
+  created_at: 2007-10-23 15:00:00
+two:
+  tag: two
+  taggable: one (Content)
+  created_at: 2007-10-23 15:00:00
+three:
+  tag: one
+  taggable: five (Content)
+  created_at: 2007-10-23 15:00:00
+four:
+  tag: one
+  taggable: five (Content)
+  created_at: 2007-10-23 15:00:00
+five:
+  tag: one
+  taggable: one (Project)
+  created_at: 2007-10-23 15:00:00
+six:
+  tag: one
+  taggable: one (Project)
+  created_at: 2007-10-23 15:00:00
+seven:
+  tag: one
+  taggable: one (Card)
+  created_at: 2007-10-23 15:00:00
+eight:
+  tag: two
+  taggable: one (Card)
+  created_at: 2007-10-23 15:00:00

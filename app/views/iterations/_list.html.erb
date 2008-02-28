@@ -1,0 +1,14 @@
+<table class="tps-list">
+	<thead>
+		<tr>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Cards</th>
+		</tr>
+	</thead>
+	<tbody id="iterationlist">
+	<% list.each do |iteration| %>
+		<%= render :partial => "iterations/list_tr", :locals => { :iteration => iteration } %>
+	<% end %>
+	</tbody>
+</table>

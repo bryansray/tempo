@@ -1,0 +1,20 @@
+<% 
+form_remote_for(@link) do |f|
+  fields_for(:content, @link.build_content) do |c| %>  
+    <table>
+        <tr>
+            <th>URL</th>
+            <td><%= f.text_field :url %></td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td><%= c.text_field :title %></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td><%= c.text_field :text %></td>
+        </tr>
+      </table>
+<% 
+  end 
+end %>

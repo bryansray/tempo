@@ -1,0 +1,8 @@
+page.replace_html "tag_list-tag-list-div", @project.tag_list
+
+if params[:tags]
+  page['tag-editor-inputs'].hide(); 
+  page['tag-list-panel'].show();
+end
+
+page[:tags_tag_list].clear()

@@ -1,0 +1,7 @@
+<li id="option_<%= option.id %>">
+	<%= radio_button_tag "set_default", option.id, option.id == option.property.default_option %>
+	<%= option.name %>
+	<%= observe_field "set_default_#{option.id}", :url => set_default_property_option_path(option.property, option),
+		:on => "click"
+      %>
+</li>

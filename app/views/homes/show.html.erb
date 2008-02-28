@@ -1,0 +1,75 @@
+<script>
+function submit_link_click(button, event)
+{
+   var url, title, description;
+   
+   url = $F('link_url');
+   title = $F('content_title');
+   description = $F('content_text');
+
+   var submit_url = '<%= links_path %>';
+   var params = 'link_url=' + url + '&content_title=' + title + '&content_text=' + description;
+
+   var ajax = new Ajax.Request( 
+     submit_url, 
+     { 
+       method: 'post', 
+       parameters: params, 
+	   onComplete: show_response
+     });
+}
+
+function show_response(response)
+{
+	var json = Ext.util.JSON.decode(response.responseText);
+	
+	if (json.success)
+		win.hide();
+	else
+		Ext.Msg.alert('Error', 'There was an error saving your link.');
+}
+</script>
+
+<div id="Main">
+  <div class="inner">
+    <div class="inner_left">
+        <div class="panel" id="links">
+          <h2>DataCert Links</h2>
+
+          <div class="Toolbar">
+            <%= link_to_window("New Link", "Create New Link", 
+                    "autoLoad: '#{formatted_new_link_path(:format => :js)}', autoHeight: true, width: 400, modal: true, buttons: [{text: 'Submit', handler: submit_link_click }, {text: 'Cancel', handler: function() { win.hide(); }}]", :class => "icon icon_new_link") if (logged_in?) %>
+          </div>
+
+          <% @links.each do |link| %>
+            <p class="Link"><%= link_to_unless link.url.nil?, link.title, link.url, :target => "_new" %></p>
+          <% end %>
+
+          <% if @links.length == 5 %>
+            <p class="Footer"><%= link_to "View All", links_path %></p>
+          <% end %>
+        </div>
+
+        <div class="panel" id="visits">
+            <h2>Recently Viewed</h2>
+            <%= render :partial => "users/visits_feed", :object => @visits %>
+        </div>
+		
+		<div class="panel" id="projects">
+			<h2>Projects</h2>
+			<div class="Toolbar">
+				<%= link_to_window("New Project", "Create New Project", "autoHeight: true, width: 400, modal: true, buttons: [{text: 'Create'}]", :class => "icon icon_new_project") if logged_in? %>
+			</div>
+			<%= render :partial => "projects/feed", :object => @projects %>
+		</div>
+    </div>
+
+    <div class="inner_right">
+      <div class="panel" id="recents">
+        <h2>Recent Content</h2>
+
+        <%= render :partial => "users/content_feed", :object => @contents %>
+      </div>
+    </div>
+  </div>
+</div>

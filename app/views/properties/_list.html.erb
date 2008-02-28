@@ -1,0 +1,16 @@
+<table class="tps-list">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Options</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody id="proplist">
+	<% for property in list %>
+		<%= render :partial => "properties/prop_tr", :locals => { :property => property } %>
+	<% end %>
+	</tbody>
+</table>

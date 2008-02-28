@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  user: one
+  commentable: one (Page)
+  created_at: 2007-09-10 17:14:28
+  updated_at: 2007-09-10 17:14:28
+two:
+  user: one
+  commentable: one (Page)
+  created_at: 2007-09-10 17:14:28
+  updated_at: 2007-09-10 17:14:28
+three:
+  user: one
+  commentable: two (Post)
+  created_at: 2007-09-10 17:14:28
+  updated_at: 2007-09-10 17:14:28

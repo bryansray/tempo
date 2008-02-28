@@ -1,0 +1,2 @@
+page.replace_html("post-title", @post.content.title)
+page.replace_html("post-body", @post.content.text)

@@ -1,0 +1,48 @@
+<div id="Main">
+	<div class="inner">
+		<h1>Iteration Information for team '<%= link_to @iteration.team.title, team_path(@iteration.team) %>'</h1>
+		<div class="inner_left">
+			<div class="panel">
+				<h2>Iteration detail for team '<%= link_to @iteration.team.title, team_path(@iteration.team) %>'</h2>
+				<div class="Toolbar">
+					<%= link_to_function "Edit", "$('edit-table').toggle();$('iteration-table').toggle()" %> Iteration
+				</div>
+				<table class="view-table" id="iteration-table">
+					<tbody>
+						<tr>
+							<td>Start Date:</td>
+							<td><%=h @iteration.started_at %></td>
+							<td rowspan="5"></td>
+						</tr>
+						<tr>
+							<td>End Date:</td>
+							<td><%=h @iteration.ended_at %></td>
+						</tr>
+						<tr>
+							<td>Developer capacity:</td>
+							<td><%=h @iteration.developer_hours %></td>
+						</tr>
+						<tr>
+							<td>Estimated hours:</td>
+							<td><%=h @iteration.card_hours %></td>
+						</tr>
+						<tr>
+							<td>Actual hours:</td>
+							<td><%=h @iteration.actual_hours %></td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="display: none;" id="edit-table">
+					<%= render :partial => "edit", :locals => { :iteration => @iteration } %>
+				</div>
+			</div>
+			<%= render :partial => "iterations/burndown", :object => @iteration %>
+		</div>
+		<div class="inner_right">
+			<div class="panel">
+				<h2>Cards in this iteration</h2>
+				<%= render :partial => "cards/list", :object => @iteration.cards %>
+			</div>
+		</div>
+	</div>  
+</div>

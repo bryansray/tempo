@@ -1,0 +1,17 @@
+<div id="Main">
+  <div class="inner">
+    <div class="inner_left">
+        <div class="panel" id="links">
+          <h2>Recent Links</h2>
+            Links ...
+        </div>
+    </div>
+    <div class="inner_right">
+      <div class="panel" id="recents">
+        <h2>Recent Content</h2>
+
+        <%= render :partial => "users/content_feed", :object => @contents %>
+      </div>
+    </div>
+  </div>
+</div>

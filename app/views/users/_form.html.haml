@@ -1,0 +1,33 @@
+= error_messages_for :user
+
+- form_for :user, :url => users_path do |f|
+  %fieldset
+    %legend Create Your Team Portal Account
+    
+    %table{ :style => "width: 500px;" }
+      %tbody
+        %tr
+          %th First Name
+          %td= f.text_field :first_name
+        %tr
+          %th Last Name
+          %td= f.text_field :last_name, :onblur => "$('user_email').value = $('user_first_name').value + '.' + $('user_last_name').value + '@datacert.com';"
+        %tr
+          %th Login
+          %td= f.text_field :login
+        %tr
+          %th Email
+          %td= f.text_field :email
+        %tr
+          %th Password
+          %td= f.password_field :password
+        %tr
+          %th Password Confirmation
+          %td= f.password_field :password_confirmation
+        %tr
+          %th
+          %td
+            .buttons{ :style => "text-align: left;" }
+              = f.submit "Sign Up"
+              |
+              = link_to "Cancel", users_path

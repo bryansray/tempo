@@ -1,0 +1,28 @@
+<div id="Main">
+  <div class="inner">
+    <h1>Card Types</h1>
+
+    <div id="content">
+        <table style="width: 100%;">
+          <thead>
+            <tr style="background-color: #eee;">
+              <th>Name</th>
+              <th>Where used</th>
+              <th>Order</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @project.card_types.each do |card_type| %>
+            <tr>
+              <td><%= card_type.name %></td>
+              <td>9 properties, 0 cards</td>
+              <td>Draggable</td>
+              <td><%= link_to "Edit", edit_project_card_type_path(@project, card_type) %> | Delete</td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>

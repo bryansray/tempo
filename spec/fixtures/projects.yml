@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  owner: one
+  name: Project 1
+  description: Project 1 Description
+two:
+  owner: one
+  name: Project 2
+  description: Project 2 Description
+three:
+  owner: two
+  name: Project 3
+  description: Project 3 Description

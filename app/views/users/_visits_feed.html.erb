@@ -1,0 +1,6 @@
+<% visits_feed.each do |visit| %>
+    <div class="<%= visit.content.owner.class %>">
+        <%= link_to visit.user, user_path(visit.user) %> viewed 
+        <strong><%= link_to visit.content.title, polymorphic_path(visit.content.owner) %></strong>
+    </div>
+<% end %>

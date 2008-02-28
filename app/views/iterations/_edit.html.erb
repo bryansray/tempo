@@ -1,0 +1,4 @@
+<% form_for( iteration, :html => {:id => "iteration_form"} ) do |f| %>
+	<%= render :partial => "iterations/form", :locals => { :f => f, :started => iteration.started_at, :ended => iteration.ended_at } %>
+	<%= f.submit "Update" %>
+<% end %>

@@ -1,0 +1,28 @@
+#Main
+  .inner
+    #flash.notice{ :style => "display: none" }
+      %p= flash[:notice]
+
+    - if !@page.published? && @page.user.id != current_user.id
+      %p This page has not yet been published.
+    - else
+      = render :partial => "content", :object => @page.content		
+    
+      #comments    
+        %h2
+          = pluralize @page.comments.count, "Comment"
+        
+        %ol
+          = render :partial => "comments/comment", :collection => @page.comments
+
+            
+        - if logged_in?
+          #Comment_Form
+            %h2 Leave a Comment
+          
+            - form_for :comment, :url => page_comments_path(@page) do |f|
+              - fields_for :content do |content|
+                = content.text_area :text, :cols => 55, :rows => 7
+              
+              .buttons
+                = f.submit "Submit Comment"

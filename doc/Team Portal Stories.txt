@@ -1,0 +1,173 @@
+1. [x] Perhaps split the "content area" in to two more columns?
+	1. Can this be done on an individual view basis? Wrapped around a "application" level layout
+		[x] - No, there is a plugin that supports nested layouts, but seems kind of hackish
+	2. Remove the "side bar" from applicaton.rhtml. Each view is responsible for displaying things in a "right_side" and "left_side" fashion
+		[x] - Completed 10/3/2007
+	
+	3. Need to make a "graphic" of the site layout and how to use the available CSS classes.
+	
+2. Edit Settings Interface - allowing users to specify Personal Information
+	* Yahoo, AIM, MSN, GTalk
+	* Email addresses (work and personal - optional)
+	* Contact Numbers (work, cell, home)
+	* Contact Times
+	* Google Number (so far this is for Scott's "Shared Feed Reader")
+		[x] - This was attached to the user model
+	
+3. Integrate Scott's "Google Shared Items" in to the Portal
+	* http://djangovm:3000/feeds
+		[x] - Completed 10/6/2007
+	* Need to integrate "feeds" in to the "User" model somehow?
+		* [x] - Completed 10/6/2007: Added user.shared_feeds
+			
+	* Need to talk with Scott about a decent way to integrate this.
+		* [x] I think we decided that user.google_number was suffecient
+		* [x] This will need to be setup in the "Settings" area so that "Shared" feeds will automatically be imported
+
+4. Need to clean up "login" and "signup"
+	[x] - This is "working" better. Mostly needs UI enhancements
+	* What happens when browsing the portal when you're not logged in? (Need to document this)
+		* What CRUD actions should I be allowed to do?
+	* "Logout" should be displayed when you're logged in.
+		[x] Completed 10/9/2007
+	* I need a mechanism for determining if a user is logged in or not (user.logged_in?)
+		[x] Discovered logged_in? - 10/9/2007
+		[x] This exists in AuthenticatedSystem of restful_authentication
+			Example: if (logged_in?)
+	* "Login" should be displayed with "Signup" when you're NOT logged in.
+		[x] - Implemented restful_authentication plugin - 10/9/2007
+	
+5. Clean up "routes"
+	* I need to decide whether or not I like nested routes or not.
+		[x] Completed
+
+6. Get TinyMCE working with entering/editing posts in a blog
+	[x] Completed - 10/8/2007
+	* This probably needs to be cleaned up when I go back through and refactor forms in to partials
+		[x] Completed 10/9/2007
+
+* Need to put the Post forms in to a partial to share between New and Edit.
+	[x] Completed - 10/9/2007
+	* Needs to be refactored
+
+7. "/blogs" should display a list of recently updated blogs from ALL users
+	* Should this be grouped by "Users" or would it just be a list of all blogs?
+	* Should it not display blogs at all? Perhaps it should just display the most recent "Posts" from the blog
+	* UI definitely needs some work in this area
+
+* Need to figure out what to display on /pages/index
+
+8. "News Feed" concept on "/users/:id"
+	[x] - Completed 10/5/2007
+	* This is an aggregation of things that have happened all over the site
+		[x] Completed - 10/7/2007 - Works for posts and comments
+		* Content that has been updated
+			[x] 10/5/2007 (Bryan Ray)
+		* People that have changed preferences that have changes
+		* New Content that has been added
+			[x] - Bryan Ray - 10/5/2007
+	* Add settings that allow users to specify what type of content they want to see
+	
+* Where to store site settings, user settings, etc?
+	* acts_as_configurable?
+	
+* Need to figure out how to handle "Versions" of "Content"
+	[x] Completed - Implemented acts_as_versioned - 10/7/2007
+	* Need to decide if I like the "acts_as_versioned" plugin ... might have to strip it out.
+		* I don't know if I like the fact that versions return "#{Model}Version" and don't have access to the models associations
+	
+* Should probably implement acts_as_paranoid on "Content"
+
+* Need to implement tagging on Page model
+	[x] Completed - 10/16/2007
+* Need to implement tagging on Post model
+	[x] Completed - 10/21/2007
+	
+* Need to add the UI for tagging the content in Posts and Pages (wiki)
+	[x] Completed for Pages - 10/21/2007
+	
+* Need to cleanup the "Blog" partial. Display "Edit Blog" with "Create a new blog"
+
+9. Editing a post form needs to be cleaned up
+	* Some cleanup work done 10/1/2007
+	* Some cleanup work done 10/3/2007
+	* Some cleanup work done 10/20/2007
+	* Some cleanup work done 10/22/2007
+
+10. Need to clean up the "/signup" form ...
+	[x] Some work done on 10/9/2007
+	* Include first_name and last_name
+		[x] - Completed - 10/11/2007
+	* Make it more "web 2.0ish"
+	
+11. Posts need to have comments
+	[x] Completed - 10/10/2007
+	* Ended up putting comments on Content.
+		[x] 10/8/2007 - Actually Comments are polymorphic so they can belong to any model who uses "acts_as_commentable"
+	* Where do Comments go? Should Post have comments? Content have comments?
+		[x] 10/8/2007 - Polymorphic so it doesn't matter
+	* Need to fix up the UI on "Post Comments" ... it's very ugly right now
+
+12. Possibly move "text" from Post model in to the "Content" model.
+	[x] Completed - 10/7/2007
+	* Need to do some design analysis to figure out a good way to model this
+		[x] - Completed
+	
+13. Need to merge Team_Portal in to TeamPortal
+	[x] Completed 10/2/2007
+	* "Team_Portal" should be a branch probably and then "merge"
+	* Or maybe just delete "TeamPortal" and start with the new "Team_Portal" ... what would I lose?
+
+--------------------------------------------------------------------------------------
+10/3/2007
+	* Froze to Edge Rails - wrestled with it a lot today :(
+	* Added Unobtrusive_Javascript ... realized it's not compatible with Edge Rails
+	* Cleaned up SVN repository
+	* Started Team_Portal from scratch - refactored a few points
+	* using "sexy migrations" now
+	* Created "Content" model
+		* Assigned "Blog" to have "Content"
+		* Assigned "Post" to have "Content"
+	* Hooked up RSpec and RSpec_on_Rails (trunk)
+		* Added svn:externals to vendor/plugins
+	* Implemented the new Edge Rails routes
+	
+10/2/2007
+	* Cleaned up SVN
+		* Removed "unnecessary" Rails files and svn:ignore'd a few
+		* Changed database.yml to database.example in SVN
+	* Created a "latest" tag for a stable release
+		* Hooked up DJANGOVM to run "latest" tag
+	* Made some minor UI changes
+	
+	
+--------------------------------------------------------------------------------------
+
+
+* To Do List 
+	* Allow developers to organize a "To Do List"
+	
+* Status Management (Twitter concept instead?)
+	* Display the entire list of items done during a day in a "Standup" type fashion
+	* Allow developers to enter in what they've done during a day
+	* Put updates as to what a team member is working on
+	* Allow users to "follow" other users ... getting updates whenever they enter new tasks they've completed
+
+* Developer Blogs
+	* Perhaps tie blogs to specific "Test Track" or "CIMS" issues
+	* Allow anyone to subscribe to specific "Blog Tags" ... so they can be informed anytime someone blogs on something related
+	* Define concepts of "tags" so that they can be related
+		* Need a nice "Auto Complete System" for adding Tags to a piece of content
+
+* Employee Management System
+	* Knowledge Information
+		* Allow "users" to specify what knowledge they know about a set of DataCert products
+		* A sort of "rating" system on how well they know the specific knowledge topic
+		* This would allow a central place for anyone in the company to go to find who knows the most about specific topics
+	* Personal Information (cell phone, work phone, messenger names, emails)
+	* Contact Hours
+	* SMS Messaging
+	
+* Library System
+	* Who owns what books
+	* Who has books "checked out"

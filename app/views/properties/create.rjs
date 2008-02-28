@@ -1,0 +1,8 @@
+if @property.valid?
+  page.insert_html :top, 'proplist',
+    :partial => 'properties/prop_tr', 
+    :locals => { :property => @property }
+  page[:prop_form].reset
+else
+  page.alert( 'New Property failed to save!\n\n' + @property.errors.full_text)
+end

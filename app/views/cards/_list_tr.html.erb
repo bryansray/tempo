@@ -1,0 +1,34 @@
+        <tr>
+			<td><%= link_to card.title, card_path( card ) %></td>
+			<td><%= card.description %></td>
+			<td><%= link_to_function (card.estimated.nil? ? " - " : card.estimated, nil, :id => "card_est#{card.id}") do |page|
+					page["est_field#{card.id}"].show
+					page["card_est#{card.id}"].hide
+					page["est_field#{card.id}"].focus
+					end %>
+					<input id="est_field<%= card.id %>" value="<%= card.estimated %>" style="display:none; border: 1px solid navy; background: #d0d0d0; padding: 2px 4px;" size="4" />
+					<%= observe_field "est_field#{card.id}", :url => change_estimated_card_path( card ),
+						:with => "'estimated=' + value", :on => 'click|blur' %>
+			</td>
+			<td><%= link_to_function (card.actual.nil? ? " - " : card.actual, nil, :id => "card_actu#{card.id}") do |page|
+					page["actu_field#{card.id}"].show
+					page["card_actu#{card.id}"].hide
+					page["actu_field#{card.id}"].focus
+					end %>
+					<input id="actu_field<%= card.id %>" value="<%= card.actual %>" style="display:none; border: 1px solid navy; background: #d0d0d0; padding: 2px 4px;" size="4" />
+					<%= observe_field "actu_field#{card.id}", :url => change_actual_card_path( card ),
+						:with => "'actual=' + value", :on => 'click|blur' %>
+			</td>
+			<td><%= link_to_function (card.iteration.nil? ? "Select..." : card.iteration, nil, :id => "card_iter#{card.id}") do |page|
+					page["iter_select#{card.id}"].show
+					page["card_iter#{card.id}"].hide
+					end %>
+					<select id="iter_select<%= card.id %>" style="display: none;">
+						<option<%= if card.iteration.nil? then " selected" end %>>Select...</option>
+						<%= options_for_select card.team.iterations.collect {|i| [ i, i.id ] }, card.iteration_id %>
+					</select>
+					<%= observe_field "iter_select#{card.id}", :url => change_iteration_card_path( card ),
+						:with => "'iteration_id=' + value" %>
+			</td>
+			<td><%= card.status %></td>
+		</tr>

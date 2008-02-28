@@ -1,0 +1,62 @@
+ActsAsBlog
+==========
+
+Here is a simple plugin to allow you to allow the use of RedCloth,BlueCloth, or SmartyPants in your blog.  
+It's super simple  to use.  It will take your blog post or comment and transform it into html.  
+This allows you to write in a much simpler syntax and allows your users to post valid html into their comment.  
+It  also allows you to block all html tags that weren't created using the markup.  
+This model uses two fields, one to store the raw post (this way you can edit it later) and the other to store the transformed text.  
+This also keeps you from having to do it on the fly each time the post is accessed.  
+This creates a pretty good speedup for some applications.  
+You can pass in any of the available filters for each of the markup styles.  
+
+===============================================================
+## example of posts model
+class Post < ActiveRecord::Base
+  acts_as_blog
+  
+  ## before we save, we need to transform the markup into html
+  before_save :transform_post
+  has_many  :comments
+
+  # we need to keep the posts table in good shape!
+  validates_presence_of   :date, :raw_post, :title, :category, :description
+  
+  ## transform the text into valid html
+  def transform_post
+    self.post = Post.convert_to_html(self.raw_post, 'textile')
+  end
+====================================================================
+#Here is an example of the comments model.
+class Comment < ActiveRecord::Base
+
+  acts_as_blog
+
+  belongs_to :post
+  before_save :transform_comment
+
+
+  ## validation checks
+  validates_presence_of :name, :raw_comment
+
+  ## we filter out all html tags except those created by the markup
+  def transform_comment
+    self.comment = Comment.convert_to_html(self.raw_comment,'textile',[:filter_html])
+  end
+============================================================================
+The available markup style are markdown,textile,smartypants.  
+To run the method, you just need to pass the raw text,markup style, and then any filters you need to use.  
+It will return the valid html from your raw text.  
+Just remember, to use one of the markup styles, they need to be installed
+
+gem install RedCloth
+gem install BlueCloth  
+gem install RubyPants
+
+
+author: Charlie Bowman
+summary: Simple Markup for you Blog.
+homepage: http://www.recentrambles.com.com
+plugin: http://svn.recentrambles.com/plugins/acts_as_blog
+license: MIT
+

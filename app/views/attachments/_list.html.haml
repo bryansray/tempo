@@ -1,0 +1,10 @@
+- is_edit = false if is_edit.nil?
+%ul#Attachments
+  - attachments.each do |attachment|
+    - if is_edit
+      %li{ :id => "attach_edit_" + attachment.id.to_s }
+        = link_to_remote image_tag("icons/delete.png"), :url => { :controller => "attachments", :action => "destroy", :id => attachment.id }, :method => "delete"
+        = attachment.filename
+    - else
+      %li{ :id => "attach_view_" + attachment.id.to_s }
+        = link_to format_filename( attachment.filename ), attachment.public_filename, :target => "_blank"

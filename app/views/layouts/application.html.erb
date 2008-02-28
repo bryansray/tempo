@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>
+                   Team Portal <%= "- #{controller.controller_name} - #{controller.action_name}" if RAILS_ENV == "development" %>
+                    <%= "- #{@page.title}" if controller.controller_name == "pages" && controller.action_name == "show" %>
+                    <%= "- #{@post.title}" if controller.controller_name == "posts" && controller.action_name == "show" %>
+                </title>
+
+		<meta http-equiv="Content-Language" content="English" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<meta name="description" content="DataCert Engineering Portal" />
+		<meta name="keywords" content="datacert, engineering, development, portal" />	
+		<meta name="Robots" content="index,follow" />
+
+		<%= stylesheet_link_tag "ext/css/ext-all", "ext/css/xtheme-gray", "style" %>
+	    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss/" />
+    	<%= stylesheet_link_tag "SyntaxHighlighter" %>
+
+    	<%# Include TinyMCE before other JS to avoid problems -%>
+		<%= javascript_include_tiny_mce_if_used %>
+		<%= tiny_mce if using_tiny_mce? %>
+
+		<%= javascript_include_tag :defaults, "adapter/ext/ext-base", "ext-all" %>
+		<%= javascript_include_tag "styleScripts", "styles" %>
+
+    	<%= javascript_include_tag "SyntaxHighlighter/shCore", "SyntaxHighlighter/shBrushCSharp", "SyntaxHighlighter/shBrushXml", "SyntaxHighlighter/shBrushCss", "SyntaxHighlighter/shBrushJScript", "SyntaxHighlighter/shBrushRuby", "SyntaxHighlighter/shBrushSql" %>
+	    <script type="text/javascript">
+	      Ext.onReady(function(){
+	        dp.SyntaxHighlighter.ClipboardSwf = '/javascripts/SyntaxHighlighter/clipboard.swf';
+	        dp.SyntaxHighlighter.HighlightAll('code');
+	      });
+	
+	      var win;
+	    </script>
+  </head>
+
+	<body id="body" class="<%= controller.controller_name %>">
+		<div id="Header">
+			<ul id="MainTabs">
+				<li>
+					<%= 
+						if controller.controller_name == "homes"
+							link_to_if logged_in?, "Home", home_path, :class => "current" do
+								link_to "Home", home_path, :class => "current"
+							end
+						else
+							link_to_if logged_in?, "Home", home_path do
+								link_to "Home", home_path
+							end
+						end %>
+				</li>
+				<li>
+					<%= 
+						if (controller.controller_name == "users")
+							link_to_if logged_in?, "Profile", user_path(current_user), :class => "current" do
+								link_to "Users", users_path, :class => "current"
+							end
+						else 
+							link_to_if(logged_in?, "Profile", user_path(current_user)) do
+								link_to "Users", users_path
+							end
+						end
+					%>
+				</li>
+				<li>
+					<%= 
+						if (controller.controller_name == "pages")
+							link_to("Wiki", pages_path, :class => :current, :title => "Wiki Pages" )
+						else 
+							link_to("Wiki", pages_path, :title => "Wiki Pages")
+						end %>
+				</li>
+				<li>
+					<%= 
+						if (controller.controller_name == "blogs" || controller.controller_name == "posts")
+							link_to "Blogs", blogs_path, :class => :current
+						else 
+							link_to("Blogs", blogs_path)
+						end %>
+				</li>
+				<li><a href="http://djangovm/wcims" target="_blank">Usable CIMS</a></li>
+				<li>
+					<%= 
+						if logged_in?
+							if (["teams","iterations","cards","properties","options","projects"].include?(controller.controller_name))
+								link_to "TPS<sup>BETA</sup>", "/tps", :class => "current"
+							else 
+								link_to "TPS<sup>BETA</sup>", "/tps"
+							end
+						end
+					%>
+				</li>
+				<!--
+				<li>
+					<a href="#" linkindex="4" set="yes">Projects</a>
+				</li>
+				<li>
+					<a href="#" linkindex="4" set="yes">Library</a>
+				</li>
+				-->
+			</ul>
+			<ul id="AccountTabs">
+				<!--<li><a href="/settings" linkindex="5">Settings</a></li>-->
+				<% if !logged_in? %>
+				<li>
+					<%= link_to "Signup", signup_path %>
+				</li>
+				<% end %>
+				<li>
+					<%= link_to_if (logged_in?), "Logout", logout_path  do 
+							link_to "Login", login_path
+						end %>
+				</li>
+			</ul>
+		</div>
+
+		<div id="Wrapper">
+			<div id="Container">
+				<div id="Sidebar">
+					<div class="Section" id="search">
+						<h3>Search</h3>
+						<div class="content">
+							<%= render :partial => "/contents/search_box" %>
+						</div>
+					</div>
+
+					<%= render :partial => "sidebar" %>
+				</div>
+
+				<%= yield %>
+
+				<div id="BottomShadow" class="clear">
+				</div>
+			</div>
+		</div>
+
+		<div id="Footer">
+			<p>
+				&copy; Copyright 2007, DataCert, Inc - <a href="/rss/">RSS</a> - <a href="http://validator.w3.org/check?uri=referer" title="Validate">XHTML</a> - <a href="http://jigsaw.w3.org/css-validator/check/referer" title="Validate">CSS</a>
+			</p>
+		</div>
+		
+		<% if ENV['RAILS_ENV'] == "development" %>
+			<div id="Debug">
+				Debug: 
+				<%= link_to_function "Params", "Effect.toggle('params')" %> | 
+				<%= link_to_function "Session", "Effect.toggle('session')" %>
+				
+				<fieldset id="params" style="display: none;">
+					<legend id="session_legend">Params</legend>
+					<%= debug(params) %>
+				</fieldset>
+				
+				<fieldset id="session" style="display: none;">
+					<legend>Session</legend>
+
+					<%= debug(session) %>
+				</fieldset>
+			</div>
+		<% end %>
+	</body>
+</html>

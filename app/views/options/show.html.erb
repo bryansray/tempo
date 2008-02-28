@@ -1,0 +1,15 @@
+<div id="Main">
+	<div class="inner">
+		<h3>Options</h3>
+		<% form_remote_tag :url => property_options_path(@property), :html => {:id => "option_form"} do %>
+		<%= hidden_field :option, :property_id %>
+		<%= text_field :option, :name %>
+		<ul id="vallist">
+		<% @property.options.each do |option| %>
+			<%= render :partial => "options/option_li", :locals => { :option => option } %>
+		<% end %>
+		</ul>
+		<% end %>
+	</div>
+</div>
+

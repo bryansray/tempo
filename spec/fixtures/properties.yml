@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+status:
+  name: Status
+  description: Description for property 1
+priority:
+  scope: one (Project)
+  name: Priority
+  description: Description for priority
+iteration:
+  scope: one (Project)
+  name: Iteration
+  description: Description for Iteration
+pair_assigned:
+  scope: one (Project)
+  name: Pair Assigned
+  description: The pair that is assigned to the card
+iteration_level_one:
+  scope: one (Iteration)
+  name: Prop1
+  description: Iteration level property
+iteration_level_two:
+  scope: one (Iteration)
+  name: Prop2
+  description: Iteration level property

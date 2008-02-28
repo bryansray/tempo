@@ -1,0 +1,9 @@
+<% if logged_in? && controller.action_name == "index" %>
+  <div class="Section">
+    <h3>Options</h3>
+
+    <div class="content" id="Options">
+      <%= link_to "All Teams", teams_path %>
+	</div>
+  </div>
+<% end %>

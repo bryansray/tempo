@@ -1,0 +1,11 @@
+<div id="Tags_Form" style="display: none;">
+    <%= render :partial => "tags/tag_applicator", :locals => { :selected => tags_form.content.tag_list.to_a } %>
+
+    <% form_remote_for :tags, @tag, :url => update_tags_content_path(tags_form.content), :method => :put do |f| %>
+        <%= f.hidden_field :name  %>
+            <div class="buttons">
+                <%= f.submit "Save", :onclick => "$('tag_edit').toggle();$('tag_cancel').toggle();$('tags_name').value = getTagsToApply('TagApplicator');" %> | 
+                <a href="#" onclick="$('tag_edit').toggle();$('tag_cancel').toggle();$('Tags_Form').remove(); $('Tags').blindDown();">Cancel</a>
+            </div>
+    <% end %>
+</div>

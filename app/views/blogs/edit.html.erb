@@ -1,0 +1,8 @@
+<%= error_messages_for :blog %>
+
+<%= render :partial => "form" %>
+
+<div id="left_side">
+	<%= link_to "View #{@blog.name}", user_blog_path(@blog.user, @blog) %> |
+	<%= link_to "View All User Blogs", user_blogs_path(@blog.user) %>
+</div>

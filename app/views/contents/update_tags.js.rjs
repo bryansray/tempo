@@ -1,0 +1,3 @@
+page.replace "Tags", :partial => "tags/tags", :object => @content.owner.tags
+page.visual_effect :blind_down, "Tags"
+page.remove "Tags_Form"

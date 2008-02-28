@@ -1,0 +1,19 @@
+<div class="blog" style="float:left; width: 300px; margin-right: 45px;">
+	<div class="blog-head">
+		<span style=""><%= link_to blog.name, user_blog_path(blog.user, blog) %></span>
+	</div>
+
+	<div class="blog-body" style="padding-left: 20px;"> 
+		<ul>
+		<% blog.posts.find(:all, :order => "updated_at DESC").each do |post| %>
+			<li><%= link_to post.content.title, user_blog_post_path(blog.user, blog, post) %></li>
+		<% end %>
+		</ul>
+	</div>
+	
+	<div class="blog-foot" style="text-align: right;">
+		<%= link_to "Edit Blog", edit_user_blog_path(blog.user, blog) %> | 
+		<%= link_to "New Post", new_user_blog_post_path(blog.user, blog) %> | 
+		<%=  link_to "Remove", user_blog_path(blog.user, blog), { :confirm => "Are you sure?", :method => :delete } %>
+	</div>
+</div>

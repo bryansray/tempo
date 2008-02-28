@@ -1,0 +1,8 @@
+if @iteration.valid?
+  page.insert_html :top, 'iterationlist',
+    :partial => 'list_tr', 
+    :locals => { :iteration => @iteration }
+  page.replace_html "form_container", :partial => "new", :locals => { :team => @iteration.team }
+else
+  page.alert( 'New Iteration failed to save!\n\n' + @iteration.errors.full_text)
+end

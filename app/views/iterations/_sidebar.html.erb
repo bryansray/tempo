@@ -1,0 +1,10 @@
+<% if logged_in? && controller.action_name == "show" %>
+  <div class="Section">
+    <h3>Options</h3>
+
+    <div class="content" id="Options">
+      <%= link_to @iteration.team.title, team_path(@iteration.team) %>
+	  <%= link_to "All Teams", teams_path %>
+	</div>
+  </div>
+<% end %>

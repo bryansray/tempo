@@ -1,0 +1,22 @@
+<h1>Listing team_users</h1>
+
+<table>
+  <tr>
+    <th>Team</th>
+    <th>User</th>
+  </tr>
+
+<% for team_user in @members %>
+  <tr>
+    <td><%=h team_user.team %></td>
+    <td><%=h team_user.user %></td>
+    <td><%= link_to 'Show', team_user %></td>
+    <td><%= link_to 'Edit', edit_team_user_path(team_user) %></td>
+    <td><%= link_to 'Destroy', team_user, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New team_user', new_team_user_path %>

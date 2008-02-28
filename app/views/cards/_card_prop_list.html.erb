@@ -1,0 +1,18 @@
+<ul class="property-list">
+<% card_prop_list.each do |card_prop| %>
+	<li><%=h card_prop.property.name %>: 
+	<%= link_to_function (card_prop.option.nil? ? "Select..." : card_prop.option, nil, :id => "card_prop#{card_prop.id}") do |page|
+					page["val_select#{card_prop.id}"].show
+					page["card_prop#{card_prop.id}"].hide
+					end %>
+					<select id="val_select<%= card_prop.id %>" style="display: none;">
+						<option<%= if card_prop.option.nil? then " selected" end %>>Select...</option>
+						<%= options_for_select card_prop.property.options.find(:all, :order=>"sequence").collect {|v| [ v, v.id ] }, card_prop.option_id %>
+					</select>
+					<%= observe_field "val_select#{card_prop.id}", :url => change_option_card_property_path( card_prop.card, card_prop.property ),
+						:with => "'option_id=' + value" %>
+					
+			
+	</li>
+<% end %>
+</ul>

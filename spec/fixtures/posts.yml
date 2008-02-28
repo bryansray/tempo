@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  blog: one
+  user: one
+  permalink: MyString
+  allow_comments: false
+  created_at: 2007-08-01 23:01:19
+  updated_at: 2007-08-01 23:01:19
+two:
+  blog: one
+  user: two
+  permalink: MyString
+  allow_comments: false
+  created_at: 2007-08-01 23:01:19
+  updated_at: 2007-08-01 23:01:19

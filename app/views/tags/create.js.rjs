@@ -1,0 +1,4 @@
+page.insert_html :bottom, 'TagApplicator',
+  :partial => 'tags/tagli', 
+  :locals => { :tag => @tag, :is_selected => true }
+page["tag_name"].value = ''

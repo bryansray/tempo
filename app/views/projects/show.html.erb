@@ -1,0 +1,46 @@
+<div id="Main">
+  <div class="inner">
+    <%= render :partial => "tags/applicator", :object => @project, :locals => { :url => update_tags_admin_project_path(@project) } %>
+
+    <h2><%= @project.name %></h2>
+
+    <div class="inner_left">
+
+      <div class="panel" id="teams">
+        <h2>Teams</h2>
+        <div class="Toolbar">
+            <%= link_to "New Team", new_project_team_path(@project), :class => "icon icon_new_team" %>
+        </div>
+        <% @project.teams.each do |team| %>
+          <div class="Team"><%= link_to team.title, team_path %></div>
+        <% end %>
+      </div>
+
+      <div class="panel" id="members">
+        <h2>Members</h2>
+        <div class="Toolbar">
+            <%= link_to "Add Member", new_project_member_path(@project), :class => "icon icon_new_user" %>
+        </div>
+        <% @project.users.each do |user| %>
+          <div class="User"><%= link_to user, user_path(user) %></div>
+        <% end %>
+      </div>
+
+    </div>
+
+    <div class="inner_right">
+      <%= @project.description %>
+      
+      <div class="panel" id="cards">
+        <h2>Cards</h2>
+        <div class="Toolbar">
+          <span style="float: right;"><%= link_to "View Swim Lanes", project_cards_path(@project) %></span>
+            <%= link_to "Add Card", new_project_card_path(@project) %>
+        </div>
+        <% @project.cards.each do |card| %>
+          <p><%= link_to card.title, project_card_path(@project, card) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  project: one
+  title: Team 1
+  description: Team 1 description
+two:
+  project: two
+  title: Team 2
+  description: Team 2 description
+two:
+  project: one
+  title: Team 3
+  description: Team 3 description

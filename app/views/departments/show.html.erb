@@ -1,0 +1,13 @@
+<p>
+  <b>Content:</b>
+  <%=h @department.content_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @department.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_department_path(@department) %> |
+<%= link_to 'Back', departments_path %>

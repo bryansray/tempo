@@ -1,0 +1,26 @@
+<% form_for(@blog, :url => blogs_url) do |f| %>	
+	<div id="left_side">
+		<%= f.hidden_field :user_id, :value => (params[:user_id] == nil) ? current_user.id : params[:user_id] %>
+
+		<p>
+			<b>Name</b><br />
+			<%= f.text_field :name %>
+		</p>
+
+		<p>
+			<b>Description</b><br />
+    		<%= f.text_field :description %>
+		</p>
+			
+		<p>
+			<%= f.submit "Create" %>
+		</p>
+	</div>
+
+	<div id="right_side">
+		<h3>Options</h3>
+		<p>
+			<%= f.check_box :allow_comments %> <b>Allow comments</b><br />
+		</p>
+	</div>
+<% end %>

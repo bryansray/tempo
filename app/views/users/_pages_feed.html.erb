@@ -1,0 +1,26 @@
+<div class="Toolbar">
+    <% if logged_in? && current_user.id == params[:id].to_i then %>
+        <%= link_to "New Page", new_page_path, :class => "icon icon_new_page" %>
+    <% end %>
+</div>
+
+<% if pages_feed.empty? %>
+    <p><strong>Ready to create a new blog entry?</strong><br />
+    Create a new blog post for personal entries that others can comment on. Only you can edit your blog posts.</p>
+<% else %>
+    <% pages_feed.each do |page| %>
+        <p class="<%= page.published? ? "" : "Draft" %>">
+            <span class="Timestamp"><%= page.created_at.strftime("%B %d, %Y") %></span>
+
+            <%= link_to_if page.published?, page.title, page_path(page) do 
+                    link_to page.title, edit_page_path(page)
+            end %>
+              
+              
+
+            <% if !page.comments.empty? then %>
+                <%= link_to "(#{page.comments.count})", "#{page_path(page)}#comments", :class => "comment", :title => "#{pluralize(page.comments.count, 'comment')}" %>
+            <% end %>
+        </p>
+    <% end %>
+<% end %>

@@ -1,0 +1,19 @@
+<h1>New team_user</h1>
+
+<%= error_messages_for :team_user %>
+
+<% form_for(@member) do |f| %>
+  <p>
+		<%= f.label :team %><br />
+    <%= select "team_user", "team_id", @teams %>
+  </p>
+  <p>
+		<%= f.label :user %><br />
+    <%= select "team_user", "user_id", @users %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', team_users_path %>

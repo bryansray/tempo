@@ -1,0 +1,31 @@
+<div id="feed_item" style="padding-bottom: 10px;">
+	<% if content.owner.class == Post %>
+		<%= 
+			if content.user.first_name.blank?
+				"Anonymous User"
+			else
+				link_to "#{content.user.first_name} #{content.user.last_name}", user_path(content.user) 
+			end
+		%> 
+		
+		<%=	content.updated_at == content.created_at ? "created" : "updated" %> a <%= content.owner.class %> titled 
+ 		
+		"<i><%= link_to content.title, user_blog_post_path(content.owner.blog.user, content.owner.blog, content.owner) %></i>"
+ 		<small>(Revision: <%= content.versions.size %>)</small>
+	<% elsif content.owner.class == Comment %>
+		<%= link_to "#{content.owner.name}", user_path(content.user) %> 
+		<%=	content.updated_at == content.created_at ? "left" : "modified" %> a Comment on, 
+		"<i><%= link_to content.owner.commentable.content.title, user_blog_post_path(content.owner.commentable.user, content.owner.commentable.blog, content.owner.commentable) %></i>"
+	<% elsif content.owner.class == Page %>
+		<%= 
+			if content.user.nil?
+				"Anonymous User"
+			else 
+				link_to "#{content.user.first_name} #{content.user.last_name}", user_path(content.user) 
+			end%> 
+		
+		<%= content.updated_at == content.created_at ? "created" : "updated" %> a Wiki Page titled "<i><%= link_to content.title, page_path(content.owner) %></i>"
+	<% end %>
+	
+	<span style="color: grey;"> on <%= content.updated_at.strftime("%A, %B %d, %Y at %I:%M %p") %></span>.
+</div>

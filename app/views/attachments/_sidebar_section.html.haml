@@ -1,0 +1,7 @@
+.Section
+  %h3
+    #attachment_edit= link_to_window("Edit", "Add Attachment", "autoLoad : '#{formatted_new_attachment_path(:content_id => content.id, :format => :js)}', autoHeight: true, width: 400, modal: true, buttons: [{text: 'Finished', handler: function() { win.hide(); }}]") if (logged_in?)
+    Attachments
+    
+  .content
+    = render :partial => "attachments/list", :locals => { :attachments => content.attachments }

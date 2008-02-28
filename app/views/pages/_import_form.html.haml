@@ -1,0 +1,8 @@
+- form_tag new_page_path, :method => :get, :id => "Import_Form" do
+  %label
+    OpenWiki URL to Import
+    = text_field_tag :url, nil
+  .buttons
+    = submit_tag "Import"
+    |
+    <a href="#" onclick="$('Import_Form').remove();$('import_link').toggle();">Cancel</a>

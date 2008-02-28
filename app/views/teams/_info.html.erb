@@ -1,0 +1,46 @@
+<div class="panel">
+	<h2><%= info.title %></h2>
+	<% if controller.action_name == "index" %>
+	<div class="Toolbar">
+		Show <%= link_to info, info %>
+	</div>
+	<% end %>
+	<table class="view-table">
+		<tfoot>
+			<tr>
+				<td colspan="2"><%= link_to "Manage Iterations", team_iterations_path( info ) %></td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td><%= link_to "Members", { :controller => "teams", :action => "edit_users", :id => info.id } %>:</td>
+				<td><%= info.members.count %></td>
+			</tr>
+			<tr>
+				<% if !info.current_iteration.nil? then %>
+				<td><%= link_to "Current iteration", iteration_path( info.current_iteration ) %>:</td>
+				<td>Day <%= info.current_iteration.day_of %> of <%= info.current_iteration.days %></td>
+				<% else %>
+				<td>Current iteration:</td>
+				<td>-</td>
+				<% end %>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<% if !info.current_iteration.nil? then %>
+				<td><%= info.current_iteration.cards_completed %> of <%= info.current_iteration.cards.count %> cards completed</td>
+				<% else %>
+				<td>-</td>
+				<% end %>
+			</tr>
+			<tr>
+				<td><%= link_to "Cards", team_cards_path( info ) %>:</td>
+				<td>Unassigned: <%= info.cards.count(:conditions => "iteration_id IS NULL") %></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>Thrown to the Wolves: <%= info.cards.count(:conditions => "iteration_id = -1") %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

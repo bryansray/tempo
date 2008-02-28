@@ -1,0 +1,31 @@
+<div class="Content">
+    <% if controller.action_name == "show" %>
+        <h1 class="Title"><%= post.title %></h1>
+    <% else %>
+        <div class="Title"><%= link_to post.title, post_path(post) %></div>
+    <% end %>
+
+    <% if !post.published? %>
+        <div class="SubTitle"><strong><%= link_to "Edit Draft", edit_post_path(post) %></strong></div>
+    <% end %>
+    
+    <div class="SubTitle">
+        [created: <%= post.created_at.strftime("%B %d, %Y").downcase %> - published: <%= post.published_at.strftime("%B %d, %Y").downcase %> - updated: <%= post.updated_at.strftime("%B %d, %Y").downcase %>]
+        [versions: <%= post.content.versions.count %>]<br/>
+        [author: <%= link_to post.user, user_path(post.user) %>] 
+        
+        <% if controller.action_name != "show" && post.comments.count > 0 %>
+            | <%= link_to "(#{post.comments.count})", "#{post_path(post)}#comments", :class => "icon icon_comment", :title => "#{pluralize(post.comments.count, 'comment')}" %>
+        <% end %>
+     </div>
+
+<div class="Text"><%= post.text %></div>
+
+    <div class="Footer">
+        <ul class="Tags">
+            <% post.tags.sort_by { |tag| tag.name }.each do |tag| %>
+                <li><%= link_to tag.name, tag_path(tag) %></li>
+            <% end %>
+        </ul>
+    </div>
+</div>

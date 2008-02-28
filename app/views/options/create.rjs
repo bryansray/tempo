@@ -1,0 +1,11 @@
+if @option.valid?
+  page.insert_html :bottom, 'vallist',
+    :partial => 'option_li', 
+    :locals => { :option => @option }
+  page[:option_form].reset
+  page.sortable 'vallist',
+	  :update => 'status',  
+	  :url => update_order_property_options_path( @property_id )
+else
+  page.alert( 'New Option failed to save!\n\n' + @option.errors.inspect)
+end

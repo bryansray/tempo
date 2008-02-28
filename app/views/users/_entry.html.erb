@@ -1,0 +1,5 @@
+	<li>
+		<a href="<%= entry.url %>" target="_blank"><%= entry.title %></a><br />
+		<span class="meta_data"><%= entry.author %> on <%= entry.timestamp.to_s %></span>
+	</li>
+	<div class="entry_content" id="content<%= entry.object_id.to_s %>" style="display: none;"><div><%= entry.content %></div></div>

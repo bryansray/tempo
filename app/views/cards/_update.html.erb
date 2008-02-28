@@ -1,0 +1,11 @@
+<% form_for @card do |f| %>
+<table>
+	<tfoot>
+		<tr>
+			<td>&nbsp;</td>
+			<td><%= f.submit "Update" %></td>
+		</tr>
+	</tfoot>
+	<%= render :partial => "form", :locals => { :f => f } %>
+</table>
+<% end %>

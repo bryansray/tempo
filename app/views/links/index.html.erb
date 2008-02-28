@@ -1,0 +1,13 @@
+<div id="Main">
+	<div class="inner">
+		<img src="/images/datacert_logo.jpg" width="100" />
+		<div class="inner clear" id="list">
+			<% @links.each do |link| %>
+				<div class="Link">
+					<h2><%= link_to link.title, link.url %></h2>
+					<p><%= link.description %></p>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

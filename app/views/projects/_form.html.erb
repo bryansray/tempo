@@ -1,0 +1,15 @@
+<%= error_messages_for :project %>
+
+<% form_for(@project) do |f| %>
+	<table>
+		<tr>
+			<th>Project Name</th>
+			<td><%= f.text_field :name %></td>
+		</tr>
+		
+		<tr>
+			<th>&nbsp;</th>
+			<td><%= f.submit "Create Project" %></td>
+		</tr>
+	</table>
+<% end %>

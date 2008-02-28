@@ -1,0 +1,34 @@
+<div id="Main">
+	<div class="inner">
+		<div id="flash" class="notice" style="display: <%= flash[:notice].nil? ? 'none' : '' %>;">
+                    <%= flash[:notice] %>
+		</div>
+		<% if !@post.published? && @post.user.id != current_user.id then %>
+			<p>This post has not yet been published.</p>
+		<% else %>
+                    <%= render :partial => "post", :object => @post %>
+			
+		    <div id="comments">
+                        <h2><%= pluralize @post.comments.count, "Comment" %></h2>
+		  		
+                        <ol><%= render :partial => "comments/comment", :collection => @post.comments %></ol>
+		  		
+		  		<% if logged_in? %>
+		  			<div id="comment_form">
+		  				<h2>Leave a Comment</h2>
+		  				
+		  				<% form_for(:comment, :url => post_comments_path(@post)) do |f| %>
+		  					<% fields_for :content do |content| %>
+		  						<p><%= content.text_area :text, :cols => 55, :rows => 7 %></p>
+		  					<% end %>
+		  					
+		  					<div class="buttons">
+		  						<%= f.submit "Submit Comment" %>
+		  					</div>
+		  				<% end %>
+		  			</div>
+		  		<% end %>
+		    </div>
+		<% end %>
+	</div>
+</div>

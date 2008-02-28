@@ -1,0 +1,7 @@
+<tr>
+	<td valign="top"><%=h property.name %></td>
+	<td valign="top"><%=h property.description %></td>
+	<td valign="top"><% property.options.each do |o| %><%= o %><br /><% end %></td>
+	<td valign="top"><%= link_to 'Edit Options', property_options_path(property) %></td>
+	<td valign="top"><%= link_to 'Destroy', property, :confirm => 'Are you sure?', :method => :delete %></td>
+</tr>

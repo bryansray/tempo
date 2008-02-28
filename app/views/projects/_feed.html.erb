@@ -1,0 +1,14 @@
+<% @projects.each do |project| %>
+  <div class="Project" id="project-<%= project.id %>">
+    <%= link_to image_tag("/images/icons/application_edit.png", :class => "icon icon_edit_project", :title => "Edit"), edit_project_path(project) %>
+    <%= link_to_remote image_tag("/images/icons/application_delete.png", :class => "icon icon_delete_project", :title => "Delete"), 
+                { 
+                    :url => admin_project_path(project), 
+                    :confirm => "Are you sure you want to delete this project?", 
+                    :method => :delete, 
+                    :success => "Ext.get('project-#{project.id}').slideOut('t', { remove: true });" 
+                }  %>
+
+    <%= link_to project.name, project_path(project) %>
+  </div>
+<% end %>

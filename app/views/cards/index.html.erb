@@ -1,0 +1,54 @@
+<div id="Main">
+  <div class="inner">
+    <div class="create-card-panel" style="">
+        <% remote_form_for :card, Card.new, :url => project_cards_path(@project) do |f| %>
+          <%= f.text_field :title, :style => "width: 66%; padding: .3em 0em;" %>
+          <%= f.submit "Add", :style => "width: 8%;" %>
+          <input type="button" value="Add with detail ..." name="button" style="width: 20%;" />
+        <% end %>
+    </div>
+
+
+    <div id="lane-header" class="actions">
+      <% form_tag project_cards_path(@project), :method => :get do %>
+        <p>Group By: <%= if !@project.nil? then collection_select(:group_by, :property_id, @project.properties, :id, :name, {:prompt => true}, { :onChange => "this.form.submit();" } ) end %></p>
+      <% end %>
+    </div>
+
+    <table width="100%" class="swimming-pool">
+      <tr>
+        <% @lanes.each do |option, *cards| %>
+          <td id="lane-<%= @property.id %>-<%= option.id %>" class="lane-wrapper" style="position: relative;">
+            <div class="lane">
+              <span class="group"><%= option.name %></span>
+              <div id="cards-container-<%= option.id %>" class="cards-container" style="padding-left: 14px;">
+                <% cards.each do |card|%>
+                  <div id="card-<%= card.id %>" class="card-icon">
+                    <div class="card-inner-wrapper" style="border-left: 6px solid lime;">
+                        <img style="display: none; float: left;" src="/images/dots-white.gif" class="card-updating-icon"/>
+                        <span class="lane-card-index">#<%= card.id %></span>
+                        <%= card.title %>
+                    </div>
+                  </div>
+
+                    <script>
+                        Event.observe('card-<%= card.id %>', 'click', SwimmingPool.displayCardInfo);
+                    </script>
+
+                  <%= draggable_element "card-#{card.id}", :revert => true %>
+
+                <% end %>
+              </div>
+            </div>
+
+            <%= drop_receiving_element "lane-#{@property.id}-#{option.id}", 
+                    :accept => "card-icon",
+                    :onDrop => "SwimmingPool.afterCardDrop",
+                    :hoverclass => "lane-highlighted" %>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+    
+  </div>  
+</div>

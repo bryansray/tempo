@@ -1,0 +1,14 @@
+- form_for(:attachment, :url => attachments_path, :html => { :multipart => true }) do |f|
+  = f.hidden_field :content_id, :value => content.id
+  %p Browse for a file to attach...
+  %table
+    %tr
+      %th
+        %label{ :for=>"attachment" } Upload an attachment:
+      %td
+        = f.file_field :uploaded_data
+    %tr
+      %td
+        = submit_tag 'Attach'
+%p Or delete any existing attachments by clicking on the red icon.
+= render :partial => "attachments/list", :locals => { :attachments => content.attachments, :is_edit => true }

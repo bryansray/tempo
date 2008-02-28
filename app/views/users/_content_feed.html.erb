@@ -1,0 +1,24 @@
+<% if content_feed.empty? %>
+  <p><strong>Nothing to see here</strong><br/></p>
+<% else %>
+  <% content_feed.each do |content| %>
+    <div class="<%= content.owner.class %>">
+      <span class="Timestamp" title="Updated at"><%= content.updated_at.strftime("%B %d, %Y") %></span>
+
+      <% if content.owner.class != Comment %>
+        <%= link_to content.user, user_path(content.user) %>
+        <%= (content.owner.updated_at > content.owner.created_at) ? "updated" : "created" %> a <%= content.owner.class.to_s.downcase %> called
+        <strong><%= link_to content.title, polymorphic_path(content.owner) %></strong>
+      <% elsif content.owner.class == Comment %>
+        <%= link_to content.owner.user, user_path(content.owner.user) %> left a comment on
+        <strong><%= link_to_if(content.owner.commentable.class == Card, content.owner.commentable.title, polymorphic_path(content.owner.commentable)) do
+					link_to content.owner.commentable.content.title, polymorphic_path(content.owner.commentable)
+				end %></strong>
+      <% end %>
+
+      <% if content.owner.class == Comment %>
+        <div class="body">&ldquo;<%= content.text %>&rdquo;</div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

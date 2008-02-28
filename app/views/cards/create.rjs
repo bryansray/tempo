@@ -1,0 +1,8 @@
+#if @card.valid?
+#  page.insert_html :top, 'cardlist',
+#    :partial => 'list_tr', 
+#    :locals => { :card => @card }
+#  page[:card_form].reset
+#else
+#  page.alert( 'New Card failed to save!\n\n' + @card.errors.inspect)
+#end

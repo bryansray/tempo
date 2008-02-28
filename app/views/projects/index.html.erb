@@ -1,0 +1,16 @@
+<div id="Main">
+  <div class="inner">
+    <div class="inner_left">
+      <div class="panel" id="projects">
+        <h2>Projects</h2>
+        <div class="Toolbar">
+                <%= link_to("New Project", new_project_path, :class => "icon icon_new_project") if logged_in? %>
+        </div>
+        <%= render :partial => "projects/feed", :object => @projects %>
+      </div>
+
+      <%= render :partial => "teams/feed", :object => @teams %>
+
+    </div>
+  </div>
+</div>

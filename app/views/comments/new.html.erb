@@ -1,0 +1,31 @@
+<h1>New comment</h1>
+
+<%= error_messages_for :comment %>
+
+<% form_for(@comment) do |f| %>
+  <p>
+    <b>Parent</b><br />
+    <%= f.text_field :parent_id %>
+  </p>
+
+  <p>
+    <b>User</b><br />
+    <%= f.text_field :user_id %>
+  </p>
+
+  <p>
+    <b>Title</b><br />
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <b>Text</b><br />
+    <%= f.text_area :text %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', comments_path %>

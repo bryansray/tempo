@@ -1,0 +1,16 @@
+open:
+  name: Open
+  property: status
+  sequence: 1
+complete:
+  name: Complete
+  property: status
+  sequence: 2
+high:
+  name: High
+  property: priority
+  sequence: 1
+low:
+  name: Low
+  property: priority
+  sequence: 2

@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  team: one
+  started_at: 2008-02-01 17:26:52
+  ended_at: 2008-02-14 17:26:52
+
+two:
+  team: one
+  started_at: 2008-02-15 17:26:52
+  ended_at: 2008-02-28 17:26:52

@@ -1,0 +1,12 @@
+<h1>Editing content</h1>
+
+<%= error_messages_for :content %>
+
+<% form_for(@content) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @content %> |
+<%= link_to 'Back', contents_path %>

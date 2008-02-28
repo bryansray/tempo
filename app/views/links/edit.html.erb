@@ -1,0 +1,36 @@
+<div id="Main">
+	<div class="inner">
+<h1>Editing Link</h1>
+
+<%= error_messages_for :link %>
+
+<% form_for(@link) do |f| %>
+  <p>
+    <b>URL</b><br />
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :title %>
+  </p>
+  
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :description %>
+  </p>
+  
+  <p>
+  	<b>Position</b><br />
+	<%= f.text_field :position %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @link %> |
+<%= link_to 'Back', links_path %>
+	</div>
+</div>

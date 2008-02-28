@@ -1,0 +1,2 @@
+page['Content'].hide()
+page.insert_html :after, 'Content', { :partial => "form", :object => @page }

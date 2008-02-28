@@ -1,0 +1,8 @@
+- if logged_in?
+  .Section
+    %h3 Options
+
+    .content#Options
+      = link_to "Create a new wiki page", new_page_path, :class => "icon icon_new_page"
+      = link_to "Create a new blog post", new_post_path, :class => "icon icon_new_post"
+

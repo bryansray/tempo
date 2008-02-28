@@ -1,0 +1,64 @@
+<div id="Main">
+    <div class="inner">
+		<h1>Details for '<%= @team.title %>'</h1>
+        <div class="inner_left">
+            <%#= render :partial => "teams/info", :object => @team %>
+            
+            <div class="panel">
+              <h2><%= link_to "Members", edit_users_team_path(@team) %></h2>
+                <% @team.members.each do |member| %>
+                  <p><%= member.user %></p>
+                <% end %>
+            </div>
+
+           <div class="panel">
+             <h2><%= link_to "Cards", team_cards_path(@team) %></h2>
+
+             <% @team.cards.each do |card| %>
+                <p><%= link_to card, card_path( card ) %></p>
+             <% end %>
+           </div>
+
+          <div class="panel">
+            <h2><%= link_to "Iterations", team_iterations_path(@team) %></h2>
+
+            <% @team.iterations.each do |iteration| %>
+            <p><%= iteration.started_at %> to <%= iteration.ended_at %></p>
+            <% end %>
+          </div>
+
+            <%= render :partial => "iterations/burndown", :object => @team.current_iteration %>
+
+        </div>
+		<div class="inner_right">
+			<div class="panel">
+				<h2>Unassigned cards</h2>
+				<%= render :partial => "cards/list", :object => @team.cards.find( :all, :conditions => "iteration_id IS NULL" ) %>
+			</div>
+			<div class="panel">
+				<h2>Team Level Properties</h2>
+				<div class="Toolbar">
+					<%= link_to_function "Add Properties", "$('edit-table').toggle();" %>
+				</div>
+				<div id="edit-table" style="display: none;">
+					<p>These properties will be applied to all cards created for '<%=h @team.title %>'.</p>
+					<% form_remote_for :property, Property.new, :url => add_property_team_path(@team), :html => {:id => "prop_form"} do |f| %>
+						<table>
+							<tfoot>
+								<tr>
+									<td>&nbsp;</td>
+									<td><%= f.submit "Create" %></td>
+								</tr>
+							</tfoot>
+							<%= render :partial => "properties/form", :locals => { :f => f } %>
+						</table>
+					<% end %>
+				</div>
+				<%= render :partial => "properties/list", :object => @team.properties %>
+			</div>
+		</div>
+		
+		
+		
+	</div>  
+</div>

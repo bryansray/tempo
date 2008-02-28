@@ -1,0 +1,9 @@
+.Content
+  .Title= content.title
+  - if !content.published?
+    .SubTitle
+      %strong= link_to "Edit Draft", edit_page_path(content.owner)
+
+  .SubTitle
+    == This page has #{content.versions.count} versions and #{content.owner.comments.count} comments.
+  .Text= content.text

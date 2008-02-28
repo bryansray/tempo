@@ -1,0 +1,17 @@
+<table class="tps-list">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Estimated</th>
+			<th>Actual</th>
+			<th>Iteration</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody id="cardlist">
+	<% list.each do |card| %>
+		<%= render :partial => "cards/list_tr", :locals => { :card => card } %>
+	<% end %>
+	</tbody>
+</table>

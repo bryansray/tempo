@@ -1,0 +1,2 @@
+page.remove( 'attach_view_' + @id )
+page.remove( 'attach_edit_' + @id )

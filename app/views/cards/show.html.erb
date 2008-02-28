@@ -1,0 +1,94 @@
+<div id="Main">
+  <div class="inner">
+    <div class="card-contents">
+      <div id="card-<%= @card.id %>" class="card">
+           <div class="card-top">
+        <div class="card-index">#<%= @card.id %></div>
+        <h1 class="card-short-description">
+          <%= @card.title %>
+          <img id="waiting" class="waiting" src="/images/dots-white.gif" style="display: none;" />
+        </h1>
+        <p class="version-info">
+          (v14 - Latest version, last modified less than a minute ago)
+        </p>
+      </div>
+      
+      <div class="card-meta-data">
+        <div class="properties-container">
+          <div class="properties">
+            
+            <span class="drop-list-panel" style="width: 19em;">
+              <p>Estimated Hours: <%= link_to_function @card.estimated ? @card.estimated : "(not set)", "" %></p>
+            </span>
+
+            <span class="drop-list-panel" style="width: 19em;">
+              <p>Actual Hours: <%= link_to_function @card.actual ? @card.actual : "(not set)", "" %></p>
+            </span>
+
+            <span class="drop-list-panel" style="width: 19em;">
+              <p>Project: <%= link_to_function @card.project.name ? @card.project.name : "(not set)", "" %></p>
+            </span>
+
+            <span class="drop-list-panel" style="width: 19em;">
+              <p>Team Assigned: <%= link_to_function @card.team ? @card.team : "(not set)", "" %></p>
+            </span>
+
+            <span class="drop-list-panel" style="width: 19em;">
+              <p>Iteration: <%= link_to_function @card.iteration ? @card.iteration : "(not set)", "" %></p>
+            </span>
+
+          </div>
+          <div class="clear-both"></div>
+        </div>
+      </div>
+      
+      <div class="content">
+        <%= @card.description %>
+      </div>
+      
+      <div id="card-bottom" class="card-bottom">
+        <div class="properties-container">
+          <%= render :partial => "properties/assigned_properties", :object => @card.card_properties %>
+
+          <div class="clear-both"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <br/>
+  
+  <div class="inner_left">
+    &nbsp;
+  </div>
+  
+  <div class="inner_right">
+    
+    <div class="panel collapsed">
+      <h2>History</h2>
+      <%= render :partial => "history", :object => @card.merged_audits %>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+  <div id="comments">
+    <h2><%= pluralize @card.comments.count, "Comment" %></h2>
+    <ol><%= render :partial => "comments/comment", :collection => @card.comments %></ol>
+    
+    <% if logged_in? %>
+      <div id="comment_form">
+        <h2>Leave a Comment</h2>
+      
+        <% form_for(:comment, :url => card_comments_path(@card)) do |f| %>
+                  <% fields_for :content do |content| %>
+            <p><%= content.text_area :text, :cols => 55, :rows => 7 %></p>
+          <% end %>
+      
+          <div class="buttons">
+            <%= f.submit "Submit Comment" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>  
+</div>

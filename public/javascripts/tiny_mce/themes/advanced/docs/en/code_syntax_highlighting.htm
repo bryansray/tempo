@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+<TITLE>Code Syntax Highlighting</TITLE>
+<link href="style.css" rel="stylesheet" type="text/css">
+</HEAD>
+
+<BODY>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="3" class="pageheader">
+  <tr> 
+    <td><span class="title">Code syntax highlighting</span></td>
+    <td align="right"><a href="index.htm"><acronym title="Table of contents">TOC</acronym></a></td>
+  </tr>
+</table>
+<hr noshade>
+<p>
+Basic syntax highlighting can be applied to preformatted text blocks, but it requires special attributes to be manually added to the blocks of code.
+</p>
+<p><strong>To apply syntax highlighting:</strong></p>
+<ol>
+<li><strong>Open the HTML source code editor <img src="../../images/code.gif" width="20" height="20" alt="Source code editor icon." /></strong><br /><br />
+<li>
+<strong>Create a new <code>&lt;pre&gt;</code> element and paste in your preformatted code:</strong> You can also paste the code in the WYSIWYG editor and apply the "preformatted" format to it.<br /><br />
+</li>
+<li>
+<strong>Add <code>name="code"</code> to the <code>&lt;pre&gt;</code> element</strong><br /><br />
+</li>
+<li>
+<strong>Add <code>class="<em>language</em>"</code> where <em>language</em> is one of the following supported languages:</strong> html, css, javascript, csharp, ruby, sql, xml
+</li>
+</ol>
+<p>
+The opening tag should look something like this when you're done:
+</p>
+<code><strong>&lt;pre name="code" class="html"&gt;</strong></code>
+
+<p>
+See the <a href="http://code.google.com/p/syntaxhighlighter/wiki/Configuration" target="_blank">syntax highlighter wiki</a> for additional configuration options.
+</p>
+
+<hr noshade>
+<table width="100%" border="0" cellpadding="1" cellspacing="3" class="pagefooter">
+  <tr> 
+    <td>Go to: <a href="index.htm">Table of contents</a></td>
+    <td align="right"><a href="#">Top</a></td>
+  </tr>
+</table>
+<br>
+</BODY>
+</HTML>

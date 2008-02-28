@@ -1,0 +1,2 @@
+module ExtHelper
+end

@@ -1,0 +1,9 @@
+<div id="Main">
+  <div class="inner">
+    <h2>Edit Card Type</h2>
+
+    <% form_for(:card_type, @card_type, :url => project_card_type_path(@project, @card_type), :html => { :method => :put }) do |f| %>
+      <%= render :partial => "form", :locals => { :f => f } %>
+    <% end %>
+  </div>
+</div>
