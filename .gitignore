@@ -1,0 +1,4 @@
+index/*
+logs/*.log
+config/database.yml
+db/*.sqlite3
