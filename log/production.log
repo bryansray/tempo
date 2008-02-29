@@ -1,0 +1,83 @@
+# Logfile created on Thu Feb 28 18:45:52 -0600 2008
+
+Processing HomesController#show (for 127.0.0.1 at 2008-02-28 18:47:55) [GET]
+  Session ID: BAh7CToMY3NyZl9pZCIlNDc2ZWM4MjNmNTU4OWE1ZTBiMDdjMzI2OGM5ODNm%0ANTE6DnJldHVybl90bzA6CXVzZXJpBAmLzzgiCmZsYXNoSUM6J0FjdGlvbkNv%0AbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--3b751aeba2fb350a8cff418547181ec7030be317
+  Parameters: {"action"=>"show", "controller"=>"homes"}
+default field list: [:is_think_box, :text, :created_at, :owner_type, :published_at, :version, :keywords, :title, :owner_id, :published, :updated_at, :allow_comments, :user_id, :status_id]
+Rendering template within layouts/application
+Rendering homes/show
+Completed in 0.17872 (5 reqs/sec) | Rendering: 0.14411 (80%) | DB: 0.00000 (0%) | 200 OK [http://localhost/home]
+
+
+Processing PagesController#index (for 127.0.0.1 at 2008-02-28 18:48:29) [GET]
+  Session ID: BAh7CToMY3NyZl9pZCIlNDc2ZWM4MjNmNTU4OWE1ZTBiMDdjMzI2OGM5ODNm%0ANTE6CXVzZXJpBAmLzzg6DnJldHVybl90bzAiCmZsYXNoSUM6J0FjdGlvbkNv%0AbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--dbc860c0bdfa0c50b375c937358894a8b22ed520
+  Parameters: {"action"=>"index", "controller"=>"pages"}
+Rendering template within layouts/application
+Rendering pages/index
+Completed in 0.19880 (5 reqs/sec) | Rendering: 0.13008 (65%) | DB: 0.00000 (0%) | 200 OK [http://localhost/pages]
+
+
+Processing BlogsController#index (for 127.0.0.1 at 2008-02-28 18:48:34) [GET]
+  Session ID: BAh7CToMY3NyZl9pZCIlNDc2ZWM4MjNmNTU4OWE1ZTBiMDdjMzI2OGM5ODNm%0ANTE6DnJldHVybl90bzA6CXVzZXJpBAmLzzgiCmZsYXNoSUM6J0FjdGlvbkNv%0AbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--3b751aeba2fb350a8cff418547181ec7030be317
+  Parameters: {"action"=>"index", "controller"=>"blogs"}
+Rendering template within layouts/application
+Rendering blogs/index
+Completed in 0.05399 (18 reqs/sec) | Rendering: 0.04737 (87%) | DB: 0.00000 (0%) | 200 OK [http://localhost/blogs]
+
+
+Processing SessionsController#destroy (for 127.0.0.1 at 2008-02-28 18:48:38) [GET]
+  Session ID: BAh7CToMY3NyZl9pZCIlNDc2ZWM4MjNmNTU4OWE1ZTBiMDdjMzI2OGM5ODNm%0ANTE6CXVzZXJpBAmLzzg6DnJldHVybl90bzAiCmZsYXNoSUM6J0FjdGlvbkNv%0AbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--dbc860c0bdfa0c50b375c937358894a8b22ed520
+  Parameters: {"action"=>"destroy", "controller"=>"sessions"}
+Cookie set: auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT
+Redirected to http://localhost:3000/
+Completed in 0.01004 (99 reqs/sec) | DB: 0.00000 (0%) | 302 Found [http://localhost/logout]
+
+
+Processing HomesController#show (for 127.0.0.1 at 2008-02-28 18:48:38) [GET]
+  Session ID: BAh7BzoOcmV0dXJuX3RvMCIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6%0ARmxhc2g6OkZsYXNoSGFzaHsGOgtub3RpY2UiHllvdSBoYXZlIGJlZW4gbG9n%0AZ2VkIG91dC4GOgpAdXNlZHsGOwdU--19cf2d6cff91ccd2aa0707318a0342d7bb621053
+  Parameters: {"action"=>"show", "controller"=>"homes"}
+Rendering template within layouts/application
+Rendering homes/show
+Completed in 0.02897 (34 reqs/sec) | Rendering: 0.02117 (73%) | DB: 0.00000 (0%) | 200 OK [http://localhost/]
+
+
+Processing HomesController#show (for 192.168.0.175 at 2008-02-28 19:05:56) [GET]
+  Session ID: 1fc485b8a214e54bb993cf4bd9e64fa9
+  Parameters: {"action"=>"show", "controller"=>"homes"}
+Rendering template within layouts/application
+Rendering homes/show
+Completed in 0.02922 (34 reqs/sec) | Rendering: 0.02109 (72%) | DB: 0.00000 (0%) | 200 OK [http://192.168.0.115/]
+
+
+Processing SessionsController#new (for 192.168.0.175 at 2008-02-28 19:06:32) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlMjM0MjY5YjAwOTBkYWNkYTY1MTk4OWVjYTYwNjkw%0ANmIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%0Ac2h7AAY6CkB1c2VkewA%3D--49522242be6cf7b5d4ac7c79524d0141423e76c4
+  Parameters: {"action"=>"new", "controller"=>"sessions"}
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 0.00783 (127 reqs/sec) | Rendering: 0.00754 (96%) | DB: 0.00000 (0%) | 200 OK [http://192.168.0.115/login]
+
+
+Processing SessionsController#create (for 192.168.0.175 at 2008-02-28 19:07:02) [POST]
+  Session ID: BAh7BzoMY3NyZl9pZCIlMjM0MjY5YjAwOTBkYWNkYTY1MTk4OWVjYTYwNjkw%0ANmIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%0Ac2h7AAY6CkB1c2VkewA%3D--49522242be6cf7b5d4ac7c79524d0141423e76c4
+  Parameters: {"commit"=>"Log In", "authenticity_token"=>"e20287a595e50e65e8905704ffc15e7b2d6b5b00", "action"=>"create", "controller"=>"sessions", "password"=>"test", "login"=>"Bryan.Ray", "remember_me"=>"1"}
+Cookie set: auth_token=0afdcb2d7822e980951c54171885d36974d6a216; path=/; expires=Fri, 14 Mar 2008 00:07:02 GMT
+Redirected to http://192.168.0.115:3000/home
+Completed in 0.00729 (137 reqs/sec) | DB: 0.00000 (0%) | 302 Found [http://192.168.0.115/session]
+
+
+Processing HomesController#show (for 192.168.0.175 at 2008-02-28 19:07:02) [GET]
+  Session ID: BAh7CToMY3NyZl9pZCIlMjM0MjY5YjAwOTBkYWNkYTY1MTk4OWVjYTYwNjkw%0ANmI6DnJldHVybl90bzA6CXVzZXJpBAmLzzgiCmZsYXNoSUM6J0FjdGlvbkNv%0AbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlIhtMb2dnZWQg%0AaW4gc3VjY2Vzc2Z1bGx5BjoKQHVzZWR7BjsJVA%3D%3D--054178aba6b67249e3b4f268ee8c7421d2157d13
+  Parameters: {"action"=>"show", "controller"=>"homes"}
+Rendering template within layouts/application
+Rendering homes/show
+Completed in 0.02919 (34 reqs/sec) | Rendering: 0.02168 (74%) | DB: 0.00000 (0%) | 200 OK [http://192.168.0.115/home]
+
+
+Processing HomesController#show (for 192.168.0.175 at 2008-02-28 19:08:09) [GET]
+  Session ID: 9456f70a1deda20d7840a52cabcb4a40
+  Parameters: {"action"=>"show", "controller"=>"homes"}
+default field list: [:owner_type, :published_at, :text, :created_at, :keywords, :version, :owner_id, :allow_comments, :title, :user_id, :published, :updated_at, :status_id, :is_think_box]
+Rendering template within layouts/application
+Rendering homes/show
+Cookie set: auth_token=d99e0cda7d702c0a60c6bea8d8ff2ac23e8dbb63; path=/; expires=Fri, 14 Mar 2008 00:08:09 GMT
+Completed in 0.19193 (5 reqs/sec) | Rendering: 0.15711 (81%) | DB: 0.00000 (0%) | 200 OK [http://192.168.0.115/]
