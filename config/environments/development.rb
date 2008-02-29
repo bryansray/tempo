@@ -16,6 +16,8 @@ config.action_controller.perform_caching             = false
 config.action_view.cache_template_extensions         = false
 config.action_view.debug_rjs                         = true
 
+ExceptionNotifier.exception_recipients = %w(bryan.ray@datacert.com)
+
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
@@ -23,4 +25,6 @@ config.action_mailer.raise_delivery_errors = true
 ActionMailer::Base.default_charset    = 'utf-8'
 ActionMailer::Base.delivery_method    = :smtp
 ActionMailer::Base.perform_deliveries = true
-ActionMailer::Base.smtp_settings    = {:address => 'DCMX01.DC.COM'}
+ActionMailer::Base.smtp_settings    = {
+  :address => 'DCMX01.DC.COM'
+}
