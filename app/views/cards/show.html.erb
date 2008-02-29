@@ -56,20 +56,8 @@
     </div>
   </div>
   
-  <br/>
-  
-  <div class="inner_left">
-    &nbsp;
-  </div>
-  
-  <div class="inner_right">
-    
-    <div class="panel collapsed">
-      <h2>History</h2>
-      <%= render :partial => "history", :object => @card.merged_audits %>
-    </div>
-  </div>
   <div style="clear:both"></div>
+  
   <div id="comments">
     <h2><%= pluralize @card.comments.count, "Comment" %></h2>
     <ol><%= render :partial => "comments/comment", :collection => @card.comments %></ol>
