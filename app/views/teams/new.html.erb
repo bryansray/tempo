@@ -4,38 +4,6 @@
 
 	<%= error_messages_for :team %>
 
-<script>
-    Ext.onReady(function() {
-        var reader = new Ext.data.JsonReader({}, [
-         {name: 'member'},
-         {name: 'team_count', type: 'int'},
-         {name: 'title'},
-         ]);
-        var xg = Ext.grid;
-        var sm = new xg.CheckboxSelectionModel();
-        var grid2 = new xg.GridPanel({
-            store: new Ext.data.Store({
-             reader: reader,
-             data: xg.dummyData
-             }),
-             cm: new xg.ColumnModel([
-             sm,
-             {id:'member',header: "Member", width: 200, sortable: true, dataIndex: 'member'},
-             {header: "Team Count", width: 120, sortable: true, dataIndex: 'team_count'},
-             {header: "Title", width: 120, sortable: true, dataIndex: 'title'}
-             ]),
-             sm: sm,
-             autoWidth: true,
-             autoHeight: true,
-             frame:true,
-             iconCls:'icon-grid',
-             renderTo: 'member-grid'
-             });
-    });
-// Array data for the grids
-Ext.grid.dummyData = <%= @users.to_json %>;
-</script>
-
 <% form_for(@team) do |f| %>
   
 <table width="100%">
@@ -55,13 +23,10 @@ Ext.grid.dummyData = <%= @users.to_json %>;
             </p>
           
     </td>
-    <td valign="top">
-      <h2>Team Members</h2>
-      <div id="member-grid"></div>
-    </td>
   </tr>
 </table>
-    <% end %>
+
+<% end %>
 	
   </div>
 </div>
