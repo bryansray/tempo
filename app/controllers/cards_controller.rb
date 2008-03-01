@@ -21,7 +21,7 @@ class CardsController < ApplicationController
 
       # FIXME : Yuck ...
       if card_ids.length > 0
-        cards = Card.find(:all, :conditions => [ "cards.project_id = ? AND card_properties.card_id NOT IN (?)", @project.id, card_ids], :include => :card_properties)
+        cards = Card.find(:all, :conditions => [ "cards.project_id = ? AND (card_properties.card_id NOT IN (?) OR card_properties.card_id IS NULL)", @project.id, card_ids], :include => :card_properties)
       else
         cards = Card.find(:all, :conditions => [ "cards.project_id = ?", @project.id], :include => :card_properties)
       end
