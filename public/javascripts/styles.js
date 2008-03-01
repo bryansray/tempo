@@ -48,7 +48,6 @@ var SwimmingPool = {
         element.highlight();
     },
     
-    
     displayCardInfo: function displayCardInfo(event) {
         if (!_isDragged && this.getStyle('left') == "0px") 
         {

@@ -1,0 +1,13 @@
+<div id="card-<%= card.id %>" class="card-icon">
+  <div class="card-inner-wrapper" style="border-left: 6px solid lime;">
+      <img style="display: none; float: left;" src="/images/dots-white.gif" class="card-updating-icon"/>
+      <span class="lane-card-index">#<%= card.id %></span>
+      <%= card.title %>
+  </div>
+</div>
+
+  <script>
+      Event.observe('card-<%= card.id %>', 'click', SwimmingPool.displayCardInfo);
+  </script>
+
+<%= draggable_element "card-#{card.id}", :revert => true %>
