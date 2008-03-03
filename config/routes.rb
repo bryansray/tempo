@@ -56,6 +56,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :projects, :member => { :update_tags => :post }
     admin.resources :cards, :member => { :set_value_for => :post }
+    admin.resources :passwords
   end
   
   map.resource :home
@@ -67,8 +68,8 @@ ActionController::Routing::Routes.draw do |map|
   map.search "/search", :controller => "contents", :action => "search"
   map.tps "/tps", :controller => "projects", :action => "index"
   
-  map.forgot_password "/forgot_password", :controller => "users", :action => "forgot_password"
-  map.reset_password '/reset_password/:id', :controller => "users", :action => "reset_password"
+  map.forgot_password "/forgot_password", :controller => "admin/passwords", :action => "new"
+  map.reset_password '/reset_password/:id', :controller => "admin/accounts", :action => "reset_password"
 
   map.connect '', :controller => "homes", :action => "show"
 	

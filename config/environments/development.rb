@@ -26,5 +26,9 @@ ActionMailer::Base.default_charset    = 'utf-8'
 ActionMailer::Base.delivery_method    = :smtp
 ActionMailer::Base.perform_deliveries = true
 ActionMailer::Base.smtp_settings    = {
-  :address => 'DCMX01.DC.COM'
+  :address => 'mail.bryanray.net',
+  :user_name => 'bryan@bryanray.net',
+  :port => 26,
+  :authentication => :login,
+  :password => 'rstlne88'
 }

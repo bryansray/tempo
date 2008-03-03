@@ -54,6 +54,11 @@ describe User, "with fixtures loaded" do
     
     @user.should_not be_valid
   end
+  
+  it "should set the recently_forgot_password? method to true after calling forgot_method" do
+    @user.forgot_password
+    @user.recently_forgot_password?.should be_true
+  end
 
 
   it "should authenticate the user" do

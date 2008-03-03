@@ -1,0 +1,13 @@
+<div id="Main">
+    <div class="inner">
+        <% form_for :user, :url => admin_passwords_path do |form| %>
+          <fieldset>
+              <dl>
+                  <dt><label for="user_email" class="block">Enter the email address used to create your account</label></dt>
+                  <dd><%= form.text_field :email %></dd>
+              </dl>
+              <%= submit_tag 'Send' %>
+          </fieldset>
+        <% end %>
+    </div>
+</div>
