@@ -1,12 +1,17 @@
 <div id="Main">
     <div class="inner">
-        <% form_for :user, :url => admin_passwords_path do |form| %>
+		<% if flash[:notice] %>
+			<div id="flash" class="notice">
+				<%= flash[:notice] %>
+			</div>
+		<% end %>
+        <% form_tag admin_passwords_path do %>
           <fieldset>
               <dl>
                   <dt><label for="user_email" class="block">Enter the email address used to create your account</label></dt>
-                  <dd><%= form.text_field :email %></dd>
+                  <dd><%= text_field_tag :email %></dd>
               </dl>
-              <%= submit_tag 'Send' %>
+              <%= submit_tag 'Reset Password' %>
           </fieldset>
         <% end %>
     </div>

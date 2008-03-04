@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe User do
+
+end
+
 describe User, "with fixtures loaded" do
   fixtures :users, :blogs, :pages, :visits, :contents, :members, :teams
 	
@@ -104,4 +108,9 @@ describe User, "with fixtures loaded" do
   it "should show team member history" do
     @user.team_history.should_not be_nil
  end
+ 
+  it "should find the specified user with User.find_for_forget" do
+    user = User.find_for_forget("bryan.ray@datacert.com")
+    user.should == @user
+  end
 end

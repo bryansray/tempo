@@ -17,6 +17,37 @@ describe Admin::PasswordsController, "handling GET /admin/passwords/new" do
   end
 end
 
+describe Admin::PasswordsController, "handling PUT /admin/reset_password/1" do
+  before(:each) do
+    @user = mock_model(User, :to_param => 1)
+    User.stub!(:find_by_password_reset_code).and_return(@user)
+  end
+  
+  def do_put
+    put :update, :id => 1
+  end
+  
+  it "should be successful" do
+    do_put
+    response.should be_success
+  end
+  
+  it "should re-render the 'edit' template if the old password is not provided" do
+    do_put
+    response.should render_template("edit")
+  end
+  
+  it "should set a flash variable if a new password is not provided" do
+    do_put
+    flash[:notice].should_not be_nil
+  end
+  
+  it "should find the user by their password reset code" do
+    User.should_receive(:find_by_password_reset_code).and_return(@user)
+    do_put
+  end
+end
+
 describe Admin::PasswordsController, "handling POST /admin/passwords" do
   before(:each) do
     @user = mock_model(User, :to_param => 1)

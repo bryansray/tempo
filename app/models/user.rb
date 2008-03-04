@@ -98,6 +98,10 @@ class User < ActiveRecord::Base
     save(false)
   end
   
+  def self.find_for_forget(email)
+    find :first, :conditions => ["email = ?", email]
+  end
+  
   def forgot_password
     @forgotten_password = true
     self.make_password_reset_code
