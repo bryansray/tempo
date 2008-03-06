@@ -113,4 +113,11 @@ describe User, "with fixtures loaded" do
     user = User.find_for_forget("bryan.ray@datacert.com")
     user.should == @user
   end
+  
+  it "should have a reset password method that clears out the password_reset_code field" do
+    @user.reset_password
+    @user.password_reset_code.should be_nil
+  end
+  
+  it "should set the @reset_password instance variable to true so that an email can be sent out if needed"
 end

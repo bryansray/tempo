@@ -107,6 +107,11 @@ class User < ActiveRecord::Base
     self.make_password_reset_code
   end
   
+  def reset_password
+    update_attribute :password_reset_code, nil
+    @reset_password = true
+  end
+  
   def recently_forgot_password?
     @forgotten_password
   end

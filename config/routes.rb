@@ -1,4 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
+  map.signup "/signup", :controller => "users", :action => "new"
+  map.login "/login", :controller => "sessions", :action => "new"
+  map.logout "/logout", :controller => "sessions", :action => "destroy"
+  map.search "/search", :controller => "contents", :action => "search"
+  
+  map.forgot_password "/forgot_password", :controller => "passwords", :action => "new"
+  map.reset_password '/reset_password/:id', :controller => "passwords", :action => "edit"
+
+  map.resource :password  
   map.resources :options
   
   map.resources :properties do |property|
@@ -56,20 +65,10 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :projects, :member => { :update_tags => :post }
     admin.resources :cards, :member => { :set_value_for => :post }
-    admin.resources :passwords
   end
   
   map.resource :home
   map.resource :session
-
-  map.signup "/signup", :controller => "users", :action => "new"
-  map.login "/login", :controller => "sessions", :action => "new"
-  map.logout "/logout", :controller => "sessions", :action => "destroy"
-  map.search "/search", :controller => "contents", :action => "search"
-  map.tps "/tps", :controller => "projects", :action => "index"
-  
-  map.forgot_password "/forgot_password", :controller => "admin/passwords", :action => "new"
-  map.reset_password '/reset_password/:id', :controller => "admin/accounts", :action => "reset_password"
 
   map.connect '', :controller => "homes", :action => "show"
 	
