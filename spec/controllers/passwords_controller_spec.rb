@@ -6,9 +6,14 @@ describe PasswordsController, "#route_for" do
   end
 end
 
-describe PasswordsController, "handling GET /admin/passwords/new" do
+describe PasswordsController, "handling GET /passwords/new" do
   def do_get
     get :new
+  end
+  
+  it "should be successful" do
+    do_get
+    response.should be_success
   end
   
   it "should render the new template" do
@@ -17,7 +22,7 @@ describe PasswordsController, "handling GET /admin/passwords/new" do
   end
 end
 
-describe PasswordsController, "handling PUT /admin/passwords/1" do
+describe PasswordsController, "handling PUT /passwords/1" do
   before(:each) do
     @user = mock_model(User, :to_param => 1)
     User.stub!(:find_by_password_reset_code).and_return(@user)
@@ -126,7 +131,7 @@ describe PasswordsController, "handling GET /reset_password/1" do
   end
 end
 
-describe PasswordsController, "handling POST /admin/passwords" do
+describe PasswordsController, "handling POST /passwords" do
   before(:each) do
     @user = mock_model(User, :to_param => 1)
     User.stub!(:find_for_forget).and_return(@user)
