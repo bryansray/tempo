@@ -23,12 +23,9 @@ config.action_mailer.raise_delivery_errors = false
 
 config.action_mailer.raise_delivery_errors = true
 ActionMailer::Base.default_charset    = 'utf-8'
-ActionMailer::Base.delivery_method    = :smtp
+ActionMailer::Base.delivery_method    = :sendmail
 ActionMailer::Base.perform_deliveries = true
 ActionMailer::Base.smtp_settings    = {
-  :address => 'mail.bryanray.net',
-  :user_name => 'bryan@bryanray.net',
-  :port => 26,
-  :authentication => :login,
-  :password => 'rstlne88'
+  :location => '/usr/sbin/sendmail',
+  :arguments => '-i -t'
 }
