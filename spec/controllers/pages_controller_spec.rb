@@ -159,7 +159,7 @@ describe PagesController, "handling GET /pages/new" do
   
   it "should redirect to the login page if you attempt to create a new page and are not logged in" do
     do_unauthorized_get
-    response.should redirect_to(new_session_path)
+    response.should redirect_to(login_path)
   end
   
   it "should assign the flash variable if you attempt to create a new page while not logged in" do
@@ -247,7 +247,7 @@ describe PagesController, "handling GET /pages/1/edit" do
   
   it "should redirect if user is not authorized" do
     do_unauthorized_get
-    response.should redirect_to(new_session_path)
+    response.should redirect_to(login_path)
   end
   
   it "should assign a flash notice if the user is not authorized" do

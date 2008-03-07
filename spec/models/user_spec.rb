@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe User do
+
+end
+
 describe User, "with fixtures loaded" do
   fixtures :users, :blogs, :pages, :visits, :contents, :members, :teams
 	
@@ -54,6 +58,11 @@ describe User, "with fixtures loaded" do
     
     @user.should_not be_valid
   end
+  
+  it "should set the recently_forgot_password? method to true after calling forgot_method" do
+    @user.forgot_password
+    @user.recently_forgot_password?.should be_true
+  end
 
 
   it "should authenticate the user" do
@@ -99,4 +108,16 @@ describe User, "with fixtures loaded" do
   it "should show team member history" do
     @user.team_history.should_not be_nil
  end
+ 
+  it "should find the specified user with User.find_for_forget" do
+    user = User.find_for_forget("bryan.ray@datacert.com")
+    user.should == @user
+  end
+  
+  it "should have a reset password method that clears out the password_reset_code field" do
+    @user.reset_password
+    @user.password_reset_code.should be_nil
+  end
+  
+  it "should set the @reset_password instance variable to true so that an email can be sent out if needed"
 end
