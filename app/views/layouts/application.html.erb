@@ -88,24 +88,15 @@
 					<%= 
 						if logged_in?
 							if (["teams","iterations","cards","properties","options","projects"].include?(controller.controller_name))
-								link_to "TPS<sup>BETA</sup>", "/tps", :class => "current"
+								link_to "TPS<sup>BETA</sup>", projects_path, :class => "current"
 							else 
-								link_to "TPS<sup>BETA</sup>", "/tps"
+								link_to "TPS<sup>BETA</sup>", projects_path
 							end
 						end
 					%>
 				</li>
-				<!--
-				<li>
-					<a href="#" linkindex="4" set="yes">Projects</a>
-				</li>
-				<li>
-					<a href="#" linkindex="4" set="yes">Library</a>
-				</li>
-				-->
 			</ul>
 			<ul id="AccountTabs">
-				<!--<li><a href="/settings" linkindex="5">Settings</a></li>-->
 				<% if !logged_in? %>
 				<li>
 					<%= link_to "Signup", signup_path %>
