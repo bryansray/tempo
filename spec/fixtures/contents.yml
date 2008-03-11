@@ -89,3 +89,32 @@ nine:
   published_at: 2007-10-03 19:58:26
   created_at: 2007-10-03 19:58:26
   updated_at: 2007-10-03 19:58:26
+ten:
+  user: two
+  title: Card 1 Example
+  text: This is a content string for a Card
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: one (Card)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+eleven:
+  title: Card 2 Example
+  text: This is a content string for a Card
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: two (Card)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26
+twelve:
+  user: one
+  title: Card 3 Example
+  text: This is a content string for a Card
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: three (Card)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26

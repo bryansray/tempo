@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Card, "with fixtures loaded" do
   fixtures :cards, :card_types, :types, :projects, :taggings, :tags, 
-    :properties, :card_properties, :iterations, :teams
+    :properties, :card_properties, :iterations, :teams, :users
   
   before(:each) do
     @card = cards(:one)
@@ -48,6 +48,15 @@ describe Card, "with fixtures loaded" do
   
   it "should report a status" do
     @card.status.should == "Open"
+  end
+  
+  it "should get user from content" do
+    @card.user.should == users(:two)
+  end
+  
+  it "should return '' if content user is null" do
+    @card.content.user = nil
+    @card.user.should == ''
   end
   
   it "should save the default properties before it is created in the database"
