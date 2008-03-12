@@ -78,16 +78,20 @@ end
 
 describe CardsController, "handling POST /teams/1/cards" do
   before(:each) do
+    @project = mock_model(Project, :to_param => 1)
     @team = mock_model(Team, :to_param => 1)
     @card = mock_model(Card, :to_param => 1)
     
+    Project.stub!(:find).and_return(@project)
     Card.stub!(:new).and_return(@card)
     Team.stub!(:find).and_return(@team)
     @card.stub!(:team=).and_return(@team)
+    @card.stub!(:project=).and_return(@project)
+    @card.stub!(:project).and_return(@project)
   end
   
   def do_post
-    post :create, :id => 1, :team_id => 1
+    post :create, :id => 1, :project_id => 1, :team_id => 1
   end
   
   def post_with_successful_save
@@ -114,6 +118,7 @@ describe CardsController, "handling POST /projects/1/cards" do
     Card.stub!(:new).and_return(@card)
     Project.stub!(:find).and_return(@project)
     @card.stub!(:project=).and_return(@project)
+    @card.stub!(:project).and_return(@project)
   end
   
   def do_post
@@ -133,37 +138,6 @@ describe CardsController, "handling POST /projects/1/cards" do
   it "should assign the created card to the project" do
     @card.should_receive(:project=).and_return(@project)
     post_with_successful_save
-  end
-end
-
-describe CardsController, "handling POST /cards" do
-  before(:each) do
-    @card = mock_model(Card, :to_param => 1)
-    Card.stub!(:new).and_return(@card)
-  end
-  
-  def do_post
-    post :create, :id => 1
-  end
-  
-  def post_with_successful_save
-    @card.should_receive(:save).and_return(true)
-    do_post
-  end
-  
-  def post_with_unsuccessful_save
-    @card.should_receive(:save).and_return(false)
-    do_post
-  end
-  
-  it "should create a new card to be saved" do
-    Card.should_receive(:new).and_return(@card)
-    post_with_successful_save
-  end
-  
-  it "should redirect to the new card on successful save" do
-    post_with_successful_save
-    response.should redirect_to(card_path(@card))
   end
 end
 

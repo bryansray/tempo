@@ -1,0 +1,32 @@
+<div id="Main">
+	<div class="inner">
+		<% form_for(@card, :url => project_cards_path(@project)) do |f| %>
+			<div class="action-bar">
+				<%= f.submit "Save" %>
+			</div>
+			
+			<div class="card-top">
+				<h2 class="card-index">#1</h2>
+				<div class="card-edit-title">
+					<%= f.text_field :title %>
+				</div>
+			</div>
+			
+			<div id="tags-container">
+				Tags Container (Not Yet Implemented)
+			</div>
+			
+			<p><label for="card_description">Description</label></p>
+			
+			<fieldset style="margin: 1em; background-color: transparent;"><%= f.text_area :description %></fieldset>
+			
+			<div id="card-bottom">
+				<div id="card-types-properties-container">
+					<div class="properties-container">
+						(Not Yet Implemented) Dynamically List Properties for this Card
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>
