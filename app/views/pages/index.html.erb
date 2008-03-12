@@ -18,7 +18,10 @@
 		<div class="inner_right">
 			<div class="panel">
 				<h2>Recently Viewed</h2>
-				<p>Testing</p>
+				
+				<% @visits.each do |visit| %>
+					<p><%=h visit.inspect %></p>
+				<% end %>
 			</div>
 		</div>
 	</div>

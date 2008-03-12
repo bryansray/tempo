@@ -58,4 +58,6 @@ describe Page do
   it "should return false for deprecated?" do
     @page.deprecated?.should == false
   end
+  
+  it "should have many visits"
 end

@@ -17,6 +17,11 @@ class Content < ActiveRecord::Base
   # Validations
   validates_presence_of :text
   
+  protected
+  def self.published_pages
+    find(:all, :conditions => ["published = ? AND owner_type = ?", true, 'Page'])
+  end
+  
   private
   def set_published_at
     if published_at.nil? 

@@ -52,4 +52,8 @@ describe Content, "with fixtures loaded" do
   it "should have two tags associated with it" do
     @content.should have(2).tags
   end
+  
+  it "should have many published pages" do
+    Content.should have(1).published_pages
+  end
 end
