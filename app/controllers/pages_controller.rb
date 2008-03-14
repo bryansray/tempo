@@ -12,12 +12,9 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.xml
   def index
-    @recent_changes = Page.find(:all, 
-				:include => :content, 
-				:conditions => ["contents.published = ?", true], 
-				:limit => 10, 
-				:order => "pages.updated_at DESC")
-      
+    @recent_changes = Page.find(:all, :include => :content, :conditions => ["contents.published = ?", true], :limit => 10, :order => "pages.updated_at DESC")
+    @visits = Visit.find :all, :conditions => ["contents.owner_type = ?", 'Page'], :include => :content
+    
     if logged_in? && !current_user.default_page.nil?
       redirect_to page_url(current_user.default_page)
     else  

@@ -48,7 +48,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to card_path(@card) }
+        format.html { redirect_to project_card_path(@card.project, @card) }
         format.js
       else
         format.html { render :action => "new" }
@@ -109,7 +109,7 @@ class CardsController < ApplicationController
   end
   
   def new
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id]) if params[:project_id]
     @card = Card.new
   end
 end
