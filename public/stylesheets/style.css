@@ -516,8 +516,8 @@ input[type="text"], input.text {
 
 .panel .Toolbar {
     background-color: #efefef;
-    padding: 3px;
-    margin: 0px;
+    padding: .5em;
+	text-align: right;
 }
 
 /******[ panel - recent posts]******/

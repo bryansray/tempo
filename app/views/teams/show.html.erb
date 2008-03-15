@@ -11,7 +11,11 @@
             </div>
 
            <div class="panel">
-             <h2><%= link_to "Cards", project_cards_path(@team.project) %></h2>
+             <h2>Cards</h2>
+
+				<div class="Toolbar">
+					<span style="float: right;"><%= link_to "Swim Lanes", team_cards_path(@team) %></span>
+				</div>
 
              <% @team.cards.each do |card| %>
                 <p><%= link_to card, card_path( card ) %></p>
