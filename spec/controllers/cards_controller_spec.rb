@@ -27,33 +27,72 @@ describe CardsController, "#route_for" do
   end  
 end
 
-describe CardsController, "handling GET /projects/1/cards" do
+describe CardsController, "handling GET /cards" do
   before(:each) do
-    @project = mock_model(Project, :to_param => 1)
     @card = mock_model(Card, :to_param => 1)    
     @cards = [@card]
+  end
+  
+  describe "when listing all the cards for a specific team" do
+    before(:each) do
+      @team = mock_model(Team, :to_param => 1)
+      @project = mock_model(Project, :to_param => 1)
+      
+      Team.stub!(:find).and_return(@team)
+      @team.stub!(:project).and_return(@project)
+    end
+    
+    def do_get
+      get :index, :team_id => 1
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    
+    it "should find the team that we want to display cards for" do
+      Team.should_receive(:find).and_return(@team)
+      do_get
+    end
+    
+    it "should set the project the team is associated with to the requesting view" do
+      do_get
+      assigns[:project].should == @project
+    end
+    
+    it "should assign the team to the associated view" do
+      do_get
+      assigns[:team].should == @team
+    end
+  end
+  
+  describe "when listing all the cards for a project" do
+    before(:each) do
+      @project = mock_model(Project, :to_param => 1)
+      Project.stub!(:find).and_return(@project)
+    end
+    
+    def do_get
+      get :index, :project_id => 1
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    
+    it "should find the project to list the cards for" do
+      Project.should_receive(:find).and_return(@project)
+      do_get
+    end
+    
+    it "should assign the project to the specified view" do
+      do_get
+      assigns[:project].should eql(@project)
+    end
+  end
 
-    Project.stub!(:find).and_return(@project)
-  end
-  
-  def do_get
-    get :index, :project_id => 1
-  end
-  
-  it "should find the project to list the cards for" do
-    Project.should_receive(:find).and_return(@project)
-    do_get
-  end
-  
-  it "should be successful" do
-    do_get
-    response.should be_success
-  end
-  
-  it "should assign the project to the specified view" do
-    do_get
-    assigns[:project].should eql(@project)
-  end
   
   describe "when a property_id is NOT specified to group by" do
     before(:each) do
@@ -73,6 +112,12 @@ describe CardsController, "handling GET /projects/1/cards" do
     before(:each) do
       
     end
+  end
+end
+
+describe CardsController, "handling GET /teams/1/cards" do
+  it "should populate " do
+    
   end
 end
 
