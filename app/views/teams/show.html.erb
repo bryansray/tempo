@@ -1,6 +1,5 @@
 <div id="Main">
     <div class="inner">
-		<h1>Details for '<%= @team.title %>'</h1>
         <div class="inner_left">
             <%#= render :partial => "teams/info", :object => @team %>
             
@@ -12,7 +11,7 @@
             </div>
 
            <div class="panel">
-             <h2><%= link_to "Cards", team_cards_path(@team) %></h2>
+             <h2><%= link_to "Cards", project_cards_path(@team.project) %></h2>
 
              <% @team.cards.each do |card| %>
                 <p><%= link_to card, card_path( card ) %></p>

@@ -4,7 +4,7 @@
 
 	<%= error_messages_for :team %>
 
-<% form_for(@team) do |f| %>
+<% form_for(@team, :url => project_teams_path(@project)) do |f| %>
   
 <table width="100%">
   <tr>

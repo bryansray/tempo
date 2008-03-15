@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe TeamsController, "handling /projects/1/teams/new" do
+describe TeamsController, "handling GET /projects/1/teams/new" do
   before(:each) do
     @project = mock_model(Project, :to_param => 1)
     @team = mock_model(Team, :to_param => 1)
@@ -24,6 +24,15 @@ describe TeamsController, "handling /projects/1/teams/new" do
     response.should render_template('new')
   end
   
+  it "should find the project that was requested to create the team for" do
+    Project.should_receive(:find).and_return(@project)
+    do_get
+  end
+  
+  it "should assign the project to the associated view" do
+    do_get
+    assigns[:project].should == @project
+  end
   it "should assign the newly built team to the associated view" do
     do_get
     assigns[:team].should == @team
