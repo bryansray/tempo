@@ -14,7 +14,7 @@
              <h2>Cards</h2>
 
 				<div class="Toolbar">
-					<span style="float: right;"><%= link_to "Swim Lanes", team_cards_path(@team) %></span>
+					<%= link_to "Swim Lanes", team_cards_path(@team) %>
 				</div>
 
              <% @team.cards.each do |card| %>

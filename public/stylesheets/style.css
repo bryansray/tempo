@@ -742,6 +742,10 @@ a.icon:hover {
     padding: 5px 10px;
 }
 
+.action-bar a { 
+	margin: 1em;
+}
+
 /******[draggable lists]*******/
 .drag-list
 {
