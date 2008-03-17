@@ -24,10 +24,11 @@ class TeamsController < ApplicationController
   # GET /teams/new
   # GET /teams/new.xml
   def new
-    @project = Project.find(params[:project_id]) if params[:project_id]
     @team = Team.new
+    @project = Project.find(params[:project_id]) if params[:project_id]
 
-    @users = User.find(:all, :select => "first_name, last_name, CONCAT(first_name, ' ', last_name) as 'member'", :order => "first_name")
+    # TODO : This should find a list of users that can be assigned to the team
+    #@users = User.find(:all, :select => "first_name, last_name, CONCAT(first_name, ' ', last_name) as 'member'", :order => "first_name")
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @team }
@@ -90,15 +91,17 @@ class TeamsController < ApplicationController
 	render :template => "properties/create"
   end
   
-  # POST /teams
-  # POST /teams.xml
+  # POST /projects/1/teams
   def create
     @team = Team.new(params[:team])
+    @project = Project.find(params[:project_id]) if params[:project_id]
 
+    @team.project = @project
+    
     respond_to do |format|
       if @team.save
         flash[:notice] = 'Team was successfully created.'
-        format.html { redirect_to(@team) }
+        format.html { redirect_to project_team_path(@project, @team) }
         format.xml  { render :xml => @team, :status => :created, :location => @team }
       else
         format.html { render :action => "new" }

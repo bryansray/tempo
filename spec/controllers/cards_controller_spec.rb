@@ -27,33 +27,72 @@ describe CardsController, "#route_for" do
   end  
 end
 
-describe CardsController, "handling GET /projects/1/cards" do
+describe CardsController, "handling GET /cards" do
   before(:each) do
-    @project = mock_model(Project, :to_param => 1)
     @card = mock_model(Card, :to_param => 1)    
     @cards = [@card]
+  end
+  
+  describe "when listing all the cards for a specific team" do
+    before(:each) do
+      @team = mock_model(Team, :to_param => 1)
+      @project = mock_model(Project, :to_param => 1)
+      
+      Team.stub!(:find).and_return(@team)
+      @team.stub!(:project).and_return(@project)
+    end
+    
+    def do_get
+      get :index, :team_id => 1
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    
+    it "should find the team that we want to display cards for" do
+      Team.should_receive(:find).and_return(@team)
+      do_get
+    end
+    
+    it "should set the project the team is associated with to the requesting view" do
+      do_get
+      assigns[:project].should == @project
+    end
+    
+    it "should assign the team to the associated view" do
+      do_get
+      assigns[:team].should == @team
+    end
+  end
+  
+  describe "when listing all the cards for a project" do
+    before(:each) do
+      @project = mock_model(Project, :to_param => 1)
+      Project.stub!(:find).and_return(@project)
+    end
+    
+    def do_get
+      get :index, :project_id => 1
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    
+    it "should find the project to list the cards for" do
+      Project.should_receive(:find).and_return(@project)
+      do_get
+    end
+    
+    it "should assign the project to the specified view" do
+      do_get
+      assigns[:project].should eql(@project)
+    end
+  end
 
-    Project.stub!(:find).and_return(@project)
-  end
-  
-  def do_get
-    get :index, :project_id => 1
-  end
-  
-  it "should find the project to list the cards for" do
-    Project.should_receive(:find).and_return(@project)
-    do_get
-  end
-  
-  it "should be successful" do
-    do_get
-    response.should be_success
-  end
-  
-  it "should assign the project to the specified view" do
-    do_get
-    assigns[:project].should eql(@project)
-  end
   
   describe "when a property_id is NOT specified to group by" do
     before(:each) do
@@ -76,18 +115,28 @@ describe CardsController, "handling GET /projects/1/cards" do
   end
 end
 
+describe CardsController, "handling GET /teams/1/cards" do
+  it "should populate " do
+    
+  end
+end
+
 describe CardsController, "handling POST /teams/1/cards" do
   before(:each) do
+    @project = mock_model(Project, :to_param => 1)
     @team = mock_model(Team, :to_param => 1)
     @card = mock_model(Card, :to_param => 1)
     
+    Project.stub!(:find).and_return(@project)
     Card.stub!(:new).and_return(@card)
     Team.stub!(:find).and_return(@team)
     @card.stub!(:team=).and_return(@team)
+    @card.stub!(:project=).and_return(@project)
+    @card.stub!(:project).and_return(@project)
   end
   
   def do_post
-    post :create, :id => 1, :team_id => 1
+    post :create, :id => 1, :project_id => 1, :team_id => 1
   end
   
   def post_with_successful_save
@@ -114,6 +163,7 @@ describe CardsController, "handling POST /projects/1/cards" do
     Card.stub!(:new).and_return(@card)
     Project.stub!(:find).and_return(@project)
     @card.stub!(:project=).and_return(@project)
+    @card.stub!(:project).and_return(@project)
   end
   
   def do_post
@@ -133,37 +183,6 @@ describe CardsController, "handling POST /projects/1/cards" do
   it "should assign the created card to the project" do
     @card.should_receive(:project=).and_return(@project)
     post_with_successful_save
-  end
-end
-
-describe CardsController, "handling POST /cards" do
-  before(:each) do
-    @card = mock_model(Card, :to_param => 1)
-    Card.stub!(:new).and_return(@card)
-  end
-  
-  def do_post
-    post :create, :id => 1
-  end
-  
-  def post_with_successful_save
-    @card.should_receive(:save).and_return(true)
-    do_post
-  end
-  
-  def post_with_unsuccessful_save
-    @card.should_receive(:save).and_return(false)
-    do_post
-  end
-  
-  it "should create a new card to be saved" do
-    Card.should_receive(:new).and_return(@card)
-    post_with_successful_save
-  end
-  
-  it "should redirect to the new card on successful save" do
-    post_with_successful_save
-    response.should redirect_to(card_path(@card))
   end
 end
 

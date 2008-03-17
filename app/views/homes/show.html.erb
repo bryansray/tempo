@@ -58,7 +58,7 @@ function show_response(response)
 		<div class="panel" id="projects">
 			<h2>Projects</h2>
 			<div class="Toolbar">
-				<%= link_to_window("New Project", "Create New Project", "autoHeight: true, width: 400, modal: true, buttons: [{text: 'Create'}]", :class => "icon icon_new_project") if logged_in? %>
+				<%= link_to "New Project", new_project_path, :class => "icon icon_new_project" %>
 			</div>
 			<%= render :partial => "projects/feed", :object => @projects %>
 		</div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>
-                   Team Portal <%= "- #{controller.controller_name} - #{controller.action_name}" if RAILS_ENV == "development" %>
+                   Tempo <%= "- #{controller.controller_name} - #{controller.action_name}" if RAILS_ENV == "development" %>
                     <%= "- #{@page.title}" if controller.controller_name == "pages" && controller.action_name == "show" %>
                     <%= "- #{@post.title}" if controller.controller_name == "posts" && controller.action_name == "show" %>
                 </title>

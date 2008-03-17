@@ -9,35 +9,45 @@ class CardsController < ApplicationController
       @property = Property.find_by_name("Status", :order => "options.sequence", :include => :options)
     end
 
-    if params[:project_id]
-      @project = Project.find(params[:project_id])
-
-      card_ids = []
-      @property.options.each do |option|
-        cards = Card.find(:all, :conditions => [ "cards.project_id = ? AND card_properties.option_id = ?", @project.id, option.id], :include => :card_properties)
-        cards.collect{ |card| card_ids << card.id }
-        @lanes << [option, *cards]
-      end
-
-      # FIXME : Yuck ...
-      if card_ids.length > 0
-        cards = Card.find(:all, :conditions => [ "cards.project_id = ? AND (card_properties.card_id NOT IN (?) OR card_properties.card_id IS NULL)", @project.id, card_ids], :include => :card_properties)
+    if params[:team_id]
+      @team = Team.find(params[:team_id])
+      @project = @team.project
+    else
+      @project = Project.find(params[:project_id]) if params[:project_id]
+    end
+      
+    card_ids = []
+    @property.options.each do |option|
+      if @team
+        conditions = ["cards.team_id = ? AND card_properties.option_id = ?", @team.id, option.id]
       else
-        cards = Card.find(:all, :conditions => [ "cards.project_id = ?", @project.id], :include => :card_properties)
+        conditions = ["cards.project_id = ? AND card_properties.option_id = ?", @project.id, option.id]
       end
       
-      @lanes.unshift([Option.new(:name => "(not set)", :sequence => 0), *cards])
+      cards = Card.find(:all, :conditions => conditions, :include => :card_properties)
+      cards.collect{ |card| card_ids << card.id }
+      @lanes << [option, *cards]
     end
 
-#    if params[:team_id]
-#      @team = Team.find(params[:team_id])
-#      @project = @team.project
-#
-#      @property.options.sort_by{|option| option.sequence}.each do |option|
-#        cards = Card.find(:all, :conditions => [ "cards.team_id = ? AND card_properties.option_id = ?", @team.id, option.id], :include => :card_properties)
-#        @lanes[option] = cards
-#      end
-#    end
+    # FIXME : Yuck ...
+    if card_ids.length > 0
+      if @team
+        conditions = ["cards.project_id = ? AND cards.team_id = ? AND (card_properties.card_id NOT IN (?) OR card_properties.card_id IS NULL)", @project.id, @team.id, card_ids]
+      else
+        conditions = ["cards.project_id = ? AND (card_properties.card_id NOT IN (?) OR card_properties.card_id IS NULL)", @project.id, card_ids]
+      end
+      
+      cards = Card.find(:all, :conditions => conditions, :include => :card_properties)
+    else
+      if @team
+        conditions = ["cards.project_id = ? AND cards.team_id = ?", @project.id, @team.id]
+      else
+        conditions = ["cards.project_id = ?", @project.id]
+      end
+      cards = Card.find(:all, :conditions => conditions, :include => :card_properties)
+    end
+      
+    @lanes.unshift([Option.new(:name => "(not set)", :sequence => 0), *cards])
   end
   
   def create
@@ -48,7 +58,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to card_path(@card) }
+        format.html { redirect_to project_card_path(@card.project, @card) }
         format.js
       else
         format.html { render :action => "new" }
@@ -109,7 +119,7 @@ class CardsController < ApplicationController
   end
   
   def new
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id]) if params[:project_id]
     @card = Card.new
   end
 end

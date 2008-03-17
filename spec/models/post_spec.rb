@@ -37,9 +37,7 @@ describe Post, "with fixtures loaded" do
     @post.published_at.should eql(contents(:one).published_at)
   end
   
-  it "should have a tags property that refers to content.tags" do
-    @post.should have(2).tags
-  end
+  it "should have a tags property that refers to content.tags"
   
   it "should belong to a blog" do
     @post.blog.should == blogs(:one)

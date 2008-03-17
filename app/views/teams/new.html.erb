@@ -4,7 +4,7 @@
 
 	<%= error_messages_for :team %>
 
-<% form_for(@team) do |f| %>
+<% form_for(@team, :url => project_teams_path(@project)) do |f| %>
   
 <table width="100%">
   <tr>
@@ -19,7 +19,7 @@
                   <%= f.text_area :description, :cols => 30, :rows => 10 %>
             </p>
             <p>
-                  <%= f.submit "Create" %> | <%= link_to 'Back', teams_path %>
+                  <%= f.submit "Create" %> | <%= link_to 'Back', project_path(@project) %>
             </p>
           
     </td>

@@ -39,7 +39,6 @@ h2 {
     margin-top:.25em;
 }
 label {
-    font-weight:bold;
     display: block;
     padding-bottom: 0.2em;
 }
@@ -242,9 +241,9 @@ input[type="text"], input.text {
     margin-top: .3em;
 }
 #tags-container {
-    background-color: #fff2e5;
+    background-color: #ccccff;
     border-bottom: 1px dotted #dddddd;
-    border-top: 1px dotted #dddddd;
+    border-top: 1px dotted #efefef;
     color: #666666;
     padding: 0.65em 1em;
 }
@@ -517,8 +516,8 @@ input[type="text"], input.text {
 
 .panel .Toolbar {
     background-color: #efefef;
-    padding: 3px;
-    margin: 0px;
+    padding: .5em;
+	text-align: right;
 }
 
 /******[ panel - recent posts]******/
@@ -736,10 +735,15 @@ a.icon:hover {
 /******[ action-bar ]******/
 .action-bar {
     background-color: #e0dfd5;
-    margin: 1em;
+	border-bottom: 1px dotted #EFEFEF;
+	padding: .5em 1em;
 }
 .action-bar-inner-wrapper {
     padding: 5px 10px;
+}
+
+.action-bar a { 
+	margin: 1em;
 }
 
 /******[draggable lists]*******/
@@ -801,6 +805,10 @@ a.icon:hover {
     font-size: 150%;
     font-weight: bold;
     margin: 0em;
+}
+
+.card-edit-title {
+	margin-right: 9em;
 }
 
 h1.card-short-description {
