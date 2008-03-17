@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe "/projects/1/cards" do
   before(:each) do
     @property = mock_model(Property, :id => 1, :name => "Status")
-
+    @project = mock_model(Project, :to_param => 1)
     @not_set = mock_model(Option, :id => nil, :name => "(not set)")
     @completed = mock_model(Option, :id => 2, :name => "Completed", :to_param => 2)
     
@@ -13,6 +13,11 @@ describe "/projects/1/cards" do
     @lanes = []
     @lanes << [@not_set, *cards]
     @lanes << [@completed, *cards]
+    
+    @project.stub!(:name).and_return("Project 1")
+    @project.stub!(:properties).and_return([])
+
+    assigns[:project] = @project
     assigns[:lanes] = @lanes
     assigns[:property] = @property
   end
