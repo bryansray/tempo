@@ -293,9 +293,8 @@ input[type="text"], input.text {
 
 #AccountTabs {
     float: right;
-    padding-right:30px;
+    padding-right:21em;
     width: 224px;
-    border-left:2px solid #03b;
 }
 #AccountTabs a:link, #AccountTabs a:visited {
     color:#F0D1B2;
