@@ -25,6 +25,7 @@ class TeamsController < ApplicationController
   # GET /teams/new.xml
   def new
     @team = Team.new
+    @project = Project.find(params[:project_id]) if params[:project_id]
 
     # TODO : This should find a list of users that can be assigned to the team
     #@users = User.find(:all, :select => "first_name, last_name, CONCAT(first_name, ' ', last_name) as 'member'", :order => "first_name")
@@ -90,8 +91,7 @@ class TeamsController < ApplicationController
 	render :template => "properties/create"
   end
   
-  # POST /teams
-  # POST /teams.xml
+  # POST /projects/1/teams
   def create
     @team = Team.new(params[:team])
     @project = Project.find(params[:project_id]) if params[:project_id]

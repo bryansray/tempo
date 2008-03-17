@@ -1,5 +1,13 @@
 <div id="Main">
   <div class="inner">
+	<div class="action-bar">
+		<%= link_to @project.name, project_path(@project) %>
+		<% if @team %>
+			> 
+			<%= link_to @team.title, project_team_path(@project, @team) %>
+		<% end %>
+	</div>
+	
     <div class="create-card-panel" style="">
         <% remote_form_for :card, Card.new, :url => project_cards_path(@project) do |f| %>
           	<%= f.text_field :title, :style => "width: 66%; padding: .3em 0em;" %>

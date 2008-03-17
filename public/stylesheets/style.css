@@ -516,8 +516,8 @@ input[type="text"], input.text {
 
 .panel .Toolbar {
     background-color: #efefef;
-    padding: 3px;
-    margin: 0px;
+    padding: .5em;
+	text-align: right;
 }
 
 /******[ panel - recent posts]******/
@@ -735,10 +735,15 @@ a.icon:hover {
 /******[ action-bar ]******/
 .action-bar {
     background-color: #e0dfd5;
-    margin: 1em;
+	border-bottom: 1px dotted #EFEFEF;
+	padding: .5em 1em;
 }
 .action-bar-inner-wrapper {
     padding: 5px 10px;
+}
+
+.action-bar a { 
+	margin: 1em;
 }
 
 /******[draggable lists]*******/

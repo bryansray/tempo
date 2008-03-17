@@ -51,7 +51,7 @@ var SwimmingPool = {
     displayCardInfo: function displayCardInfo(event) {
         if (!_isDragged && this.getStyle('left') == "0px") 
         {
-            console.info('Not yet implemented - Display an inline popup about this card.')
+            console.info('Not Yet Implemented - Display an inline popup about this card.')
         }
         
         _isDragged = false;
