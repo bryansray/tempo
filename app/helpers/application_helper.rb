@@ -1,9 +1,6 @@
-require 'google_api'
-
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   include TagsHelper
-  include Google
   
   def link_to_window(name, window_title, ext_options, html_options = {})
     options = []
