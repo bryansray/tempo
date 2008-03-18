@@ -1,9 +1,0 @@
-<div id="Main">
-  <div class="inner">
-    <ul>
-      <% tag_cloud @tags, %w(css1) do |tag, css| %>
-        <li id="tag-<%= tag.id %>"><%= link_to tag.name, tag_path(tag) %></li>
-      <% end %>
-    </ul>
-  </div>
-</div>
