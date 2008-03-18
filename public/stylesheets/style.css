@@ -889,4 +889,948 @@ span.group {
     position:relative;
     width:120px;
     height:80px;
+=======
+html, body {
+    background: #E5E5E5 none repeat scroll 0;
+}
+
+body {
+    font-family: "Lucida Grande", Verdana, Tahoma, Sans-Serif;
+    font-size: 12px;
+    margin: 0pt;
+    line-height:1.6;
+}
+:focus {
+    outline: 0;
+}
+a:link, a:visited {
+    color:#0000EE;
+    padding-bottom:1px;
+    text-decoration:none;
+    padding-bottom:1px;
+}
+a:hover, a:active {
+    border-bottom:1px solid #aac;
+    padding-bottom:0;
+}
+hr {
+    margin-bottom:1em;
+}
+h1, h2, h3, h4, h5 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight:normal;
+}
+h1 {
+    font-size:30px;
+    line-height:1.2;
+    text-decoration: none;
+    color:#333;
+}
+h2 {
+    font-size:1.5em;
+    margin-top:.25em;
+}
+label {
+    display: block;
+    padding-bottom: 0.2em;
+}
+strong {
+    font-weight:bold;
+    color:#444;
+}
+ul {
+    list-style-type: disc;
+    margin-left:2em;
+}
+li {
+    margin:.2em 0;
+}
+textarea {
+    width:100%;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size:1em;
+}
+caption, th, td {
+    padding:2px 4px;
+}
+form table {
+    width:90%;
+    margin:1em;
+}
+form th {
+    text-align:right;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: "";
+}
+blockquote, q {
+    quotes: "" "";
+    margin-left: 3em;
+    
+}
+fieldset {
+    margin: 10px 0pt;
+    border: medium none;
+}
+fieldset th {
+    padding-top: 10px;
+    text-align: right;
+    width: 11em;
+    font-weight:bold;
+    color:#444;
+    white-space:nowrap;
+    line-height:28px;
+}
+fieldset th, fieldset td {
+    padding: 7px 3px;
+    vertical-align: top;	
+}
+fieldset legend {
+    font-size: 14pt;
+    font-weight: bold;
+    padding: 0.1em .3em;
+}
+pre { white-space: pre; }
+.buttons {
+    padding:5px 0;
+}
+input {
+    padding:5px 0;
+}
+input[type="submit"], input[type="button"] {
+    padding: .15em .3em;
+    font-size: 100%;
+    color:#333;
+}
+
+/* This should be used on Buttons to represent the "default" action */
+input.default {
+    font-weight: bold;
+}
+
+input[type="text"], input.text {
+    width:90%;
+    padding-left:5px;
+    padding-right:5px;
+}
+#login {
+    line-height:30px;
+}
+#login input[type="text"], #login input[type="password"]{
+    width:200px;
+    padding:5px;
+}
+#login input[type="checkbox"] {
+    margin-right:4px;
+}
+.editor {
+    width:95%;
+}
+.mceEditor
+{
+    width: 95%;
+}
+.clear:after {
+    content:".";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+}
+.clear {display:inline-block;}
+.clear-both { clear: both; }
+
+
+/******[ base layout ]******/
+#Header, #Container, #Footer {
+    text-align: left;
+    width: 100%;
+}
+
+#Header {
+    background: #03c none repeat scroll 0% 0%;
+    color: #CCCCCC;
+    padding: 15px 0 0;
+    height: 27px;
+}
+
+#Wrapper {
+    margin: 0pt auto;
+    padding: 0pt 20px 0pt 0px;
+}
+#Container {
+    background: transparent url(/images/page-bg.gif) repeat-y scroll right center;
+    clear: right;
+    margin: 0 auto;
+    position: relative;
+}
+#Main {
+    margin-right: 235px;
+}
+#Main .inner {
+    padding: 20px 35px;
+}
+#Main .inner .inner_left {
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+}
+#Main .inner .inner_right {
+    float: left;
+    width: 65%;
+}
+
+#Sidebar {
+    float: right;
+    padding: 0pt;
+    margin-top: 10px;
+    position: relative;
+    width: 235px;
+}
+#BottomShadow
+{
+    background: transparent url(/images/page-page_bottom-bg.gif) no-repeat scroll right bottom;
+    padding-bottom:33px;
+    clear:both;
+}
+
+#Footer {
+    clear: both;
+}
+#Footer p {
+    color: #666666;	
+    font-size:11px;
+    padding: 0 25px 10px;
+}
+
+/*****[ tags-container ]*****/
+.inner #tags-container {
+    margin-bottom: 1em;
+}
+.tag-list {
+    display: inline;
+}
+.removeable-tag {
+    display: inline;
+    margin-right: 1em;
+    white-space: nowrap;
+}
+.inner #tag-editor-actions {
+    display: inline;
+}
+#tag-editor-actions {
+    
+}
+.notes {
+    color: #888888;
+    font-size: 92%;
+    font-style: italic;
+    margin-top: .3em;
+}
+#tags-container {
+    background-color: #ccccff;
+    border-bottom: 1px dotted #dddddd;
+    border-top: 1px dotted #efefef;
+    color: #666666;
+    padding: 0.65em 1em;
+}
+#tags-container .input-type-text {
+    margin-bottom: .3em;
+    margin-top: .3em;
+    width: 98%;
+}
+
+/******[ header styles, tabs, login links ]******/
+#Header a:link, #Header a:visited {
+    color: #fff;
+}
+#Header li {
+    border: medium none;
+    display: inline;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+#MainTabs {
+    float: left;
+    width: 450px;
+    margin-left: 30px;
+}
+#MainTabs a:link, #MainTabs a:visited {
+    float: left;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 3px 8px 9px;
+    border: none;
+}
+#MainTabs a.current:link, #MainTabs a.current:visited 
+{
+    background: white;
+    border:1px solid #E5E5E5;
+    border-bottom:none;
+    color:#369;
+    font-weight:bold;
+    margin:0 5px;
+}
+#MainTabs a sup {
+    color: #ff6600;
+    text-transform: lowercase;
+}
+
+#AccountTabs {
+    float: right;
+    padding-right:21em;
+    width: 224px;
+}
+#AccountTabs a:link, #AccountTabs a:visited {
+    color:#F0D1B2;
+    float:right;
+    font-size:11px;
+    font-weight:normal;
+    margin-right:5px;
+    padding:3px 3px 6px;
+    border: none;
+}
+#AccountTabs a:link, #AccountTabs a:visited {	
+    color: #C0C5E1;
+}
+
+
+/******[ sidebar items ]******/
+#Sidebar .Section h3 {
+    background: #ffffff none repeat scroll 0%; 
+    color: #333;
+    line-height: 16px;
+    padding: 5px 5px 5px 15px;
+    border-top: 1px solid #ddd;
+    border-right: 2px solid #cfcfcf;
+    border-bottom: 2px solid #cfcfcf;
+}
+#Sidebar .Section h3 a {
+    float:right;
+}
+#Sidebar .content {
+    padding: 5px 5px 15px 15px;
+}
+#Sidebar p {
+    color:#444;
+    font-size: .8em;
+    padding:1em .5em;
+}
+#Options a {
+    display:block;
+    margin-bottom:5px;
+    border:1px solid #e5e5e5;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+#Options a:hover {
+    border:1px solid #ccc;
+    background-color:#efefef;
+}
+#Options .buttons a {
+    display:inline;
+    border:none;
+}
+#Options .buttons a:hover {
+    background:transparent;
+}
+
+.tag_cloud1 { font-size: 1em; }
+.tag_cloud2 { font-size: 1.2em; }
+.tag_cloud3 { font-size: 1.4em; }
+.tag_cloud4 { font-size: 1.6em; }
+
+#Tags {
+    margin:0;
+}
+#Tags li {
+    padding: 0 8px 0 0;
+    margin: 0;
+    display: inline;
+}
+#Tags a {
+    line-height: 20px;
+    display:inline;
+}
+#TagApplicator {
+    margin:0;
+    padding:4px 0;
+    border: 1px solid #ccc;
+    width:100%;
+    background: #fff;
+}
+#TagApplicator li {
+    margin: 0;
+    display: inline;
+    line-height: 23px;
+}
+#TagApplicator a {
+    padding:4px 8px;
+    color: #c0c0c0;
+    font-weight: bold;
+    border:none;
+    white-space:nowrap;
+}
+#TagApplicator a.on {
+    color: #00a000;
+}
+
+#search h3 {
+    border:none;
+    background:none;
+    padding-bottom:0;
+}
+#search input {
+    width:90%;
+}
+
+
+/******[ content chunks ]******/
+.Content {
+    margin: 0px 0px 3em;
+}
+.Content .Title {
+    font:normal 30px/1.2 Georgia, "Times New Roman", serif;
+    text-decoration: none;
+    color:#333;
+}
+.Content .Title a {
+    color:#369;
+}
+.Content .SubTitle {
+    font-size:11px;
+    color: #aaa;
+    margin: 0 1px;
+}
+.Content .Footer {
+    color: #aaa;
+    font-size: 11px;
+    border-bottom: 1px solid #eee;
+}
+.Content .Footer .Tags {
+    background: url(/images/icons/tag_blue.png) no-repeat left center;
+    padding-left: 2em;
+    margin-left:0;
+    line-height:2em;
+}
+.Content .Footer .Tags li {
+    display: inline;
+    margin-right: 1.4em;
+}
+
+.Text {
+    margin: 1em 1px;
+}
+.Text p {
+    padding-bottom: 10px;
+    line-height: 18px;
+}
+.Text h1 {
+    font-size: 26px;
+}
+.Text h2 {
+    font-size: 22px;
+}
+.Text h3 {
+    font-size: 18px;
+}
+.Text h4 {
+    font-size: 14px;
+}
+.Text ol, .Text ul {
+    margin: 0 0 1em 3em;
+}
+.Text ol ol, .Text ul ul {
+    margin:0 0 0 1.5em;
+}
+.Text ol {
+    list-style-type: decimal;
+}
+.Text strong {
+    font-weight: bold;
+}
+.Text em {
+    font-style:italic;
+}
+.Text a {
+    font-weight:bold;
+}
+
+/******[ generic ext panel styles ]******/
+.x-panel {
+    margin-bottom: 10px;
+}
+
+.panel  div {
+    border-top: 1px solid #D8DFEA;
+    color: #333333;
+    font-weight: normal;
+    padding: 10px;
+    font-size: 11px;
+    padding-left: 35px;
+}
+
+.panel p {
+    border-top: 1px solid #D8DFEA;
+    color: #333333;
+    font-size: 11px;
+    font-weight: normal;
+    padding: 10px;
+}
+
+.panel .Footer {
+    padding: 3px;
+    text-align: right; 
+    background-color: #efefef;
+}
+.panel .Timestamp {
+    color: #999;
+    float: right;
+    margin: 0 0 5px 10px;
+}
+.panel a.comment {
+    padding-left: 19px;
+    margin-left: 5px;
+    color: #bbc;
+    background: url(/images/icons/comment.png) no-repeat left top;
+}
+.panel a.comment:hover {
+    color: blue;
+    border:none;
+}
+.panel .Draft
+{
+    background-color: #efefef;
+}
+
+.panel .Toolbar {
+    background-color: #efefef;
+    padding: .5em;
+	text-align: right;
+}
+
+/******[ panel - recent posts]******/
+#recents .Link {
+    background: url(/images/icons/link.png) no-repeat 10px 10px;
+}
+.Page {
+    background: url(/images/icons/page_white_text.png) no-repeat 10px 10px;
+}
+.Post {
+    background: url(/images/icons/note.png) no-repeat 10px 10px;
+}
+.Team {
+    background: url(/images/icons/group.png) no-repeat 10px 10px;
+}
+.User {
+    background: url(/images/icons/user.png) no-repeat 10px 10px;
+}
+.Project {
+    background: url(/images/icons/application.png) no-repeat 10px 10px;
+}
+#recents .Comment {
+    background: url(/images/icons/comment.png) no-repeat 10px 12px;
+}
+
+.panel .x-panel-body .body {
+    padding: 0;
+    border-color: #efefef;
+    position: relative;
+    left: -7px;
+}
+
+/******[ links with icons ]******/
+.icon {
+    padding: 4px 4px 4px 24px;
+    background-position: 4px center;
+    background-repeat: no-repeat;
+    color: #369;
+    line-height:16px;
+}
+a.icon:hover {
+    border:none;
+}
+.icon_new_post {
+    background-image: url(/images/icons/note_add.png);
+}
+.icon_edit_post {
+    background-image: url(/images/icons/note_edit.png);
+}
+.icon_new_page {
+    background-image: url(/images/icons/page_white_add.png);
+}
+.icon_edit_page {
+    background-image: url(/images/icons/page_white_edit.png);
+}
+.icon_star_page {
+    background-image: url(/images/icons/page_white_star.png);
+}
+.icon_copy_page {
+    background-image: url(/images/icons/page_white_copy.png);
+}
+.icon_new_link {
+    background-image: url(/images/icons/link_add.png);
+}
+.icon_new_user {
+    background-image: url(/images/icons/user_add.png);
+}
+.icon_new_team {
+    background-image: url(/images/icons/group_add.png);
+}
+.icon_comment {
+    background-image: url(/images/icons/comment.png);
+    background-position:left 4px;
+    padding-left:18px;
+}
+.icon_delete_project, .icon_edit_project {
+    padding: 0px 5px;
+    float: right;
+}
+.icon_new_project {
+    background-image: url(/images/icons/application_add.png);
+}
+
+
+/******[ comments ]******/
+#comments h2{
+    font-family: Georgia, "Times New Roman", serif;
+    font-size:1.6em;
+    font-weight:normal;
+    color:#333;
+    letter-spacing:-1px;
+    font-weight:bold;
+}
+#comments ol {
+    list-style-type: none;
+    margin: 1em 0 0 0;
+    padding: 0;
+}
+#comments li {
+    border-left: 5px solid #ddd;
+    padding: 0 1em 0;
+    margin-bottom:2em;
+}
+#comments .author {
+    font-size:11px;
+    font-weight: bold;
+    color:#666;
+    margin-bottom: 8px;
+}
+
+
+/******[ user profiles ]******/
+.profile {
+    clear:both;
+    padding-bottom:1em;
+    margin-bottom:1em;
+}
+.profile img {
+    float:left;
+    margin:0 1em 2em 0;
+}
+.profile h2 {
+    font-family:Georgia;
+    font-size:1.8em;
+    line-height:1;
+    font-weight:normal;
+    color:#333;
+}
+.profile p {
+    margin-top:0;
+    padding-top:0;
+}
+#list {
+    float:left;
+    text-align:left;
+    width:100%;
+    _width:auto;
+}
+#list .profile, #list .Link {
+    float:left;
+    clear:none;
+    width:350px;
+    height:4em;
+    padding:1em;
+}
+
+
+/******[ notifications ]******/
+#flash {
+    border:2px solid white;
+    color:#225522;
+    font-size:14px;
+    margin:0pt 0pt 20px;
+    padding:5px 12px;
+    text-align:left;
+}
+#flash.notice {
+    background: #DDFFDD none repeat scroll 0%;
+    border-color: #BBEEBB;
+    color: #225522;
+    text-align: center;
+}
+
+#flash.warning, .errorExplanation {
+    background: #E0867D none repeat scroll 0%;
+    color: #ffffff;
+    text-align: center;
+    border: 1px solid darkred;
+    background-color: #ffbfbf;
+}
+
+.errorExplanation
+{
+    text-align: left;
+    padding: 10px 20px;
+}
+
+#Debug
+{
+    text-align: left;
+    padding: 10px;
+    line-height: 25px;
+    background-color: #ffffff;
+    margin: 12px auto 1pt;
+    border-top:2px solid #ccc;
+}
+
+/******[ sidebar versions ]*****/
+#Sidebar ul.versions
+{
+    list-style-type: none;
+    margin: 0;  
+}
+
+#Sidebar ul.versions li.version
+{
+    padding: 3px;
+}
+
+.odd {
+    background-color: #efefef;
+}
+
+
+/******[ ext message box ]******/
+#message_alert
+{
+    left: 35%;
+    position: absolute;
+    top: 10px;
+    width: 250px;
+    z-index: 20000;
+}
+
+/******[ action-bar ]******/
+.action-bar {
+    background-color: #e0dfd5;
+	border-bottom: 1px dotted #EFEFEF;
+	padding: .5em 1em;
+}
+.action-bar-inner-wrapper {
+    padding: 5px 10px;
+}
+
+.action-bar a { 
+	margin: 1em;
+}
+
+/******[draggable lists]*******/
+.drag-list
+{
+    list-style-type: none;
+    margin: 1em;
+    padding: none;
+    background: #d0d0d0;
+    min-height: 3em;
+}
+.drag-list li
+{
+    padding: 4px 8px;
+    border: 1px solid #d0d0d0;
+    margin: -1px 0px 0px 0px;
+    cursor: move;
+    background: white;
+}
+/******[ TPS ]******/
+.tps-list {
+    width: 100%;
+}
+.tps-list thead th {
+    font-weight: bold;
+    border-bottom: 3px solid black;
+}
+.tps-list tbody td {
+    border-bottom: 1px solid #eee;
+}
+
+.view-table th {
+    font-weight: bold;
+}
+/******[ cards ]******/
+.card {
+    border: 1px solid #aaa;
+}
+
+#card-top, .card-top {
+    background-color: #ccccff;
+    padding: 1em;
+}
+
+#card-bottom, .card-bottom, .card-meta-data {
+    background-color: #ccccff;
+    border-bottom: 1px solid #fff2e5;
+    border: 1px dotted #dddddd;
+}
+
+.card-meta-data {
+    border-bottom: 1px dotted black;
+    border-top: 1px dotted black;
+}
+
+.card-index {
+    color: #666;
+    float: right;
+    font-size: 150%;
+    font-weight: bold;
+    margin: 0em;
+}
+
+.card-edit-title {
+	margin-right: 9em;
+}
+
+h1.card-short-description {
+ margin: 0em;   
+}
+
+.card .content {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    overflow: auto;
+}
+
+.content {
+    margin: 0em 1em;
+}
+
+.card .version-info {
+    margin: .25em 0 0;
+    color: #666666;
+    font-size: 85%;
+}
+
+.properties-container {
+    margin: .5em;
+}
+
+.properties span {
+    display: block;
+    float: left;
+    margin: .2em 0em;
+    padding: 1px;
+}
+
+.property-list {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.property-list li {
+    padding: 8px 4px;
+    margin: 0px 1.5em 0px;
+    display: block;
+}
+
+/******[ swim lane technology ]******/
+.swimming-pool {
+    background-color: #efefef;
+    border: medium none;
+    border-spacing: 0pt;
+    font-size: 100%;
+    height: 100%;
+    margin-top: 1px;
+    padding-bottom: 1em;
+    table-layout: fixed;
+    vertical-align: top;
+    width: 100%;
+}
+
+#lane-header.actions {
+    padding: 7px;
+    background-color: #e0dfd5;
+    font-size: 92%;
+    text-align: left;
+    padding-bottom: .5em;
+    border-top: 1px solid #E0DFD5;
+    border-bottom: 1px solid #E0DFD5;
+}
+
+.create-card-panel {
+    background-color: #e0dfd5;
+    padding: .5em;
+    border-bottom: 1px solid white;
+}
+
+.lane {
+    height: 100%;
+    top: 0pt;
+    width: 100
+}
+.lane-wrapper {
+    border-right: 2px solid #FFFFFF;
+    height: 100%;
+    margin: 0pt;
+    padding: 0pt;
+    vertical-align: top;
+}
+
+.lane-highlighted {
+    background-color: lightblue;
+}
+
+.lane-card-index {
+    color:#663333;
+    text-align: right;
+    display: block;
+    font-weight:bold;
+    margin:0em 0em 0.1em 0.2em;
+}
+
+span.group {
+    border-bottom:1px solid #FFFFFF;
+    display:block;
+    font-size:95%;
+    font-weight:bold;
+    margin-left:auto;
+    margin-right:auto;
+    padding-bottom:10px;
+    padding-top:10px;
+    text-align:center;
+}
+
+.card-inner-wrapper {
+    padding:0.25em 0.4em;
+    height: 100%;
+}
+
+.card-icon {
+    background-color:#FFFFFF;
+    border:1px solid #999999;
+    cursor:pointer;
+    display:inline;
+    float:left;
+    font-size:80%;
+    margin:4px;
+    overflow:hidden;
+    position:relative;
+    width:120px;
+    height:80px;
 }
