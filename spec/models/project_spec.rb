@@ -18,8 +18,8 @@ describe Project, "with fixtures loaded" do
   
   it "should have a page assigned to it"
   
-  it "should have multiple properties that belong to it" do
-    @project.should have(3).properties
+  it "should have multiple properties that belong to it including 'system' level properties" do
+    @project.should have(4).properties
   end
   
   it "should have an owner that is in charge of the project" do
