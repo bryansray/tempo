@@ -9,8 +9,24 @@ complete:
 high:
   name: High
   property: priority
-  sequence: 1
+  sequence: 2
 low:
   name: Low
   property: priority
+  sequence: 1
+iteration_one:
+  name: 1
+  property: iteration
+  sequence: 1
+iteration_two:
+  name: 2
+  property: iteration
   sequence: 2
+iteration_three:
+  name: 3
+  property: iteration
+  sequence: 3
+pair_one:
+  name: Pair 1
+  property: pair_assigned
+  sequence: 1
