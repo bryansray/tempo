@@ -7,4 +7,7 @@ class Blog < ActiveRecord::Base
 	
 	# Validations
 	validates_presence_of :name
+  
+  def test
+  end
 end

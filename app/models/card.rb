@@ -3,9 +3,10 @@ class Card < ActiveRecord::Base
   acts_as_taggable
   
   # Associations
+  has_one :content, :as => :owner
+  
   has_many :card_types, :dependent => :destroy
   has_many :card_properties, :dependent => :destroy
-  
   has_many :properties, :through => :card_properties
   has_many :types, :through => :card_types
   has_many :comments, :as => :commentable, :dependent => :destroy
@@ -17,8 +18,28 @@ class Card < ActiveRecord::Base
   # Validations
   validates_presence_of :title
   
+  def title
+    content.nil? ? "" : content.title
+  end
+  
+  def title=(value)
+    content.nil? ? build_content(:title => value) : content.title = value
+  end
+  
+  def description
+    content.text
+  end
+  
+  def description=(value)
+    content.nil? ? build_content(:text => value) : content.text = value
+  end
+  
+  def user
+    content.user.nil? ? '' : content.user
+  end
+  
   def to_s
-    self.title
+    content.title
   end
   
   # TODO : Should this be a first class model rather than a property?

@@ -5,21 +5,15 @@ one:
   team: one
   estimated: 5
   actual: 10
-  title: Card 1
-  description: Card 1 description
 two:
   project: one
   iteration: two
   team: two
   estimated: 5
   actual: 10.5
-  title: Card 2
-  description: Card 2 description
 three:
   project: one
   iteration: two
   team: two
   estimated: 55
   actual: 100
-  title: Card 3
-  description: Card 3 description

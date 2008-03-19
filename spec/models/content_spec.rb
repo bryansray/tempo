@@ -1,12 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Content, "with fixtures loaded" do
-  fixtures :contents, :posts, :pages, :comments, :taggings, :tags
+  fixtures :contents, :posts, :pages, :comments, :taggings, :tags, :cards
   
   before(:each) do
     @content = contents(:one)
     @post_content = contents(:one)
     @page_content = contents(:five)
+    @card_content = contents(:ten)
   end
 
   it "should be valid" do
@@ -47,6 +48,14 @@ describe Content, "with fixtures loaded" do
   
   it "should be assigned to a specific Page" do
     @page_content.owner.should == pages(:one)
+  end
+  
+  it "should have an owner of class Card" do
+    @card_content.owner.class.should == Card
+  end
+  
+  it "should be assigned to a specific Card" do
+    @card_content.owner.should == cards(:one)
   end
   
   it "should have two tags associated with it" do
