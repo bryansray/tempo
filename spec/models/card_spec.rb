@@ -17,6 +17,14 @@ describe Card, "with fixtures loaded" do
     @card.should_not be_valid
   end
   
+  it "should have a description method that returns the text method of the associated content" do
+    @card.description.should == @card.content.text
+  end
+  
+  it "should have a title that returns the title method of the associated content" do
+    @card.title.should == @card.content.title
+  end
+  
   it "should be valid without a description" do
     @card.description = nil
     @card.should be_valid

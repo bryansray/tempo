@@ -27,7 +27,7 @@ class Card < ActiveRecord::Base
   end
   
   def description
-    content.text
+    content.text unless content.nil?
   end
   
   def description=(value)
