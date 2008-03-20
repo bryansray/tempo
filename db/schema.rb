@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 38) do
+ActiveRecord::Schema.define(:version => 39) do
 
   create_table "attachments", :force => true do |t|
     t.integer "content_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 38) do
     t.float    "actual"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number"
   end
 
   create_table "comments", :force => true do |t|
