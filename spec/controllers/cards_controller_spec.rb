@@ -125,7 +125,7 @@ describe CardsController, "handling GET /projects/1/cards/1" do
     get :show, :project_id => 1, :id => 1
   end
   
-  it "should find the requested card by the number" do
+  it "should find the requested card by the number and project id" do
     Card.should_receive(:find_by_number).and_return(@card)
     do_get
   end
