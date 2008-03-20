@@ -115,9 +115,29 @@ describe CardsController, "handling GET /cards" do
   end
 end
 
-describe CardsController, "handling GET /teams/1/cards" do
-  it "should populate " do
-    
+describe CardsController, "handling GET /projects/1/cards/1" do
+  before(:each) do
+    @card = mock_model(Card, :to_param => 1)
+    Card.stub!(:find_by_number).and_return(@card)
+  end
+  
+  def do_get
+    get :show, :project_id => 1, :id => 1
+  end
+  
+  it "should find the requested card by the number" do
+    Card.should_receive(:find_by_number).and_return(@card)
+    do_get
+  end
+  
+  it "should assign the card to the associated view" do
+    do_get
+    assigns[:card].should == @card
+  end
+  
+  it "should be successful" do
+    do_get
+    response.should be_success
   end
 end
 
@@ -133,6 +153,7 @@ describe CardsController, "handling POST /teams/1/cards" do
     @card.stub!(:team=).and_return(@team)
     @card.stub!(:project=).and_return(@project)
     @card.stub!(:project).and_return(@project)
+    @card.stub!(:number=).and_return(1)
   end
   
   def do_post
@@ -164,6 +185,7 @@ describe CardsController, "handling POST /projects/1/cards" do
     Project.stub!(:find).and_return(@project)
     @card.stub!(:project=).and_return(@project)
     @card.stub!(:project).and_return(@project)
+    @card.stub!(:number=).and_return(1)
   end
   
   def do_post
@@ -182,6 +204,11 @@ describe CardsController, "handling POST /projects/1/cards" do
   
   it "should assign the created card to the project" do
     @card.should_receive(:project=).and_return(@project)
+    post_with_successful_save
+  end
+  
+  it "should assign the next number available to the card" do
+    @card.should_receive(:number=).and_return(1)
     post_with_successful_save
   end
 end

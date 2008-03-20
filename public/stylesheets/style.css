@@ -779,6 +779,13 @@ a.icon:hover {
     font-weight: bold;
 }
 /******[ cards ]******/
+.panel .Card {
+	padding-left: 20px;
+}
+
+.panel .card-title {
+	padding-left: 35px;
+}
 .card {
     border: 1px solid #aaa;
 }
@@ -799,6 +806,10 @@ a.icon:hover {
     border-top: 1px dotted black;
 }
 
+.panel .card-index {
+	font-size: 120%;
+	float: none;
+}
 .card-index {
     color: #666;
     float: right;

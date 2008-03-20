@@ -6,10 +6,23 @@ describe Card, "with fixtures loaded" do
   
   before(:each) do
     @card = cards(:one)
+    @project = projects(:one)
   end
 
   it "should be valid" do
     @card.should be_valid
+  end
+  
+  it "should have a number that applies to the card" do
+    @card.number.should == cards(:one).number
+  end
+  
+  it "should calculate the next number in the sequence" do
+    Card.next_number(@project.id).should == 4
+  end
+  
+  it "should return the number rather than to_param" do
+    @card.to_param.should == 1
   end
   
   it "should not be valid without a title" do

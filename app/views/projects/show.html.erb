@@ -38,7 +38,10 @@
         	<%= link_to "Swim Lanes", project_cards_path(@project) %>
         </div>
         <% @project.cards.each do |card| %>
-          <p><%= link_to card.title, project_card_path(@project, card) %></p>
+			<div class="Card">
+				<span class="card-index">#<%= card.number %></span> 
+				<span class="card-title"><%= link_to card.title, project_card_path(@project, card) %></span>
+			</div>
         <% end %>
       </div>
     </div>
