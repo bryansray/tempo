@@ -736,6 +736,7 @@ a.icon:hover {
     background-color: #e0dfd5;
 	border-bottom: 1px dotted #EFEFEF;
 	padding: .5em 1em;
+	margin-bottom: .5em;
 }
 .action-bar-inner-wrapper {
     padding: 5px 10px;
