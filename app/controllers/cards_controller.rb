@@ -54,7 +54,11 @@ class CardsController < ApplicationController
     @card = Card.new(params[:card])
     
     @card.project = Project.find(params[:project_id]) if params[:project_id]
-    @card.team = Team.find(params[:team_id]) if params[:team_id]
+    unless params[:team_id].empty?
+      team = Team.find(params[:team_id]) 
+      @card.team = team
+      @card.project = team.project
+    end
     @card.number = Card.next_number(params[:project_id])
 
     respond_to do |format|
