@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   
   def show
     @project = Project.find(params[:id])  
+    @cards = @project.cards.find :all, :limit => 10
     
     respond_to do |format|
       format.html

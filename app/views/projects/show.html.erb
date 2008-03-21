@@ -37,7 +37,7 @@
             <%= link_to "Add Card", new_project_card_path(@project) %> | 
         	<%= link_to "Swim Lanes", project_cards_path(@project) %>
         </div>
-        <% @project.cards.each do |card| %>
+        <% @cards.each do |card| %>
 			<div class="Card">
 				<span class="card-index">#<%= card.number %></span> 
 				<span class="card-title"><%= link_to card.title, project_card_path(@project, card) %></span>
