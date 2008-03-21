@@ -206,6 +206,25 @@ END
         @name = "Haml"
       end
 
+      def set_opts(opts)
+        super
+
+        opts.on('-t', '--style NAME',
+                'Output style. Can be indented (default) or ugly.') do |name|
+          @options[:for_engine][:ugly] = true if name.to_sym == :ugly
+        end
+
+        opts.on('-f', '--format NAME',
+                'Output format. Can be xhtml (default), html4, or html5.') do |name|
+          @options[:for_engine][:format] = name.to_sym
+        end
+        
+        opts.on('-e', '--escape-html',
+                'Escape HTML characters (like ampersands and angle brackets) by default.') do
+          @options[:for_engine][:escape_html] = true
+        end
+      end
+
       def process_result
         super
         input = @options[:input]

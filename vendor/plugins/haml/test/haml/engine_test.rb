@@ -1,13 +1,5 @@
 #!/usr/bin/env ruby
-
-require 'rubygems'
-require 'active_support'
-require 'action_controller'
-require 'action_view'
-
-require 'test/unit'
-require File.dirname(__FILE__) + '/../../lib/haml'
-require 'haml/engine'
+require File.dirname(__FILE__) + '/test_helper'
 
 class EngineTest < Test::Unit::TestCase
 
@@ -101,6 +93,61 @@ class EngineTest < Test::Unit::TestCase
     assert_equal("<p>foo</p>\n<p>bar</p>\n<p>baz</p>\n<p>boom</p>\n", render("%p foo\r%p bar\r\n%p baz\n\r%p boom"))
   end
 
+  def test_textareas
+    assert_equal("<textarea>Foo&#x000A;  bar&#x000A;   baz</textarea>\n",
+                 render('%textarea= "Foo\n  bar\n   baz"'))
+
+    assert_equal("<pre>Foo&#x000A;  bar&#x000A;   baz</pre>\n",
+                 render('%pre= "Foo\n  bar\n   baz"'))
+
+    assert_equal("<textarea>#{'a' * 100}</textarea>\n",
+                 render("%textarea #{'a' * 100}"))
+  end
+
+  def test_boolean_attributes
+    assert_equal("<p bar baz='true' foo='bar'>\n</p>\n",
+                 render("%p{:foo => 'bar', :bar => true, :baz => 'true'}", :format => :html4))
+    assert_equal("<p bar='bar' baz='true' foo='bar'>\n</p>\n",
+                 render("%p{:foo => 'bar', :bar => true, :baz => 'true'}", :format => :xhtml))
+
+    assert_equal("<p baz='false' foo='bar'>\n</p>\n",
+                 render("%p{:foo => 'bar', :bar => false, :baz => 'false'}", :format => :html4))
+    assert_equal("<p baz='false' foo='bar'>\n</p>\n",
+                 render("%p{:foo => 'bar', :bar => false, :baz => 'false'}", :format => :xhtml))
+  end
+
+  # HTML escaping tests
+
+  def test_script_ending_in_comment_should_render_when_html_is_escaped
+    assert_equal("foo&amp;bar\n", render("= 'foo&bar' #comment", :escape_html => true))
+  end
+
+  def test_ampersand_equals
+    assert_equal("<p>\n  foo &amp; bar\n</p>\n", render("%p\n  &= 'foo & bar'", :escape_html => false))
+  end
+
+  def test_ampersand_equals_inline
+    assert_equal("<p>foo &amp; bar</p>\n", render("%p&= 'foo & bar'", :escape_html => false))
+  end
+
+  def test_bang_equals
+    assert_equal("<p>\n  foo & bar\n</p>\n", render("%p\n  != 'foo & bar'", :escape_html => true))
+  end
+
+  def test_bang_equals_inline
+    assert_equal("<p>foo & bar</p>\n", render("%p!= 'foo & bar'", :escape_html => true))
+  end
+
+  def test_escape_html_option_for_scripts
+    assert_equal("<p>\n  foo &amp; bar\n</p>\n", render("%p\n  = 'foo & bar'", :escape_html => true))
+    assert_equal("<p>\n  foo & bar\n</p>\n", render("%p\n  = 'foo & bar'", :escape_html => false))
+  end
+
+  def test_escape_html_option_for_inline_scripts
+    assert_equal("<p>foo &amp; bar</p>\n", render("%p= 'foo & bar'", :escape_html => true))
+    assert_equal("<p>foo & bar</p>\n", render("%p= 'foo & bar'", :escape_html => false))
+  end
+
   # Options tests
 
   def test_stop_eval
@@ -131,6 +178,18 @@ class EngineTest < Test::Unit::TestCase
     assert_equal("<p foo,bar='baz, qux'>\n</p>\n", render("%p{'foo,bar' => 'baz, qux'}"))
     assert_equal("<p escaped='quo\nte'>\n</p>\n", render("%p{ :escaped => \"quo\\nte\"}"))
     assert_equal("<p escaped='quo4te'>\n</p>\n", render("%p{ :escaped => \"quo\#{2 + 2}te\"}"))
+  end
+  
+  def test_correct_parsing_with_brackets
+    assert_equal("<p class='foo'>{tada} foo</p>\n", render("%p{:class => 'foo'} {tada} foo"))
+    assert_equal("<p class='foo'>deep {nested { things }}</p>\n", render("%p{:class => 'foo'} deep {nested { things }}"))
+    assert_equal("<p class='bar foo'>{a { d</p>\n", render("%p{{:class => 'foo'}, :class => 'bar'} {a { d"))
+    assert_equal("<p foo='bar'>a}</p>\n", render("%p{:foo => 'bar'} a}"))
+    
+    foo = []
+    foo[0] = Struct.new('Foo', :id).new
+    assert_equal("<p class='struct_foo' id='struct_foo_new'>New User]</p>\n",
+                 render("%p[foo[0]] New User]", :locals => {:foo => foo}))
   end
   
   def test_empty_attrs
@@ -370,5 +429,59 @@ class EngineTest < Test::Unit::TestCase
 
   def test_render_proc_with_binding
     assert_equal("FOO\n", Haml::Engine.new("= upcase").render_proc("foo".instance_eval{binding}).call)
+  end
+
+  def test_ugly_true
+    assert_equal("<div id='outer'>\n<div id='inner'>\n<p>hello world</p>\n</div>\n</div>\n",
+                 render("#outer\n  #inner\n    %p hello world", :ugly => true))
+
+    assert_equal("<p>#{'s' * 75}</p>\n",
+                 render("%p #{'s' * 75}", :ugly => true))
+
+    assert_equal("<p>#{'s' * 75}</p>\n",
+                 render("%p= 's' * 75", :ugly => true))
+  end
+
+  def test_xhtml_output_option
+    assert_equal "<p>\n  <br />\n</p>\n", render("%p\n  %br", :format => :xhtml)
+    assert_equal "<a />\n", render("%a/", :format => :xhtml)
+  end
+
+  def test_arbitrary_output_option
+    assert_raise(Haml::Error, "Invalid output format :html1") { Haml::Engine.new("%br", :format => :html1) }
+  end
+
+  # HTML 4.0
+
+  def test_html_has_no_self_closing_tags
+    assert_equal "<p>\n  <br>\n</p>\n", render("%p\n  %br", :format => :html4)
+    assert_equal "<br>\n", render("%br/", :format => :html4)
+  end
+
+  def test_html_renders_empty_node_with_closing_tag
+    assert_equal %{<div class='foo'>\n</div>\n}, render(".foo", :format => :html4)
+  end
+
+  def test_html_ignores_explicit_self_closing_declaration
+    assert_equal "<a>\n</a>\n", render("%a/", :format => :html4)
+  end
+
+  def test_html_ignores_xml_prolog_declaration
+    assert_equal "", render('!!! XML', :format => :html4)
+  end
+
+  def test_html_has_different_doctype
+    assert_equal %{<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n},
+    render('!!!', :format => :html4)
+  end
+
+  # because anything before the doctype triggers quirks mode in IE
+  def test_xml_prolog_and_doctype_dont_result_in_a_leading_whitespace_in_html
+    assert_no_match /^\s+/, render("!!! xml\n!!!", :format => :html4)
+  end
+
+  # HTML5
+  def test_html5_doctype
+    assert_equal %{<!DOCTYPE html>\n}, render('!!!', :format => :html5)
   end
 end

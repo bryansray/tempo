@@ -24,34 +24,66 @@ module Haml
     # to produce the Haml document.
     attr :precompiled, true
 
+    # True if the format is XHTML
+    def xhtml?
+      not html?
+    end
+
+    # True if the format is any flavor of HTML
+    def html?
+      html4? or html5?
+    end
+
+    # True if the format is HTML4
+    def html4?
+      @options[:format] == :html4
+    end
+
+    # True if the format is HTML5
+    def html5?
+      @options[:format] == :html5
+    end
+
     # Creates a new instace of Haml::Engine that will compile the given
     # template string when <tt>render</tt> is called.
-    # See README for available options.
+    # See README.rdoc for available options.
     #
     #--
     # When adding options, remember to add information about them
-    # to README!
+    # to README.rdoc!
     #++
     #
     def initialize(template, options = {})
       @options = {
         :suppress_eval => false,
         :attr_wrapper => "'",
-        :autoclose => ['meta', 'img', 'link', 'br', 'hr', 'input', 'area'],
+
+        # Don't forget to update the docs in lib/haml.rb if you update these
+        :autoclose => %w[meta img link br hr input area param col base],
+        :preserve => %w[textarea pre],
+
         :filters => {
-          'sass' => Sass::Engine,
+          'sass' => Haml::Filters::Sass,
           'plain' => Haml::Filters::Plain,
+          'javascript' => Haml::Filters::Javascript,
           'preserve' => Haml::Filters::Preserve,
           'redcloth' => Haml::Filters::RedCloth,
           'textile' => Haml::Filters::Textile,
           'markdown' => Haml::Filters::Markdown },
-        :filename => '(haml)'
+        :filename => '(haml)',
+        :ugly => false,
+        :format => :xhtml,
+        :escape_html => false
       }
       @options.rec_merge! options
 
+      unless [:xhtml, :html4, :html5].include?(@options[:format])
+        raise Haml::Error, "Invalid format #{@options[:format].inspect}"
+      end
+
       unless @options[:suppress_eval]
         @options[:filters].merge!({
-          'erb' => ERB,
+          'erb' => Haml::Filters::ERB,
           'ruby' => Haml::Filters::Ruby
         })
       end
@@ -230,9 +262,14 @@ END
     end
 
     # Returns a hash of options that Haml::Buffer cares about.
-    # This should remain loadable form #inspect.
+    # This should remain loadable from #inspect.
     def options_for_buffer
-      {:attr_wrapper => @options[:attr_wrapper]}
+      {
+        :preserve => @options[:preserve],
+        :attr_wrapper => @options[:attr_wrapper],
+        :ugly => @options[:ugly],
+        :format => @options[:format]
+      }
     end
   end
 end

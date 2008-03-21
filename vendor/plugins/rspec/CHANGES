@@ -5,6 +5,18 @@ Note: we've removed the metaclass method from Object. There were some generated 
 used it, and they will now break. Just replace the metaclass call with (class << self; self; end)
 and all will be well.
 
+* Added as_new_record to stub_model e.g. stub_model(Foo).as_new_record
+* Improved stub_model such that new_record? does "the right thing"
+* Patch from Pat Maddox to get integrate_views to work in nested example groups.
+* Patch from Pat Maddox to get controller_name to work in nested example groups.
+* Patch from Corey Haines to add include_text matcher (rspec_on_rails)
+* Patch from Antti Tarvainen to stop files from being loaded repeatedly when running heckle. Closes #333.
+* Fixed bug in which session object in example was not the same instance used in the controller. Closes #331. 
+* Added stub_model method which creates a real model instance with :id stubbed and data access prohibited.
+* Applied patch from Antti Tarvainen to fix bug where heckle runs rspec runs heckle runs rspec etc. Closes #280.
+* Applied patch from Zach Dennis to merge :steps functionality to :steps_for. Closes #324.
+* Applied patch from Pat Maddox to handle redirect_to w/ SSL. Closes #320.
+* Applied patch from Ryan Davis to add eval of block passed to raise_error matcher. Closes #321.
 * alias :context :describe in example_group_methods. Closes #312.
 * Applied patch from Ben Mabey to make the Story runner exit with a non-0 exit code on failing stories. Closes #228.
 * Added #helper and #assigns to helper specs.

@@ -21,25 +21,19 @@ uses_tzinfo 'TimeWithZoneTest' do
     def test_time_zone
       assert_equal @time_zone, @twz.time_zone
     end
-  
+    
     def test_in_time_zone
+      Time.use_zone 'Alaska' do
+        assert_equal ActiveSupport::TimeWithZone.new(@utc, TimeZone['Alaska']), @twz.in_time_zone
+      end
+    end
+  
+    def test_in_time_zone_with_argument
       assert_equal ActiveSupport::TimeWithZone.new(@utc, TimeZone['Alaska']), @twz.in_time_zone('Alaska')
     end
     
     def test_in_time_zone_with_new_zone_equal_to_old_zone_does_not_create_new_object
       assert_equal @twz.object_id, @twz.in_time_zone(TimeZone['Eastern Time (US & Canada)']).object_id
-    end
-  
-    def test_in_current_time_zone
-      Time.use_zone 'Alaska' do
-        assert_equal ActiveSupport::TimeWithZone.new(@utc, TimeZone['Alaska']), @twz.in_current_time_zone
-      end
-    end
-  
-    def test_change_time_zone
-      silence_warnings do # silence warnings raised by tzinfo gem
-        assert_equal ActiveSupport::TimeWithZone.new(nil, TimeZone['Alaska'], Time.utc(1999, 12, 31, 19)), @twz.change_time_zone('Alaska')
-      end
     end
   
     def test_utc?
@@ -53,8 +47,10 @@ uses_tzinfo 'TimeWithZoneTest' do
     end
       
     def test_dst?
-      assert_equal false, @twz.dst?
-      assert_equal true, ActiveSupport::TimeWithZone.new(Time.utc(2000, 6), @time_zone).dst?
+      silence_warnings do # silence warnings raised by tzinfo gem
+        assert_equal false, @twz.dst?
+        assert_equal true, ActiveSupport::TimeWithZone.new(Time.utc(2000, 6), @time_zone).dst?
+      end
     end
       
     def test_zone
@@ -165,6 +161,38 @@ uses_tzinfo 'TimeWithZoneTest' do
       assert_equal  86_400.0,  twz2 - twz1
     end
     
+    def test_plus_and_minus_enforce_spring_dst_rules
+      utc = Time.utc(2006,4,2,6,59,59) # == Apr 2 2006 01:59:59 EST; i.e., 1 second before daylight savings start
+      twz = ActiveSupport::TimeWithZone.new(utc, @time_zone)
+      assert_equal Time.utc(2006,4,2,1,59,59), twz.time
+      assert_equal false, twz.dst?
+      assert_equal 'EST', twz.zone
+      twz = twz + 1
+      assert_equal Time.utc(2006,4,2,3), twz.time # adding 1 sec springs forward to 3:00AM EDT
+      assert_equal true, twz.dst?
+      assert_equal 'EDT', twz.zone
+      twz = twz - 1 # subtracting 1 second takes goes back to 1:59:59AM EST
+      assert_equal Time.utc(2006,4,2,1,59,59), twz.time
+      assert_equal false, twz.dst?
+      assert_equal 'EST', twz.zone
+    end
+    
+    def test_plus_and_minus_enforce_fall_dst_rules
+      utc = Time.utc(2006,10,29,5,59,59) # == Oct 29 2006 01:59:59 EST; i.e., 1 second before daylight savings end
+      twz = ActiveSupport::TimeWithZone.new(utc, @time_zone)
+      assert_equal Time.utc(2006,10,29,1,59,59), twz.time
+      assert_equal true, twz.dst?
+      assert_equal 'EDT', twz.zone
+      twz = twz + 1
+      assert_equal Time.utc(2006,10,29,1), twz.time # adding 1 sec falls back from 1:59:59 EDT to 1:00AM EST
+      assert_equal false, twz.dst?
+      assert_equal 'EST', twz.zone
+      twz = twz - 1
+      assert_equal Time.utc(2006,10,29,1,59,59), twz.time # subtracting 1 sec goes back to 1:59:59AM EDT
+      assert_equal true, twz.dst?
+      assert_equal 'EDT', twz.zone
+    end
+    
     def test_to_a
       assert_equal [45, 30, 5, 1, 2, 2000, 2, 32, false, "HST"], ActiveSupport::TimeWithZone.new( Time.utc(2000, 2, 1, 15, 30, 45), TimeZone['Hawaii'] ).to_a
     end
@@ -209,11 +237,56 @@ uses_tzinfo 'TimeWithZoneTest' do
       assert_instance_of ActiveSupport::TimeWithZone, @twz.months_since(1)
       assert_equal Time.utc(2000, 1, 31, 19, 0 ,0), @twz.months_since(1).time
     end
+    
+    def test_marshal_dump_and_load
+      marshal_str = Marshal.dump(@twz)
+      mtime = Marshal.load(marshal_str)
+      assert_equal Time.utc(2000, 1, 1, 0), mtime.utc
+      assert_equal TimeZone['Eastern Time (US & Canada)'], mtime.time_zone
+      assert_equal Time.utc(1999, 12, 31, 19), mtime.time
+    end
       
     def test_method_missing_with_non_time_return_value
-      assert_equal 1999, @twz.year
-      assert_equal 12, @twz.month
-      assert_equal 31, @twz.day
+      twz = ActiveSupport::TimeWithZone.new(Time.utc(1999,12,31,19,18,17,500), @time_zone)
+      assert_equal 1999, twz.year
+      assert_equal 12, twz.month
+      assert_equal 31, twz.day
+      assert_equal 14, twz.hour
+      assert_equal 18, twz.min
+      assert_equal 17, twz.sec
+      assert_equal 500, twz.usec
+    end
+    
+    def test_utc_to_local_conversion_saves_period_in_instance_variable
+      assert_nil @twz.instance_variable_get('@period')
+      @twz.time
+      assert_kind_of TZInfo::TimezonePeriod, @twz.instance_variable_get('@period')
+    end
+    
+    def test_instance_created_with_local_time_returns_correct_utc_time
+      twz = ActiveSupport::TimeWithZone.new(nil, @time_zone, Time.utc(1999, 12, 31, 19))
+      assert_equal Time.utc(2000), twz.utc
+    end
+    
+    def test_instance_created_with_local_time_enforces_spring_dst_rules
+      twz = ActiveSupport::TimeWithZone.new(nil, @time_zone, Time.utc(2006,4,2,2)) # first second of DST
+      assert_equal Time.utc(2006,4,2,3), twz.time # springs forward to 3AM
+      assert_equal true, twz.dst?
+      assert_equal 'EDT', twz.zone
+    end
+    
+    def test_instance_created_with_local_time_enforces_fall_dst_rules
+      twz = ActiveSupport::TimeWithZone.new(nil, @time_zone, Time.utc(2006,10,29,1)) # 1AM can be either DST or non-DST; we'll pick DST
+      assert_equal Time.utc(2006,10,29,1), twz.time
+      assert_equal true, twz.dst?
+      assert_equal 'EDT', twz.zone
+    end
+    
+    def test_ruby_19_weekday_name_query_methods
+      ruby_19_or_greater = RUBY_VERSION >= '1.9'
+      %w(sunday? monday? tuesday? wednesday? thursday? friday? saturday?).each do |name|
+        assert_equal ruby_19_or_greater, @twz.respond_to?(name)
+      end
     end
   end
   
@@ -225,8 +298,25 @@ uses_tzinfo 'TimeWithZoneTest' do
     def teardown
       Time.zone = nil
     end
-
+    
     def test_in_time_zone
+      silence_warnings do # silence warnings raised by tzinfo gem
+        Time.use_zone 'Alaska' do
+          assert_equal 'Fri, 31 Dec 1999 15:00:00 AKST -09:00', @t.in_time_zone.inspect
+          assert_equal 'Fri, 31 Dec 1999 15:00:00 AKST -09:00', @dt.in_time_zone.inspect
+        end
+        Time.use_zone 'Hawaii' do
+          assert_equal 'Fri, 31 Dec 1999 14:00:00 HST -10:00', @t.in_time_zone.inspect
+          assert_equal 'Fri, 31 Dec 1999 14:00:00 HST -10:00', @dt.in_time_zone.inspect
+        end
+        Time.use_zone nil do
+          assert_equal @t, @t.in_time_zone
+          assert_equal @dt, @dt.in_time_zone
+        end
+      end
+    end
+
+    def test_in_time_zone_with_argument
       silence_warnings do # silence warnings raised by tzinfo gem
         Time.use_zone 'Eastern Time (US & Canada)' do # Time.zone will not affect #in_time_zone(zone)
           assert_equal 'Fri, 31 Dec 1999 15:00:00 AKST -09:00', @t.in_time_zone('Alaska').inspect
@@ -245,35 +335,6 @@ uses_tzinfo 'TimeWithZoneTest' do
         with_env_tz 'US/Eastern' do
           time = Time.local(1999, 12, 31, 19) # == Time.utc(2000)
           assert_equal 'Fri, 31 Dec 1999 15:00:00 AKST -09:00', time.in_time_zone('Alaska').inspect
-        end
-      end
-    end
-
-    def test_in_current_time_zone
-      Time.use_zone 'Alaska' do
-        assert_equal 'Fri, 31 Dec 1999 15:00:00 AKST -09:00', @t.in_current_time_zone.inspect
-        assert_equal 'Fri, 31 Dec 1999 15:00:00 AKST -09:00', @dt.in_current_time_zone.inspect
-      end
-      Time.use_zone 'Hawaii' do
-        assert_equal 'Fri, 31 Dec 1999 14:00:00 HST -10:00', @t.in_current_time_zone.inspect
-        assert_equal 'Fri, 31 Dec 1999 14:00:00 HST -10:00', @dt.in_current_time_zone.inspect
-      end
-      Time.use_zone nil do
-        assert_equal @t, @t.in_current_time_zone
-        assert_equal @dt, @dt.in_current_time_zone
-      end
-    end
-    
-    def test_change_time_zone
-      silence_warnings do # silence warnings raised by tzinfo gem
-        Time.use_zone 'Eastern Time (US & Canada)' do # Time.zone will not affect #change_time_zone(zone)
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 AKST -09:00', @t.change_time_zone('Alaska').inspect
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 AKST -09:00', @dt.change_time_zone('Alaska').inspect
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 HST -10:00', @t.change_time_zone('Hawaii').inspect
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 HST -10:00', @dt.change_time_zone('Hawaii').inspect
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 UTC +00:00', @t.change_time_zone('UTC').inspect
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 UTC +00:00', @dt.change_time_zone('UTC').inspect
-          assert_equal 'Sat, 01 Jan 2000 00:00:00 AKST -09:00', @t.change_time_zone(-9.hours).inspect
         end
       end
     end

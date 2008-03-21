@@ -34,11 +34,11 @@ module Haml
     #     include Haml::Helpers
     #   end
     #   context.init_haml_helpers
-    #   context.open :p, "Stuff"
+    #   context.haml_tag :p, "Stuff"
     # 
     def init_haml_helpers
       @haml_is_haml = true
-      @haml_stack = [Haml::Buffer.new]
+      @haml_stack = [Haml::Buffer.new(Haml::Engine.new('').send(:options_for_buffer))]
       nil
     end
 
@@ -153,15 +153,15 @@ module Haml
     #   <strong>baz</strong>
     #
     def tab_up(i = 1)
-      buffer.tabulation += i
+      haml_buffer.tabulation += i
     end
 
-    # Increments the number of tabs the buffer automatically adds
+    # Decrements the number of tabs the buffer automatically adds
     # to the lines of the template.
     #
-    # See tab_up.
+    # See also tab_up.
     def tab_down(i = 1)
-      buffer.tabulation -= i
+      haml_buffer.tabulation -= i
     end
     
     # Surrounds the given block of Haml code with the given characters,
@@ -235,19 +235,19 @@ module Haml
     # the local variable <tt>foo</tt> would be assigned to "<p>13</p>\n".
     #
     def capture_haml(*args, &block)
-      capture_haml_with_buffer(buffer.buffer, *args, &block)
+      capture_haml_with_buffer(haml_buffer.buffer, *args, &block)
     end
 
     # Outputs text directly to the Haml buffer, with the proper tabulation
     def puts(text = "")
-      buffer.buffer << ('  ' * buffer.tabulation) << text.to_s << "\n"
+      haml_buffer.buffer << ('  ' * haml_buffer.tabulation) << text.to_s << "\n"
       nil
     end
 
     #
     # call-seq:
-    #   open(name, attributes = {}) {...}
-    #   open(name, text, attributes = {}) {...}
+    #   haml_tag(name, attributes = {}) {...}
+    #   haml_tag(name, text, attributes = {}) {...}
     #
     # Creates an HTML tag with the given name and optionally text and attributes.
     # Can take a block that will be executed
@@ -257,13 +257,13 @@ module Haml
     # 
     # For example,
     #
-    #   open :table do
-    #     open :tr do
-    #       open :td, {:class => 'cell'} do
-    #         open :strong, "strong!"
+    #   haml_tag :table do
+    #     haml_tag :tr do
+    #       haml_tag :td, {:class => 'cell'} do
+    #         haml_tag :strong, "strong!"
     #         puts "data"
     #       end
-    #       open :td do
+    #       haml_tag :td do
     #         puts "more_data"
     #       end
     #     end
@@ -285,19 +285,21 @@ module Haml
     #     </tr>
     #   </table>
     #
-    def open(name, attributes = {}, alt_atts = {}, &block)
+    def haml_tag(name, attributes = {}, alt_atts = {}, &block)
       text = nil
       if attributes.is_a? String
         text = attributes
         attributes = alt_atts
       end
 
+      attributes = Haml::Precompiler.build_attributes(haml_buffer.html?,
+                                                      haml_buffer.options[:attr_wrapper], attributes)
       if text.nil? && block.nil?
-        puts "<#{name}#{Haml::Precompiler.build_attributes(buffer.options[:attr_wrapper], attributes)} />"
+        puts "<#{name}#{attributes} />"
         return nil
       end
 
-      puts "<#{name}#{Haml::Precompiler.build_attributes(buffer.options[:attr_wrapper], attributes)}>"
+      puts "<#{name}#{attributes}>"
       unless text && text.empty?
         tab_up
         # Print out either the text (using push_text) or call the block and add an endline
@@ -311,18 +313,36 @@ module Haml
       puts "</#{name}>"
       nil
     end
-    
+
+    def open(*args, &block)
+              warn <<END
+DEPRECATION WARNING:
+The Haml #open helper is deprecated and will be removed in version 2.0.
+Use the #haml_tag method instead.
+END
+      haml_tag(*args, &block)
+    end
+
+    # Returns a copy of <tt>text</tt> with ampersands, angle brackets and quotes
+    # escaped into HTML entities.
+    def html_escape(text)
+      text.to_s.gsub(/[&<>"]/) { |s| ESCAPE_TABLE[s] }
+    end
+    # Characters that need to be escaped to HTML entities from user input
+    ESCAPE_TABLE = { '&'=>'&amp;', '<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;', }
+
+
     private
 
     # Gets a reference to the current Haml::Buffer object.
-    def buffer
+    def haml_buffer
       @haml_stack[-1]
     end
     
     # Gives a proc the same local "_hamlout" and "_erbout" variables
     # that the current template has.
-    def bind_proc(&proc)
-      _hamlout = buffer
+    def haml_bind_proc(&proc)
+      _hamlout = haml_buffer
       _erbout = _hamlout.buffer
       proc { |*args| proc.call(*args) }
     end

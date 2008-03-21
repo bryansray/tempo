@@ -14,11 +14,14 @@ module Haml
     # Designates an XHTML/XML comment.
     COMMENT         = ?/
 
-    # Designates an XHTML doctype.
+    # Designates an XHTML doctype or script that is never HTML-escaped.
     DOCTYPE         = ?!
 
     # Designates script, the result of which is output.
     SCRIPT          = ?=
+
+    # Designates script that is always HTML-escaped.
+    SANITIZE        = ?&
 
     # Designates script, the result of which is flattened and output.
     FLAT_SCRIPT     = ?~
@@ -47,6 +50,7 @@ module Haml
       COMMENT,
       DOCTYPE,
       SCRIPT,
+      SANITIZE,
       FLAT_SCRIPT,
       SILENT_SCRIPT,
       ESCAPE,
@@ -197,8 +201,12 @@ END
       when DIV_CLASS, DIV_ID; render_div(text)
       when ELEMENT; render_tag(text)
       when COMMENT; render_comment(text)
+      when SANITIZE
+        return push_script(text[2..-1].strip, false, nil, false, true) if text[1] == SCRIPT
+        push_plain text
       when SCRIPT
         return push_script(unescape_interpolation(text[2..-1].strip), false) if text[1] == SCRIPT
+        return push_script(text[1..-1], false, nil, false, true) if options[:escape_html]
         push_script(text[1..-1], false)
       when FLAT_SCRIPT; push_flat_script(text[1..-1])
       when SILENT_SCRIPT
@@ -212,6 +220,7 @@ END
       when FILTER; start_filtered(text[1..-1].downcase)
       when DOCTYPE
         return render_doctype(text) if text[0...3] == '!!!'
+        return push_script(text[2..-1].strip, false) if text[1] == SCRIPT
         push_plain text
       when ESCAPE; push_plain text[1..-1]
       else push_plain text
@@ -270,9 +279,15 @@ END
     # Adds <tt>text</tt> to <tt>@buffer</tt> with appropriate tabulation
     # without parsing it.
     def push_merged_text(text, tab_change = 0, try_one_liner = false)
-      @merged_text  << "#{'  ' * @output_tabs}#{text}"
+      @merged_text  << (@options[:ugly] ? text : "#{'  ' * @output_tabs}#{text}")
       @tab_change   += tab_change
       @try_one_liner = try_one_liner
+    end
+
+    # Concatenate <tt>text</tt> to <tt>@buffer</tt> without tabulation.
+    def concat_merged_text(text)
+      @merged_text  << text
+      @try_one_liner = false
     end
     
     def push_text(text, tab_change = 0, try_one_liner = false)
@@ -299,23 +314,27 @@ END
 
     # Adds +text+ to <tt>@buffer</tt> while flattening text.
     def push_flat(line)
-      tabulation = line.spaces - @flat_spaces
-      tabulation = tabulation > -1 ? tabulation : 0
-      @filter_buffer << "#{' ' * tabulation}#{line.unstripped}\n"
+      unless @options[:ugly]
+        tabulation = line.spaces - @flat_spaces
+        tabulation = tabulation > -1 ? tabulation : 0
+        @filter_buffer << "#{' ' * tabulation}#{line.unstripped}\n"
+      else
+        @filter_buffer << "#{line.unstripped}\n"
+      end
     end
 
     # Causes <tt>text</tt> to be evaluated in the context of
     # the scope object and the result to be added to <tt>@buffer</tt>.
     #
-    # If <tt>flattened</tt> is true, Haml::Helpers#find_and_flatten is run on
+    # If <tt>preserve_script</tt> is true, Haml::Helpers#find_and_flatten is run on
     # the result before it is added to <tt>@buffer</tt>
-    def push_script(text, flattened, close_tag = nil)
+    def push_script(text, preserve_script, close_tag = nil, preserve_tag = false, escape_html = false)
       flush_merged_text
       return if options[:suppress_eval]
 
       push_silent "haml_temp = #{text}"
       newline true
-      out = "haml_temp = _hamlout.push_script(haml_temp, #{flattened.inspect}, #{close_tag.inspect});"
+      out = "haml_temp = _hamlout.push_script(haml_temp, #{preserve_script.inspect}, #{close_tag.inspect}, #{preserve_tag.inspect}, #{escape_html.inspect});"
       if @block_opened
         push_and_tabulate([:loud, out])
       else
@@ -384,14 +403,7 @@ END
     # Closes a filtered block.
     def close_filtered(filter)
       @flat_spaces = -1
-      filtered = filter.new(@filter_buffer).render
-
-      if filter == Haml::Filters::Preserve
-        push_silent("_hamlout.buffer << #{filtered.dump} << \"\\n\";")
-      else
-        push_text(filtered.rstrip.gsub("\n", "\n#{'  ' * @output_tabs}"))
-      end
-
+      filter.internal_compile(self, @filter_buffer)
       @filter_buffer = nil
       @template_tabs -= 1
     end
@@ -449,12 +461,19 @@ END
     end
 
     # This is a class method so it can be accessed from Buffer.
-    def self.build_attributes(attr_wrapper, attributes = {})
+    def self.build_attributes(is_html, attr_wrapper, attributes = {})
       quote_escape = attr_wrapper == '"' ? "&quot;" : "&apos;"
       other_quote_char = attr_wrapper == '"' ? "'" : '"'
   
       result = attributes.collect do |attr, value|
         next if value.nil?
+
+        if value == true
+          next " #{attr}" if is_html
+          next " #{attr}=#{attr_wrapper}#{attr}#{attr_wrapper}"
+        elsif value == false
+          next
+        end
 
         value = value.to_s
         this_attr_wrapper = attr_wrapper
@@ -470,32 +489,56 @@ END
       result.compact.sort.join
     end
 
-    def prerender_tag(name, atomic, attributes)
-      "<#{name}#{Precompiler.build_attributes(@options[:attr_wrapper], attributes)}#{atomic ? ' />' : '>'}"
+    def prerender_tag(name, self_close, attributes)
+      attributes_string = Precompiler.build_attributes(html?, @options[:attr_wrapper], attributes)
+      "<#{name}#{attributes_string}#{self_close && xhtml? ? ' /' : ''}>"
+    end
+    
+    # Parses a line into tag_name, attributes, attributes_hash, object_ref, action, value
+    def parse_tag(line)
+      raise SyntaxError.new("Invalid tag: \"#{line}\"") unless match = line.scan(/[%]([-:\w]+)([-\w\.\#]*)(.*)/)[0]
+      tag_name, attributes, rest = match
+      if rest[0] == ?{
+        scanner = StringScanner.new(rest)
+        attributes_hash, rest = balance(scanner, ?{, ?})
+        attributes_hash = attributes_hash[1, attributes_hash.length - 2] if attributes_hash
+      end
+      if rest
+        object_ref, rest = balance(rest, ?[, ?]) if rest[0] == ?[
+        action, value = rest.scan(/([=\/\~&!]?)?(.*)?/)[0]
+      end
+      value = value.to_s.strip
+      [tag_name, attributes, attributes_hash, object_ref, action, value]
     end
 
     # Parses a line that will render as an XHTML tag, and adds the code that will
     # render that tag to <tt>@precompiled</tt>.
     def render_tag(line)
-      raise SyntaxError.new("Invalid tag: \"#{line}\"") unless match = line.scan(TAG_REGEX)[0]
-      tag_name, attributes, attributes_hash, object_ref, action, value = match
-      value = value.to_s.strip
-      attributes_hash = attributes_hash[1...-1] if attributes_hash
-
+      tag_name, attributes, attributes_hash, object_ref, action, value = parse_tag(line)
+      
       raise SyntaxError.new("Illegal element: classes and ids must have values.") if attributes =~ /[\.#](\.|#|\z)/
 
+      preserve_tag = options[:preserve].include?(tag_name)
+
       case action
-      when '/'; atomic = true
-      when '~'; parse = flattened = true
+      when '/'; atomic = xhtml?
+      when '~'; parse = preserve_script = true
       when '='
         parse = true
         value = unescape_interpolation(value[1..-1].strip) if value[0] == ?=
+      when '&', '!'
+        if value[0] == ?=
+          parse = true
+          value = value[1..-1].strip
+        end
       end
-        
+      
       if parse && @options[:suppress_eval]
         parse = false
         value = ''
       end
+
+      escape_html = (action == '&' || (action != '!' && @options[:escape_html]))
 
       object_ref = "nil" if object_ref.nil? || @options[:suppress_eval]
 
@@ -504,16 +547,17 @@ END
       attributes = parse_class_and_id(attributes)
       Buffer.merge_attrs(attributes, static_attributes) if static_attributes
 
-      raise SyntaxError.new("Illegal Nesting: Nesting within an atomic tag is illegal.") if @block_opened && atomic
-      raise SyntaxError.new("Illegal Nesting: Nesting within a tag that already has content is illegal.") if @block_opened && !value.empty?
-      raise SyntaxError.new("Tag has no content.") if parse && value.empty?
-      raise SyntaxError.new("Atomic tags can't have content.") if atomic && !value.empty?
+      raise SyntaxError, "Illegal Nesting: Nesting within an atomic tag is illegal." if @block_opened && atomic
+      raise SyntaxError, "Illegal Nesting: Content can't be both given on the same line as %#{tag_name} and nested within it." if @block_opened && !value.empty?
+      raise SyntaxError, "Tag has no content." if parse && value.empty?
+      raise SyntaxError, "Atomic tags can't have content." if atomic && !value.empty?
 
-      atomic = true if !@block_opened && value.empty? && @options[:autoclose].include?(tag_name)
-      
-      if object_ref == "nil" && attributes_hash.nil? && !flattened && (parse || Buffer.one_liner?(value))
+      atomic ||= !!( !@block_opened && value.empty? && @options[:autoclose].include?(tag_name) )
+
+      one_liner = Buffer.one_liner?(value) || preserve_tag
+      if object_ref == "nil" && attributes_hash.nil? && !preserve_script && (parse || one_liner)
         # This means that we can render the tag directly to text and not process it in the buffer
-        tag_closed = !value.empty? && Buffer.one_liner?(value) && !parse
+        tag_closed = !value.empty? && one_liner && !parse
 
         open_tag  = prerender_tag(tag_name, atomic, attributes)
         open_tag << "#{value}</#{tag_name}>" if tag_closed
@@ -525,9 +569,9 @@ END
         flush_merged_text
         content = value.empty? || parse ? 'nil' : value.dump
         attributes_hash = ', ' + attributes_hash if attributes_hash
-        push_silent "_hamlout.open_tag(#{tag_name.inspect}, #{atomic.inspect}, #{(!value.empty?).inspect}, #{attributes.inspect}, #{object_ref}, #{content}#{attributes_hash})"
+        push_silent "_hamlout.open_tag(#{tag_name.inspect}, #{atomic.inspect}, #{(!value.empty?).inspect}, #{preserve_tag.inspect}, #{attributes.inspect}, #{object_ref}, #{content}#{attributes_hash})"
       end
-          
+
       return if atomic
 
       if value.empty?
@@ -538,7 +582,7 @@ END
       
       if parse
         flush_merged_text
-        push_script(value, flattened, tag_name)
+        push_script(value, preserve_script, tag_name, preserve_tag, escape_html)
       end
     end
 
@@ -577,28 +621,44 @@ END
     # Renders an XHTML doctype or XML shebang.
     def render_doctype(line)
       raise SyntaxError.new("Illegal Nesting: Nesting within a header command is illegal.") if @block_opened
-      push_text text_for_doctype(line)
+      doctype = text_for_doctype(line)
+      push_text doctype if doctype
     end
 
     def text_for_doctype(text)
       text = text[3..-1].lstrip.downcase
-      if text[0...3] == "xml"
+      if text.index("xml") == 0
+        return nil if html?
         wrapper = @options[:attr_wrapper]
         return "<?xml version=#{wrapper}1.0#{wrapper} encoding=#{wrapper}#{text.split(' ')[1] || "utf-8"}#{wrapper} ?>"
       end
 
-      version, type = text.scan(DOCTYPE_REGEX)[0]
-      if version == "1.1"
-        return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">'
-      end
+      if html5?
+        '<!DOCTYPE html>'
+      else
+        version, type = text.scan(DOCTYPE_REGEX)[0]
+        
+        if xhtml?
+          if version == "1.1"
+            '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">'
+          else
+            case type
+            when "strict";   '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+            when "frameset"; '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">'
+            else             '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+            end
+          end
 
-      case type
-      when "strict";   return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
-      when "frameset"; return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">'
-      else             return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+        elsif html4?
+          case type
+          when "strict";   '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">'
+          when "frameset"; '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">'
+          else             '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
+          end
+        end
       end
     end
-
+    
     # Starts a filtered block.
     def start_filtered(name)
       raise SyntaxError.new('Filters must have nested text.') unless @block_opened
@@ -613,29 +673,40 @@ END
       push_and_tabulate([:filtered, filter])
       @flat_spaces = @template_tabs * 2
       @filter_buffer = String.new
+      @block_opened = false
+    end
+
+    def contains_interpolation?(str)
+      str.include?('#{')
     end
 
     def unescape_interpolation(str)
       scan = StringScanner.new(str.dump)
       str = ''
 
-      while scan.scan(/(.*?)\\\#\{/)
-        str << scan.matched[0...-3]
-        str << eval("\"\\\#{#{balance_brackets(scan)}}\"")
+      while scan.scan(/(.*?)(\\+)\#\{/)
+        escapes = (scan[2].size - 1) / 2
+        str << scan.matched[0...-3 - escapes]
+        if escapes % 2 == 1
+          str << '#{'
+        else
+          # Use eval to get rid of string escapes
+          str << '#{' + eval('"' + balance(scan, ?{, ?}, 1)[0][0...-1] + '"') + "}"
+        end
       end
 
       str + scan.rest
     end
 
-    def balance_brackets(scanner)
+    def balance(scanner, start, finish, count = 0)
       str = ''
-      count = 1
-
-      while scanner.scan(/(.*?)[\{\}]/)
+      scanner = StringScanner.new(scanner) unless scanner.is_a? StringScanner
+      regexp = Regexp.new("(.*?)[\\#{start.chr}\\#{finish.chr}]")
+      while scanner.scan(regexp)
         str << scanner.matched
-        count += 1 if scanner.matched[-1] == ?{
-        count -= 1 if scanner.matched[-1] == ?}
-        return str[0...-1] if count == 0
+        count += 1 if scanner.matched[-1] == start
+        count -= 1 if scanner.matched[-1] == finish
+        return [str.strip, scanner.rest] if count == 0
       end
 
       raise SyntaxError.new("Unbalanced brackets.")

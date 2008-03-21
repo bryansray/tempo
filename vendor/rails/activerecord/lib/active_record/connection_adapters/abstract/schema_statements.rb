@@ -89,7 +89,7 @@ module ActiveRecord
       # See also TableDefinition#column for details on how to create columns.
       def create_table(table_name, options = {})
         table_definition = TableDefinition.new(self)
-        table_definition.primary_key(options[:primary_key] || "id") unless options[:id] == false
+        table_definition.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
         yield table_definition
 
@@ -298,6 +298,22 @@ module ActiveRecord
         sql << " ORDER BY #{options[:order]}"
       end
 
+      # Adds timestamps (created_at and updated_at) columns to the named table.
+      # ===== Examples
+      #  add_timestamps(:suppliers)
+      def add_timestamps(table_name)
+        add_column table_name, :created_at, :datetime
+        add_column table_name, :updated_at, :datetime    
+      end
+      
+      # Removes the timestamp columns (created_at and updated_at) from the table definition.
+      # ===== Examples
+      #  remove_timestamps(:suppliers)
+      def remove_timestamps(table_name)
+        remove_column table_name, :updated_at   
+        remove_column table_name, :created_at       
+      end
+      
       protected
         def options_include_default?(options)
           options.include?(:default) && !(options[:null] == false && options[:default].nil?)

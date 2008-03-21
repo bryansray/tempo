@@ -1,5 +1,27 @@
 *SVN*
 
+* Migrations: create_table supports primary_key_prefix_type.  #10314 [student, thechrisoshow]
+
+* Added logging for dependency load errors with fixtures #11056 [stuthulhu]
+
+* Time zone aware attributes use Time#in_time_zone [Geoff Buesing]
+
+* Fixed that scoped joins would not always be respected #6821 [Theory/Danger]
+
+* Ensure that ActiveRecord::Calculations disambiguates field names with the table name.  #11027 [cavalle]
+
+* Added add/remove_timestamps to the schema statements for adding the created_at/updated_at columns on existing tables #11129 [jramirez]
+
+* Added ActiveRecord::Base.find(:last) #11338 [miloops]
+
+* test_native_types expects DateTime.local_offset instead of DateTime.now.offset; fixes test breakage due to dst transition [Geoff Buesing]
+
+* Add :readonly option to HasManyThrough associations. #11156 [miloops]
+
+* Improve performance on :include/:conditions/:limit queries by selectively joining in the pre-query.  #9560 [dasil003]
+
+* Perf fix: Avoid the use of named block arguments.  Closes #11109 [adymo]
+
 * PostgreSQL: support server versions 7.4 through 8.0 and the ruby-pg driver.  #11127 [jdavis]
 
 * Ensure association preloading doesn't break when an association returns nil. ##11145 [GMFlash]

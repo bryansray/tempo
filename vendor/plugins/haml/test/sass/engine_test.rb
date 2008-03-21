@@ -98,6 +98,11 @@ class SassEngineTest < Test::Unit::TestCase
     end
   end
 
+  def test_css_import
+    assert_equal("@import url(./fonts.css) screen;", render("@import url(./fonts.css) screen"))
+    assert_equal("@import \"./fonts.css\" screen;", render("@import \"./fonts.css\" screen"))
+  end
+
   def test_default_function
     assert_equal("foo {\n  bar: url(foo.png); }\n",
                  render("foo\n  bar = url(foo.png)\n"));
@@ -207,6 +212,11 @@ END
 
   def test_cr_newline
     assert_equal("foo {\n  a: b;\n  c: d;\n  e: f; }\n", render("foo\r  a: b\r\n  c: d\n\r  e: f"))
+  end
+
+  def test_or_eq
+    assert_equal("foo {\n  a: b; }\n", render("!foo = b\n!foo ||= c\nfoo\n  a = !foo"))
+    assert_equal("foo {\n  a: b; }\n", render("!foo ||= b\nfoo\n  a = !foo"))
   end
   
   private

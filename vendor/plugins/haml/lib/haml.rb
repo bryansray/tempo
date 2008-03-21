@@ -144,6 +144,8 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     </script>
 #   </head>
 #
+# ===== Attribute Methods
+#
 # A Ruby method call that returns a hash
 # can be substituted for the hash contents.
 # For example, Haml::Helpers defines the following method:
@@ -182,6 +184,33 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 # would compile to:
 #
 #   <sandwich bread='whole wheat' delicious='true' filling='peanut butter and jelly' />
+#
+# ===== Boolean Attributes
+#
+# Some attributes, such as "checked" for <tt>input</tt> tags or "selected" for <tt>option</tt> tags,
+# are "boolean" in the sense that their values don't matter -
+# it only matters whether or not they're present.
+# In HTML (but not XHTML), these attributes can be written as
+#
+#   <input selected>
+#
+# To do this in Haml, just assign a Ruby true value to the attribute:
+#
+#   %input{:selected => true}
+#
+# In XHTML, the only valid value for these attributes is the name of the attribute.
+# Thus this will render in XHTML as
+# 
+#   <input selected="selected">
+#
+# To set these attributes to false, simply assign them to a Ruby false value.
+# In both XHTML and HTML
+#
+#   %input{:selected => false}
+#
+# will just render as
+#
+#   <input>
 # 
 # ==== []
 # 
@@ -530,41 +559,58 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     <p>Hello, <em>World</em></p>
 #   </p>
 #
+# Filters can have Ruby code interpolated, like with ==.
+# For example,
+#
+#   - flavor = "raspberry"
+#   #content
+#     :textile
+#       I *really* prefer _#{h flavor}_ jam.
+#
+# is compiled to
+#
+#   <div id='content'>
+#     <p>I <strong>really</strong> prefer <em>raspberry</em> jam.</p>
+#   </div>
+#
 # Haml has the following filters defined:
 #
-# [plain]     Does not parse the filtered text.
-#             This is useful for large blocks of text without HTML tags,
-#             when you don't want lines starting with <tt>.</tt> or <tt>-</tt>
-#             to be parsed.
+# [plain]      Does not parse the filtered text.
+#              This is useful for large blocks of text without HTML tags,
+#              when you don't want lines starting with <tt>.</tt> or <tt>-</tt>
+#              to be parsed.
 #
-# [ruby]      Parses the filtered text with the normal Ruby interpreter.
-#             All output sent to <tt>$stdout</tt>, like with +puts+,
-#             is output into the Haml document.
-#             Not available if the <tt>suppress_eval</tt> option is set to true.
+# [javascript] Surrounds the filtered text with <script> and CDATA tags.
+#              Useful for including inline Javascript.
 #
-# [preserve]  Inserts the filtered text into the template with whitespace preserved.
-#             <tt>preserve</tt>d blocks of text aren't indented,
-#             and newlines are replaced with the HTML escape code for newlines,
-#             to preserve nice-looking output.
+# [ruby]       Parses the filtered text with the normal Ruby interpreter.
+#              All output sent to <tt>$stdout</tt>, like with +puts+,
+#              is output into the Haml document.
+#              Not available if the <tt>suppress_eval</tt> option is set to true.
+#              The Ruby code is evaluated in the same context as the Haml template.
 #
-# [erb]       Parses the filtered text with ERB, like an RHTML template.
-#             Not available if the <tt>suppress_eval</tt> option is set to true.
-#             At the moment, this doesn't support access to variables
-#             defined by Ruby on Rails or Haml code.
+# [preserve]   Inserts the filtered text into the template with whitespace preserved.
+#              <tt>preserve</tt>d blocks of text aren't indented,
+#              and newlines are replaced with the HTML escape code for newlines,
+#              to preserve nice-looking output.
 #
-# [sass]      Parses the filtered text with Sass to produce CSS output.
+# [erb]        Parses the filtered text with ERB, like an RHTML template.
+#              Not available if the <tt>suppress_eval</tt> option is set to true.
+#              Embedded Ruby code is evaluated in the same context as the Haml template.
 #
-# [redcloth]  Parses the filtered text with RedCloth (http://whytheluckystiff.net/ruby/redcloth),
-#             which uses both Textile and Markdown syntax.
-#             Only works if RedCloth is installed.
+# [sass]       Parses the filtered text with Sass to produce CSS output.
 #
-# [textile]   Parses the filtered text with Textile (http://www.textism.com/tools/textile).
-#             Only works if RedCloth is installed.
+# [redcloth]   Parses the filtered text with RedCloth (http://whytheluckystiff.net/ruby/redcloth),
+#              which uses both Textile and Markdown syntax.
+#              Only works if RedCloth is installed.
 #
-# [markdown]  Parses the filtered text with Markdown (http://daringfireball.net/projects/markdown).
-#             Only works if RedCloth or BlueCloth (http://www.deveiate.org/projects/BlueCloth)
-#             is installed
-#             (BlueCloth takes precedence if both are installed).
+# [textile]    Parses the filtered text with Textile (http://www.textism.com/tools/textile).
+#              Only works if RedCloth is installed.
+#
+# [markdown]   Parses the filtered text with Markdown (http://daringfireball.net/projects/markdown).
+#              Only works if RedCloth or BlueCloth (http://www.deveiate.org/projects/BlueCloth)
+#              is installed
+#              (BlueCloth takes precedence if both are installed).
 #
 # You can also define your own filters (see Setting Options, below).
 # 
@@ -587,19 +633,15 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     yo
 #   </p>
 #
-# You can also use two equal signs, <tt>==</tt>,
-# along with conventional Ruby string-embedding syntax
-# to easily embed Ruby code in otherwise static text.
+# If the <tt>:escape_html</tt> option is set,
+# = will sanitize any HTML-sensitive characters generated by the script.
 # For example:
 #
-#   %p
-#     == 1 + 1 = #{1 + 1}
+#   = '<script>alert("I\'m evil!");</script>'
 #
-# is compiled to:
+# would be compiled to
 #
-#   <p>
-#     1 + 1 = 2
-#   </p>
+#   &lt;script&gt;alert(&quot;I'm evil!&quot;);&lt;/script&gt;
 # 
 # ==== -
 # 
@@ -623,6 +665,69 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     hello there you!
 #   </p>
 # 
+# ==== ==
+#
+# Two equals characters interpolates Ruby code into plain text,
+# similarly to Ruby string interpolation.
+# For example,
+#
+#   %p== This is #{h quality} cake!
+#
+# is the same as
+#
+#   %p= "This is #{h quality} cake!"
+#
+# and might compile to
+#
+#   <p>This is scrumptious cake!</p>
+#
+# Backslashes can be used to escape "#{" strings,
+# but they don't act as escapes anywhere else in the string.
+# For example:
+#
+#   %p
+#     == \\ Look at \\#{h word} lack of backslash: \#{foo}
+#
+# might compile to
+#
+#  <p>
+#    \\ Look at \yon lack of backslash: #{foo}
+#  </p>
+#
+# ==== &=
+#
+# An ampersand followed by an equals character
+# evaluates Ruby code just like the single equals,
+# but sanitizes any HTML-sensitive characters in the result of the code.
+# For example:
+#
+#   &= "I like cheese & crackers"
+#
+# compiles to
+#
+#   I like cheese &amp; crackers
+#
+# If the <tt>:escape_html</tt> option is set,
+# &= behaves identically to =.
+#
+# ==== !=
+#
+# An exclamation mark followed by an equals character
+# evaluates Ruby code just like the single equals,
+# but never sanitizes the HTML.
+#
+# By default, the single equals doesn't sanitize HTML either.
+# However, if the <tt>:escape_html</tt> option is set, = will sanitize the HTML, but != still won't.
+# For example, if <tt>:escape_html</tt> is set:
+#
+#   = "I feel <strong>!"
+#   != "I feel <strong>!"
+#
+# compiles to
+#
+#   I feel &lt;strong&gt;!
+#   I feel <strong>!
+#
 # ===== Blocks
 # 
 # Ruby blocks, like XHTML tags, don't need to be explicitly closed in Haml.
@@ -721,7 +826,18 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 # from <tt>environment.rb</tt> in Rails,
 # or by passing an options hash to Haml::Engine.
 # Available options are:
-# 
+#
+# [<tt>:output</tt>]        Determines the output format. The default is :xhtml.
+#                           Other options are :html4 and :html5, which are
+#                           identical to :xhtml except there are no self-closing tags,
+#                           XML prolog is ignored and correct DOCTYPEs are generated.
+#
+# [<tt>:escape_html</tt>]   Sets whether or not to escape HTML-sensitive characters in script.
+#                           If this is true, = behaves like &=;
+#                           otherwise, it behaves like !=.
+#                           <b>Note that this doesn't affect attributes or == interpolation.</b>
+#                           Defaults to false.
+#
 # [<tt>:suppress_eval</tt>] Whether or not attribute hashes and Ruby scripts
 #                           designated by <tt>=</tt> or <tt>~</tt> should be
 #                           evaluated. If this is true, said scripts are
@@ -743,16 +859,29 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #                           The keys are the string names of the filters;
 #                           the values are references to the classes of the filters.
 #                           User-defined filters should always have lowercase keys,
-#                           and should have:
-#                           * An +initialize+ method that accepts one parameter,
-#                             the text to be filtered.
-#                           * A +render+ method that returns the result of the filtering.
+#                           and should have the interface described in Haml::Filters::Base.
 #
 # [<tt>:autoclose</tt>]     A list of tag names that should be automatically self-closed
 #                           if they have no content.
-#                           Defaults to <tt>['meta', 'img', 'link', 'br', 'hr', 'input', 'area']</tt>.
+#                           Defaults to <tt>['meta', 'img', 'link', 'br', 'hr', 'input', 'area', 'param', 'col', 'base']</tt>.
+#
+# [<tt>:preserve</tt>]      A list of tag names that should automatically have their newlines preserved
+#                           using the Haml::Helpers#preserve helper.
+#                           This means that any content given on the same line as the tag will be preserved.
+#                           For example:
+#
+#                             %textarea= "Foo\nBar"
+#
+#                           compiles to:
+#
+#                             <textarea>Foo&&#x000A;Bar</textarea>
+#
+#                           Defaults to <tt>['textarea', 'pre']</tt>.
 #
 module Haml
+  # A string representing the version of Haml
+  VERSION = File.read(File.dirname(__FILE__) + '/../VERSION').strip unless defined?(VERSION)
+
   # This method is called by init.rb,
   # which is run by Rails on startup.
   # We use it rather than putting stuff straight into init.rb

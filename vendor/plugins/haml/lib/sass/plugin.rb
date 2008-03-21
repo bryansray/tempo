@@ -13,8 +13,15 @@ module Sass
         :always_check       => true,
         :full_exception     => true
       }
+      @@checked_for_updates = false
 
-      # Gets various options for Sass. See README for details.
+      # Whether or not Sass has *ever* checked if the stylesheets need updates
+      # (in this Ruby instance).
+      def checked_for_updates
+        @@checked_for_updates
+      end
+
+      # Gets various options for Sass. See README.rdoc for details.
       #--
       # TODO: *DOCUMENT OPTIONS*
       #++
@@ -35,6 +42,7 @@ module Sass
       def update_stylesheets
         return if options[:never_update]
 
+        @@checked_for_updates = true
         Dir.glob(File.join(options[:template_location], "**", "*.sass")).entries.each do |file|
 
           # Get the relative path to the file with no extension

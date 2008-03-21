@@ -1,20 +1,15 @@
 #!/usr/bin/env ruby
-
-require 'rubygems'
-require 'active_support'
-require 'action_controller'
-require 'action_view'
-
-require 'test/unit'
-require File.dirname(__FILE__) + '/../../lib/haml'
+require File.dirname(__FILE__) + '/test_helper'
 require 'haml/template'
 
 class HelperTest < Test::Unit::TestCase
   include Haml::Helpers
+  Post = Struct.new('Post', :body)
   
   def setup
     @base = ActionView::Base.new
     @base.controller = ActionController::Base.new
+    @base.instance_variable_set('@post', Post.new("Foo bar\nbaz"))
   end
 
   def render(text, options = {})
@@ -85,6 +80,17 @@ class HelperTest < Test::Unit::TestCase
     should_be = "<form action=\"foo\" method=\"post\">\n  <p>bar</p>\n  <strong>baz</strong>\n</form>\n"
     assert_equal(should_be, result)
   end
+
+  def test_text_area
+    assert_equal(%(<textarea id="body" name="body">Foo&#x000A;Bar&#x000A; Baz&#x000A;   Boom</textarea>\n),
+                 render('= text_area_tag "body", "Foo\nBar\n Baz\n   Boom"', :action_view))
+
+    assert_equal(%(<textarea cols="40" id="post_body" name="post[body]" rows="20">Foo bar&#x000A;baz</textarea>\n),
+                 render('= text_area :post, :body', :action_view))    
+
+    assert_equal(%(<pre>Foo bar&#x000A;   baz</pre>\n),
+                 render('= content_tag "pre", "Foo bar\n   baz"', :action_view))    
+  end
   
   def test_capture_haml
     assert_equal("\"<p>13</p>\\n\"\n", render("- foo = capture_haml(13) do |a|\n  %p= a\n= foo.dump"))
@@ -140,7 +146,7 @@ class HelperTest < Test::Unit::TestCase
     context.init_haml_helpers
 
     result = context.capture_haml do
-      context.open :p, :attr => "val" do
+      context.haml_tag :p, :attr => "val" do
         context.puts "Blah"
       end
     end

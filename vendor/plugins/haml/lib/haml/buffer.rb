@@ -18,6 +18,26 @@ module Haml
     # The options hash passed in from Haml::Engine.
     attr_accessor :options
 
+    # True if the format is XHTML
+    def xhtml?
+      not html?
+    end
+
+    # True if the format is any flavor of HTML
+    def html?
+      html4? or html5?
+    end
+
+    # True if the format is HTML4
+    def html4?
+      @options[:format] == :html4
+    end
+
+    # True if the format is HTML5
+    def html5?
+      @options[:format] == :html5
+    end
+
     # Gets the current tabulation of the document.
     def tabulation
       @real_tabs + @tabulation
@@ -32,7 +52,9 @@ module Haml
     # Creates a new buffer.
     def initialize(options = {})
       @options = {
-        :attr_wrapper => "'"
+        :attr_wrapper => "'",
+        :ugly => false,
+        :format => :xhtml
       }.merge options
       @buffer = ""
       @tabulation = 0
@@ -45,21 +67,23 @@ module Haml
     # Renders +text+ with the proper tabulation. This also deals with
     # making a possible one-line tag one line or not.
     def push_text(text, tab_change = 0)
-      if(@tabulation > 0)
+      if @tabulation > 0 && !@options[:ugly]
         # Have to push every line in by the extra user set tabulation
         text.gsub!(/^/m, '  ' * @tabulation)
       end
       
-      @buffer << "#{text}"
+      @buffer << text
       @real_tabs += tab_change
     end
 
     # Properly formats the output of a script that was run in the
     # instance_eval.
-    def push_script(result, flattened, close_tag = nil)
+    def push_script(result, preserve_script, close_tag = nil, preserve_tag = false, escape_html = false)
       tabulation = @real_tabs
-      
-      if flattened
+
+      if preserve_tag
+        result = Haml::Helpers.preserve(result)
+      elsif preserve_script
         result = Haml::Helpers.find_and_preserve(result)
       end
       
@@ -69,19 +93,21 @@ module Haml
         result = result[0...-1]
       end
       
-      if close_tag && Buffer.one_liner?(result)
-        @buffer << result
-        @buffer << "</#{close_tag}>\n"
+      result = html_escape(result) if escape_html
+
+      if close_tag && (@options[:ugly] || Buffer.one_liner?(result) || preserve_tag)
+        @buffer << "#{result}</#{close_tag}>\n"
         @real_tabs -= 1
       else
         if close_tag
           @buffer << "\n"
         end
         
-        result = result.gsub(/^/m, tabs(tabulation))
+        result = result.gsub(/^/m, tabs(tabulation)) unless @options[:ugly]
         @buffer << "#{result}\n"
         
         if close_tag
+          # We never get here if @options[:ugly] is true
           @buffer << "#{tabs(tabulation-1)}</#{close_tag}>\n"
           @real_tabs -= 1
         end
@@ -91,7 +117,7 @@ module Haml
 
     # Takes the various information about the opening tag for an
     # element, formats it, and adds it to the buffer.
-    def open_tag(name, atomic, try_one_line, class_id, obj_ref, content, *attributes_hashes)
+    def open_tag(name, atomic, try_one_line, preserve_tag, class_id, obj_ref, content, *attributes_hashes)
       tabulation = @real_tabs
       
       attributes = class_id
@@ -103,14 +129,17 @@ module Haml
 
       if atomic
         str = " />\n"
-      elsif try_one_line
+      elsif try_one_line || preserve_tag
         str = ">"
       else
         str = ">\n"
       end
-      @buffer << "#{tabs(tabulation)}<#{name}#{Precompiler.build_attributes(@options[:attr_wrapper], attributes)}#{str}"
+
+      attributes = Precompiler.build_attributes(html?, @options[:attr_wrapper], attributes)
+      @buffer << "#{@options[:ugly] ? '' : tabs(tabulation)}<#{name}#{attributes}#{str}"
+
       if content
-        if Buffer.one_liner?(content)
+        if @options[:ugly] || Buffer.one_liner?(content)
           @buffer << "#{content}</#{name}>\n"
         else
           @buffer << "\n#{tabs(@real_tabs+1)}#{content}\n#{tabs(@real_tabs)}</#{name}>\n"

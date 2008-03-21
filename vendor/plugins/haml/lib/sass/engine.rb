@@ -56,14 +56,14 @@ module Sass
 
     # Creates a new instace of Sass::Engine that will compile the given
     # template string when <tt>render</tt> is called.
-    # See README for available options.
+    # See README.rdoc for available options.
     #
     #--
     #
     # TODO: Add current options to REFRENCE. Remember :filename!
     #
     # When adding options, remember to add information about them
-    # to README!
+    # to README.rdoc!
     #++
     #
     def initialize(template, options={})
@@ -270,11 +270,18 @@ module Sass
     end
 
     def parse_constant(line)
-      name, value = line.scan(Sass::Constant::MATCH)[0]
+      name, op, value = line.scan(Sass::Constant::MATCH)[0]
       unless name && value
         raise SyntaxError.new("Invalid constant: \"#{line}\"", @line)
       end
-      @constants[name] = Sass::Constant.parse(value, @constants, @line)
+
+      constant = Sass::Constant.parse(value, @constants, @line)
+      if op == '||='
+        @constants[name] ||= constant
+      else
+        @constants[name] = constant
+      end
+
       :constant
     end
 
@@ -291,8 +298,9 @@ module Sass
     def parse_directive(line)
       directive, value = line[1..-1].split(/\s+/, 2)
 
-      case directive
-      when "import"
+      # If value begins with url( or ",
+      # it's a CSS @import rule and we don't want to touch it.
+      if directive == "import" && value !~ /^(url\(|")/
         import(value)
       else
         Tree::DirectiveNode.new(line, @options[:style])

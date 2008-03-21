@@ -1,19 +1,12 @@
 #!/usr/bin/env ruby
-
-require 'test/unit'
-require 'rubygems'
-require 'action_pack'
-
-require File.dirname(__FILE__) + '/../../lib/haml'
+require File.dirname(__FILE__) + '/test_helper'
 require 'haml/template'
 require File.dirname(__FILE__) + '/mocks/article'
 
-class TestFilter
-  def initialize(text)
-    @text = text
-  end
+module TestFilter
+  include Haml::Filters::Base
 
-  def render
+  def render(text)
     "TESTING HAHAHAHA!"
   end
 end

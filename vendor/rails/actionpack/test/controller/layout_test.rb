@@ -35,12 +35,12 @@ class MabView < ActionView::TemplateHandler
   def initialize(view)
   end
   
-  def render(text, locals = {})
-    text
+  def render(template)
+    template.source
   end
 end
 
-ActionView::Base::register_template_handler :mab, MabView
+ActionView::Template::register_template_handler :mab, MabView
 
 class LayoutAutoDiscoveryTest < Test::Unit::TestCase
   def setup
