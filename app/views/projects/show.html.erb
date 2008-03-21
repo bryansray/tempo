@@ -32,7 +32,7 @@
       <%= @project.description %>
       
       <div class="panel" id="cards">
-        <h2>Cards</h2>
+        <h2>Cards - <%= @project.cards.length %></h2>
         <div class="Toolbar">
             <%= link_to "Add Card", new_project_card_path(@project) %> | 
         	<%= link_to "Swim Lanes", project_cards_path(@project) %>
