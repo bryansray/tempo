@@ -56,6 +56,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :iterations
   map.resources :team_users
   
+  map.resources :members
   map.resources :users
   map.resources :departments
   map.resources :tags, :member => { :edit_tags => :get }
