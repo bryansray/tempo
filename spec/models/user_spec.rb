@@ -102,7 +102,7 @@ describe User, "with fixtures loaded" do
   end
 
   it "should belong to multiple teams" do
-    @user.should have(1).teams
+    @user.should have(2).teams
   end
   
   it "should show team member history" do
@@ -117,6 +117,10 @@ describe User, "with fixtures loaded" do
   it "should have a reset password method that clears out the password_reset_code field" do
     @user.reset_password
     @user.password_reset_code.should be_nil
+  end
+  
+  it "should belong to multiple projects" do
+    @user.should have(2).projects
   end
   
   it "should set the @reset_password instance variable to true so that an email can be sent out if needed"
