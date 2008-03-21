@@ -11,13 +11,13 @@
             </div>
 
            <div class="panel">
-             <h2>Cards</h2>
+             <h2>Cards - <%= @team.cards.length %></h2>
 
 				<div class="Toolbar">
 					<%= link_to "Swim Lanes", team_cards_path(@team) %>
 				</div>
 
-             <% @team.cards.each do |card| %>
+             <% @cards.each do |card| %>
                 <p><%= link_to card.title, project_card_path( card.project, card ) %></p>
              <% end %>
            </div>
