@@ -28,10 +28,10 @@ describe Content, "with fixtures loaded" do
     @content.should be_valid
   end
   
-  it "should not be valid with a nil text field" do
+  it "should be valid with a nil text field" do
     @content.text = nil
     
-    @content.should_not be_valid
+    @content.should be_valid
   end
   
   it "should have an owner of class Post" do

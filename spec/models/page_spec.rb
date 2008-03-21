@@ -45,12 +45,6 @@ describe Page do
     @page.content.should == contents(:five)
   end
   
-  it "should not be valid if content is invalid" do
-    @page.content.text = nil
-
-    @page.should_not be_valid
-  end
-  
   it "should be created by a user" do
     @page.user.should == users(:one)
   end
