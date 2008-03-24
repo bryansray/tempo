@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 37) do
+ActiveRecord::Schema.define(:version => 38) do
 
   create_table "attachments", :force => true do |t|
     t.integer "content_id"
@@ -62,8 +62,6 @@ ActiveRecord::Schema.define(:version => 37) do
   end
 
   create_table "cards", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
     t.integer  "project_id"
     t.integer  "iteration_id"
     t.integer  "team_id"

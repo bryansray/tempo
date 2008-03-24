@@ -14,4 +14,8 @@ class Project < ActiveRecord::Base
   
   # Validations
   validates_presence_of :name
+  
+  def to_s
+    self.name
+  end
 end

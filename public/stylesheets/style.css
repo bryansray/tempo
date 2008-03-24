@@ -837,9 +837,20 @@ h1.card-short-description {
 
 .properties span {
     display: block;
-    float: left;
+    /*float: left;*/
     margin: .2em 0em;
     padding: 1px;
+}
+.drop-list-panel
+{
+  float: left;
+}
+.drop-list-panel input
+{
+  border: 0px;
+  background: #FFFFCC;
+  padding: 0px;
+  line-height: 1.6p;
 }
 
 .property-list {

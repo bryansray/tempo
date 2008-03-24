@@ -38,14 +38,26 @@ class ApplicationController < ActionController::Base
   
   audit Card, CardProperty, Member
   
+  # This action supports the generic_field helpers
+  def generic_field_updater
+    obj = nil
+    eval "obj = #{params[:model]}.find(params[:id])"
+    
+    if obj.update_attribute( params[:field], params[:value] )
+      render :json => { :success => true }
+    else
+      render :json => { :success => false }
+    end
+  end
+  
   protected
   def rescue_action_in_public(exception)
-	puts exception
-	if exception.is_a? ActiveRecord::RecordNotFound
-		render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
-	else
-		super
-	end
+    puts exception
+  	if exception.is_a? ActiveRecord::RecordNotFound
+  		render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
+  	else
+  		super
+  	end
   end
   
   #def rescue_action_locally(e); rescue_action_in_public(e); end

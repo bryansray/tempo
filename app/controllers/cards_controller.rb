@@ -77,30 +77,13 @@ class CardsController < ApplicationController
 #    end
   end
    
-  def change_iteration
-  	@card = Card.find(params[:id])
-	@card.iteration_id = params[:iteration_id]
-	@card.save
-  end
-  
-  def change_actual
-  	@card = Card.find(params[:id])
-	@card.actual = params[:actual]
-	@card.save
-  end
-  
-  def change_estimated
-  	@card = Card.find(params[:id])
-	@card.estimated = params[:estimated]
-	@card.save
-  end
   
   def show
     @card = Card.find(params[:id])
   end
   
   def edit
-	@card = Card.find(params[:id])
+    @card = Card.find(params[:id])
   end
   
   def update

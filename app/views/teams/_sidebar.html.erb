@@ -1,18 +1,3 @@
 <% if logged_in? && controller.action_name == "index" %>
-  <div class="Section">
-    <h3>Options</h3>
-
-    <div class="content" id="Options">
-      <%= link_to "Create a new team", new_team_path, :class => "icon icon_new_page" %>
-	  <%= link_to "System Properties", properties_path, :class => "icon icon_new_page" %>
-	</div>
-  </div>
-<% elsif logged_in? %>
-  <div class="Section">
-    <h3>Options</h3>
-
-    <div class="content" id="Options">
-      <%= link_to "All Teams", teams_path %>
-	</div>
-  </div>
+  
 <% end %>
