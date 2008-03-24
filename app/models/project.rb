@@ -18,4 +18,8 @@ class Project < ActiveRecord::Base
   def to_s
     self.name
   end
+
+  def properties
+    Property.find :all, :conditions => ["scope_type = ? OR scope_type IS NULL", 'Project'], :order => 'name'
+  end
 end

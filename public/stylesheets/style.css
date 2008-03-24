@@ -293,9 +293,8 @@ input[type="text"], input.text {
 
 #AccountTabs {
     float: right;
-    padding-right:30px;
+    padding-right:21em;
     width: 224px;
-    border-left:2px solid #03b;
 }
 #AccountTabs a:link, #AccountTabs a:visited {
     color:#F0D1B2;
@@ -737,6 +736,7 @@ a.icon:hover {
     background-color: #e0dfd5;
 	border-bottom: 1px dotted #EFEFEF;
 	padding: .5em 1em;
+	margin-bottom: .5em;
 }
 .action-bar-inner-wrapper {
     padding: 5px 10px;
@@ -779,6 +779,13 @@ a.icon:hover {
     font-weight: bold;
 }
 /******[ cards ]******/
+.panel .Card {
+	padding-left: 20px;
+}
+
+.panel .card-title {
+	padding-left: 35px;
+}
 .card {
     border: 1px solid #aaa;
 }
@@ -799,6 +806,10 @@ a.icon:hover {
     border-top: 1px dotted black;
 }
 
+.panel .card-index {
+	font-size: 120%;
+	float: none;
+}
 .card-index {
     color: #666;
     float: right;
@@ -837,20 +848,9 @@ h1.card-short-description {
 
 .properties span {
     display: block;
-    /*float: left;*/
+    float: left;
     margin: .2em 0em;
     padding: 1px;
-}
-.drop-list-panel
-{
-  float: left;
-}
-.drop-list-panel input
-{
-  border: 0px;
-  background: #FFFFCC;
-  padding: 0px;
-  line-height: 1.6p;
 }
 
 .property-list {

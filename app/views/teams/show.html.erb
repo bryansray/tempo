@@ -18,7 +18,7 @@
 				</div>
 
              <% @team.cards.each do |card| %>
-                <p><%= link_to card, card_path( card ) %></p>
+                <p><%= link_to card.title, project_card_path( card.project, card ) %></p>
              <% end %>
            </div>
 

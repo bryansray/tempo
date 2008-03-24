@@ -118,3 +118,13 @@ twelve:
   published_at: 2007-10-03 19:58:26
   created_at: 2007-10-03 19:58:26
   updated_at: 2007-10-03 19:58:26
+thirteen:
+  user: one
+  title: Card 4 Example
+  text: This is the content for a new card
+  keywords: Keyword 1, Keyword 2
+  published: true
+  owner: four (Card)
+  published_at: 2007-10-03 19:58:26
+  created_at: 2007-10-03 19:58:26
+  updated_at: 2007-10-03 19:58:26

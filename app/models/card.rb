@@ -27,7 +27,7 @@ class Card < ActiveRecord::Base
   end
   
   def description
-    content.text
+    content.text unless content.nil?
   end
   
   def description=(value)
@@ -38,8 +38,17 @@ class Card < ActiveRecord::Base
     content.user.nil? ? '' : content.user
   end
   
+  def to_param
+    number
+  end
+  
+  def self.next_number(project_id)
+    card_count = Card.count :conditions => ['project_id = ?', project_id]
+    card_count + 1
+  end
+  
   def to_s
-    content.title
+    title
   end
   
   # TODO : Should this be a first class model rather than a property?

@@ -55,6 +55,7 @@ class CardsController < ApplicationController
     
     @card.project = Project.find(params[:project_id]) if params[:project_id]
     @card.team = Team.find(params[:team_id]) if params[:team_id]
+    @card.number = Card.next_number(params[:project_id])
 
     respond_to do |format|
       if @card.save
@@ -65,21 +66,11 @@ class CardsController < ApplicationController
         format.js { render "error" }
       end
     end
-#    if @card.save?
-#      props = Property.find(:all, :conditions => "scope_id IS NULL")
-#      props += @card.team.properties if @card.team_id
-#      props += @card.iteration.properties if @card.iteration_id
-#      props += @card.project.properties if @card.project_id
-#
-#      props.each do |prop|
-#        CardProperty.create( :card_id => @card.id, :property_id => prop.id, :option_id => prop.default_option )
-#      end
-#    end
   end
    
   
   def show
-    @card = Card.find(params[:id])
+    @card = Card.find_by_number(params[:id], :conditions => ["project_id = ?", params[:project_id]])
   end
   
   def edit
@@ -103,6 +94,6 @@ class CardsController < ApplicationController
   
   def new
     @project = Project.find(params[:project_id]) if params[:project_id]
-    @card = Card.new
+    @card = Card.new(:number => Card.next_number(@project.id))
   end
 end

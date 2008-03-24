@@ -28,7 +28,7 @@ describe Team, "with fixtures loaded" do
   end
   
   it "should have multiple cards assigned to it" do
-    @team.should have(1).cards
+    @team.should have(2).cards
   end
   
   it "should be assigned to a specific project" do

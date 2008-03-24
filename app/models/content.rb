@@ -13,9 +13,6 @@ class Content < ActiveRecord::Base
   scope_out :published, :conditions => ["contents.published = ?", true]
   
   has_many :attachments, :order => "attachments.filename"
-
-  # Validations
-  validates_presence_of :text
   
   protected
   def self.published_pages

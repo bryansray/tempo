@@ -57,13 +57,7 @@
 				<li>
 					<%= 
 						if (controller.controller_name == "users")
-							link_to_if logged_in?, "Profile", user_path(current_user), :class => "current" do
-								link_to "Users", users_path, :class => "current"
-							end
-						else 
-							link_to_if(logged_in?, "Profile", user_path(current_user)) do
-								link_to "Users", users_path
-							end
+							link_to "Users", users_path, :class => "current"
 						end
 					%>
 				</li>
@@ -86,27 +80,26 @@
 				<li><a href="http://djangovm/wcims" target="_blank">Usable CIMS</a></li>
 				<li>
 					<%= 
-						if logged_in?
-							if (["teams","iterations","cards","properties","options","projects"].include?(controller.controller_name))
-								link_to "TPS<sup>BETA</sup>", projects_path, :class => "current"
-							else 
-								link_to "TPS<sup>BETA</sup>", projects_path
-							end
+						if (["teams","iterations","cards","properties","options","projects"].include?(controller.controller_name))
+							link_to "TPS<sup>BETA</sup>", projects_path, :class => "current"
+						else 
+							link_to "TPS<sup>BETA</sup>", projects_path
 						end
 					%>
 				</li>
 			</ul>
 			<ul id="AccountTabs">
-				<% if !logged_in? %>
-				<li>
-					<%= link_to "Signup", signup_path %>
-				</li>
+				<% unless logged_in? %>
+					<li><%= link_to "Signup", signup_path %></li>
 				<% end %>
 				<li>
 					<%= link_to_if (logged_in?), "Logout", logout_path  do 
 							link_to "Login", login_path
 						end %>
 				</li>
+				<% if logged_in? %>
+					<li><%= link_to "Profile", user_path(current_user) %></li>
+				<% end %>
 			</ul>
 		</div>
 
