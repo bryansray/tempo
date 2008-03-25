@@ -855,7 +855,8 @@ h1.card-short-description {
 
 .drop-list-panel
 {
-  float: left;
+  	float: left;
+  	height: 20px;
 }
 .drop-list-panel input
 {
