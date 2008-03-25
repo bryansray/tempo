@@ -1,3 +1,0 @@
-page["card_iter#{@card.id}"].replace_html @card.iteration || "Select..."
-page["iter_select#{@card.id}"].hide
-page["card_iter#{@card.id}"].show

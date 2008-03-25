@@ -1,20 +1,9 @@
 <div class="properties">
 <% assigned_properties.each do |assigned| %>
   <span class="drop-list-panel" style="width: 19em;">
-  <p>
-  <%= assigned.property.name %>: 
-  <%= link_to_function assigned.option ? assigned.option : "(not set)", "CardProperties.displayOptions(#{assigned.property.id})", :id => "property-#{assigned.property.id}" %>
-
-  <select id="property-edit-<%= assigned.property.id %>" style="display: none;" onBlur="$(this).hide(); $('property-<%= assigned.property.id %>').show();">
-          <option value="">(not set)</option>
-    <%= options_for_select assigned.property.options.find(:all, :order=>"sequence").collect {|v| [ v, v.id ] }, assigned.option_id %>
-  </select>
-
-  <%= observe_field "property-edit-#{assigned.property.id}", 
-            :url => set_value_for_admin_card_path(@card), 
-            :with => "'property_id=' + #{assigned.property.id} + '&option_id=' + value", 
-            :success => "CardProperties.afterValueChanged(#{assigned.property.id})" %>
-  </p>
+  <% options = options_for_select( assigned.property.options.find(:all, :order=>"sequence").collect {|v| [ v, v.id ] }, assigned.option_id ) %>
+  <%= assigned.property.name %>: <%= generic_update_select( assigned, :option, options ) %>
+  
   </span>
 <% end %>
 </div>
