@@ -16,7 +16,7 @@ development:
   encoding: utf8
   database: TeamPortal_development
   username: root
-  password: 
+  password: datacert
   host: localhost
 
 # Warning: The database defined as 'test' will be erased and
@@ -27,7 +27,7 @@ test:
   encoding: utf8
   database: TeamPortal_test
   username: root
-  password: 
+  password: datacert
   host: localhost
 
 production:
@@ -35,5 +35,5 @@ production:
   encoding: utf8
   database: TeamPortal_production
   username: root
-  password: 
+  password: datacert
   host: localhost
