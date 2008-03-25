@@ -18,23 +18,24 @@
           <div class="properties">
             
             <span class="drop-list-panel" style="width: 19em;">
-              <p>Estimated Hours: <%= link_to_function @card.estimated ? @card.estimated : "(not set)", "" %></p>
+              Estimated Hours: <%= generic_update_textbox( @card, :estimated, :style => "width: 60px;" ) %>
+              
             </span>
 
             <span class="drop-list-panel" style="width: 19em;">
-              <p>Actual Hours: <%= link_to_function @card.actual ? @card.actual : "(not set)", "" %></p>
+              Actual Hours: <%= generic_update_textbox( @card, :actual, :style => "width: 60px;" ) %>
             </span>
 
             <span class="drop-list-panel" style="width: 19em;">
-              <p>Project: <%= link_to @card.project.name, project_path(@card.project) %></p>
+              Project: <%= generic_update_select( @card, :project ) %>
             </span>
 
             <span class="drop-list-panel" style="width: 19em;">
-              <p>Team Assigned: <%= link_to_function @card.team ? @card.team : "(not set)", "" %></p>
+              Team Assigned: <%= generic_update_select( @card, :team ) %>
             </span>
 
             <span class="drop-list-panel" style="width: 19em;">
-              <p>Iteration: <%= link_to_function @card.iteration ? @card.iteration : "(not set)", "" %></p>
+              Iteration: <%= generic_update_select( @card, :iteration ) %>
             </span>
 
           </div>

@@ -15,6 +15,10 @@ class Project < ActiveRecord::Base
   # Validations
   validates_presence_of :name
   
+  def to_s
+    self.name
+  end
+
   def properties
     Property.find :all, :conditions => ["scope_type = ? OR scope_type IS NULL", 'Project'], :order => 'name'
   end

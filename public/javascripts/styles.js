@@ -1,3 +1,4 @@
+<<<<<<< HEAD:public/javascripts/styles.js
 var rules = {
 	// convert any elements with class="panel" into an Ext Panel
 	// uses the first <h2> element it finds as the title for the panel
@@ -20,6 +21,8 @@ var rules = {
 			collapsible:true,
 			collapsed: Ext.get(el).hasClass( "collapsed" )
 		});
+	}
+};
 	}
 };
 StyleScripts.register(rules);		

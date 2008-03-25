@@ -1,3 +1,0 @@
-page["card_est#{@card.id}"].replace_html @card.estimated || " - "
-page["est_field#{@card.id}"].hide
-page["card_est#{@card.id}"].show

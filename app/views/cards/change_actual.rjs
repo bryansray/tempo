@@ -1,3 +1,0 @@
-page["card_actu#{@card.id}"].replace_html @card.actual || " - "
-page["actu_field#{@card.id}"].hide
-page["card_actu#{@card.id}"].show

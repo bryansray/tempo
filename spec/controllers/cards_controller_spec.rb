@@ -24,7 +24,11 @@ describe CardsController, "#route_for" do
   
   it "should map { :controller => 'cards', :action => 'index', :team_id => 1 } to /teams/1/cards" do
     route_for(:controller => "cards", :action => "index", :team_id => 1).should == "/teams/1/cards"
-  end  
+  end
+  
+  it "should map { :controller => 'cards', :action => 'generic_field_updaters', :id => 1 } to /cards/generic_field_updaters/1" do
+    route_for(:controller => "cards", :action => "generic_field_updaters", :id => 1).should == "/cards/generic_field_updaters/1"
+  end    
 end
 
 describe CardsController, "handling GET /cards" do
@@ -229,4 +233,25 @@ describe CardsController, "handling POST /cards.js" do
   end
   
   it "should render the RJS on successful save"
+end
+
+describe CardsController, "handling POST /cards/generic_field_updater/1" do
+  before(:each) do
+    @card = mock_model(Card, :to_param => 1)
+    #@project = mock_model(Project, :to_param => 1)
+    Card.stub!(:find).and_return(@card)
+    #Project.stub!(:find).and_return(@project)
+    #@card.stub!(:update_attributes).and_return(2)
+  end
+  
+  def do_post
+    post :generic_field_updater, :id => 1, :model => 'Card', :value => 2, :field => 'project_id', :format => :js
+  end
+  
+  it "should use generic_field_updater from ApplicationController to set field on card" do
+    @card.should_receive( :update_attribute ).with( "project_id", "2" ).and_return( true )
+    do_post
+  end
+  
+  it "should render JSON on successful save"
 end

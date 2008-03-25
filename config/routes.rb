@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
     projects.resources :teams
   end
   
-  map.resources :cards, :member => { :change_iteration => :post, :change_actual => :post }
+  map.resources :cards
   map.resources :iterations
   map.resources :team_users
   

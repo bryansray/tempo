@@ -2,8 +2,8 @@ class PropertiesController < ApplicationController
   # GET /properties
   # GET /properties.xml
   def index
-    @properties = Property.find(:all, :conditions => "scope_type = 'Project'")
-	@property = Property.new
+    @properties = Property.find(:all, :conditions => "scope_type IS NULL")
+    @property = Property.new
 	
     respond_to do |format|
       format.html # index.html.erb
