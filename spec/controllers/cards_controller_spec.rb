@@ -35,6 +35,13 @@ describe CardsController, "handling GET /cards" do
   before(:each) do
     @card = mock_model(Card, :to_param => 1)    
     @cards = [@card]
+    
+    @property = mock_model(Property, :to_param => 1, :name => "Status")
+    
+    @option = mock_model(Option, :to_param => 1)
+    @options = [@option]
+    
+    @property.stub!(:options).and_return(@options)
   end
   
   describe "when listing all the cards for a specific team" do
@@ -100,11 +107,7 @@ describe CardsController, "handling GET /cards" do
   
   describe "when a property_id is NOT specified to group by" do
     before(:each) do
-      @property = mock_model(Property, :to_param => 1, :name => "Status")
-      @option = mock_model(Option, :to_param => 1)
-      @options = [@option]
-      
-      @property.stub!(:options).and_return(@options)
+
     end
     
     def do_get
@@ -151,17 +154,18 @@ describe CardsController, "handling POST /teams/1/cards" do
     @team = mock_model(Team, :to_param => 1)
     @card = mock_model(Card, :to_param => 1)
     
-    Project.stub!(:find).and_return(@project)
     Card.stub!(:new).and_return(@card)
     Team.stub!(:find).and_return(@team)
     @card.stub!(:team=).and_return(@team)
     @card.stub!(:project=).and_return(@project)
-    @card.stub!(:project).and_return(@project)
     @card.stub!(:number=).and_return(1)
+    
+    @card.stub!(:project).and_return(@project)
+    @team.stub!(:project).and_return(@project)
   end
   
   def do_post
-    post :create, :id => 1, :project_id => 1, :team_id => 1
+    post :create, :id => 1, :team_id => 1
   end
   
   def post_with_successful_save
@@ -173,6 +177,7 @@ describe CardsController, "handling POST /teams/1/cards" do
     Team.should_receive(:find).and_return(@team)
     post_with_successful_save
   end
+  
   it "should assign the created card to the specified team" do
     @card.should_receive(:team=).and_return(@team)
     post_with_successful_save

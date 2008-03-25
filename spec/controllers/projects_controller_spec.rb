@@ -80,8 +80,12 @@ end
 describe ProjectsController, "handling GET /projects/1" do
   before(:each) do
     @project = mock_model(Project, :to_param => 1)
+    @card = mock_model(Card, :to_param => 1)
+    @cards = [@card]
     
     Project.stub!(:find).and_return(@project)
+    @project.stub!(:cards).and_return(@cards)
+    @cards.stub!(:find).and_return(@cards)
   end
   
   def do_get
