@@ -1,5 +1,5 @@
 --- 
-cwd: /home/teampo/TeamPortal/current
+cwd: /var/www/tempo/current
 log_file: log/mongrel.log
 port: "8000"
 environment: production
