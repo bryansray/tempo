@@ -127,7 +127,7 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
 
     # Update the last user that updated the content
-    @page.content.user = current_user if (logged_in?)
+    @page.content.user = current_user if logged_in?
     @page.content.published = true if params[:commit] == "Publish"
     @page.tag_list.add(params[:tags_to_apply], :parse => true)
 	
