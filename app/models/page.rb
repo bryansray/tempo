@@ -18,7 +18,7 @@ class Page < ActiveRecord::Base
   end
   
   def published?
-	content.published?
+	  content.published?
   end
   
   def tags
