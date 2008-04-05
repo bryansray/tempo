@@ -31,7 +31,7 @@
     
     .content#Options
       = link_to "Create a new page", new_page_path, :class => "icon icon_new_page"
-      = link_to "Edit this page", edit_page_path(@page), :class => "icon icon_edit_page"
+      = link_to_function("Edit this page", "$('page-content').hide(); $('page-content-form').show();", :class => "icon icon_edit_page")
       = link_to_remote("Set this page as default", {:url => set_default_page_path(@page), :complete => "Ext.DataCert.msg('Preferences', 'Default Page Set.');"}, :class => "icon icon_star_page")
 
   .Section 
