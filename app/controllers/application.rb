@@ -5,12 +5,15 @@ class ApplicationController < ActionController::Base
   uses_tiny_mce(
   	:options => {
       :apply_source_formatting => true,
+      :convert_urls => true,
+      :tab_focus => ":prev, :next",
       :cleanup => false,
       :editor_selector => "editor",
       :mode => "textareas",
       :remove_linebreaks => false,
   		:theme => "advanced",
 	  	:theme_advanced_toolbar_location => "top",
+	  	:theme_advanced_disable => "styleselect, formatselect, image",
 	  	:theme_advanced_toolbar_align => "left",
 	  	:theme_advanced_resizing => true,
       :plugins => "table, autosave, inlinepopups",
@@ -18,12 +21,8 @@ class ApplicationController < ActionController::Base
       :table_styles => "Header 1=header1;Header 2=header2;Header 3=header3",
       :table_cell_styles => "Header 1=header1;Header 2=header2;Header 3=header3;Table Cell=tableCel1",
       :table_row_styles => "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1",
-      :table_cell_limit => 100,
-      :table_row_limit => 5,
-      :table_col_limit => 5,
-			:height => "550px"
-  	},
-  	:only => [:new, :edit]
+      :table_cell_limit => 100
+  	}
   )
 
   # Be sure to include AuthenticationSystem in Application Controller instead
