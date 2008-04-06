@@ -97,6 +97,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(post_path(params[:post_id])) }
       format.xml  { head :ok }
+      format.js
     end
   end
 end

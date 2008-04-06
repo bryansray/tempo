@@ -1,0 +1,14 @@
+<li id="comment-<%= comment.id %>">
+	<%= link_to comment.user, user_path(comment.user) %>
+	-
+	<%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %>  (<%= time_ago_in_words(comment.created_at) %> ago)
+	
+	<div class='content'><%= comment.content.text.gsub(/\n/, '<br/>') %></div>
+	
+	<div class='options'>
+		<%= link_to_remote "Delete", :url => comment_path(comment), 
+			:confirm => "Are you sure you want to remove this comment?", 
+			:method => :delete,
+			:success => "$('comment-#{comment.id}').remove()" %>
+	</div>
+</li>
