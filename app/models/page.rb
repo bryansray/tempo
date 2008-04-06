@@ -1,3 +1,4 @@
+
 class Page < ActiveRecord::Base
   # acts_as ...
   
@@ -9,31 +10,5 @@ class Page < ActiveRecord::Base
   # Validations
   validates_associated :content
   
-  def title
-    content.title
-  end
-  
-  def title=(value)
-    content.nil? ? build_content(:text => value) : content.title = value
-  end
-  
-  def published?
-	  content.published?
-  end
-  
-  def tags
-    content.tags
-  end
-  
-  def tag_list
-	content.tag_list
-  end
-  
-  def text
-    content.text
-  end
-  
-  def text=(value)
-    content.nil? ? build_content(:text => value) : content.text = value
-  end
+  delegate :published?, :tags, :tag_list, :title, :title=, :text, :text=, :to => :content
 end
