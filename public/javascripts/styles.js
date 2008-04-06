@@ -22,4 +22,4 @@ var rules = {
 		});
 	}
 };
-StyleScripts.register(rules);		
+StyleScripts.register(rules);

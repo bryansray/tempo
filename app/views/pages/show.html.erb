@@ -10,19 +10,19 @@
 		
 		
 		<div style="display: none;" id="page-content-form">
-			<% remote_form_for(@page) do |f| %>
+			<% form_for(@page) do |f| %>
 			    <input type="hidden" name="tags_to_apply" id="tags_to_apply" />
 
-						<%= error_messages_for :page %>
+				<%= error_messages_for :page %>
 
-						<div id="Content_Form">
-							<%= render :partial => "contents/form", :locals => { :form => f, :owner => @page } %>
-						</div>
+				<div id="Content_Form">
+					<%= render :partial => "contents/form", :locals => { :form => f, :owner => @page } %>
+				</div>
 
-						<div class="buttons">
-			                                <%= if !@page.published? then f.submit "Publish", :class => "default" end %>
-							<%= f.submit "Update" %> | <%= link_to_function "Cancel", "$('page-content-form').hide(); $('page-content').show();" %>
-						</div>
+				<div class="buttons">
+                    <%= if !@page.published? then f.submit "Publish", :class => "default" end %>
+					<%= f.submit "Update" %> | <%= link_to_function "Cancel", "$('page-content-form').hide(); $('page-content').show();" %>
+				</div>
 
 			<% end %>
 		</div>

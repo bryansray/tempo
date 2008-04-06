@@ -143,6 +143,10 @@ input[type="text"], input.text {
 {
     width: 95%;
 }
+
+.mceEditorIframe {
+	width: 100%;
+}
 .clear:after {
     content:".";
     display:block;
