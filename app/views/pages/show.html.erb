@@ -26,27 +26,8 @@
 
 			<% end %>
 		</div>
-		<div id="comments">
-			<h2><%= pluralize @page.comments.count, 'Comment' %></h2>
-			
-			<ol>
-				<%= render :partial => 'comments/comment', :collection => @page.comments %>
-			</ol>
-			
-			<% if logged_in? %>
-				<div id="Comment_Form">
-					<h2>Leave a Comment</h2>
-					<% form_for :comment, :url => page_comments_path(@page) do |f| %>
-						<% fields_for :content do |content| %>
-							<%= content.text_area :text, :cols => 55, :rows => 7 %>
-						<% end %>
-						
-						<div class="buttons">
-							<%= f.submit "Submit Comment" %>
-						</div>
-					<% end %>
-				</div>
-			<% end %>
-		</div>
+		
+		<%= render :partial => "comments/comments", :locals => { :comments => @page.comments } %>
+
 	</div>
 </div>
