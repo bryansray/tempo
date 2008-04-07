@@ -1,3 +1,9 @@
+var Comments = {
+	addComment: function(element_id) {
+		comments = $(element_id);
+	}
+};
+
 var CardProperties = {
     displayOptions: function(property_id) {
         $('property-' + property_id).hide();

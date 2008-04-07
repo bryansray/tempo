@@ -550,7 +550,8 @@ a.icon:hover {
 
 #comments .comment .options {
 	margin-top: 1em;
-	background: #efefef;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
 	padding: .2em 1em;
 }
 
