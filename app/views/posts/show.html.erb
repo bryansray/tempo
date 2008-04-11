@@ -6,7 +6,7 @@
 		<% if !@post.published? && @post.user.id != current_user.id then %>
 			<p>This post has not yet been published.</p>
 		<% else %>
-                    <%= render :partial => "post", :object => @post %>
+			<%= render :partial => "post", :object => @post %>
 			
 		    <div id="comments">
 				<h2><%= pluralize @post.comments.count, "Comment" %></h2>
