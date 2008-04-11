@@ -1,3 +1,29 @@
+<% content_for :sidebar do %>
+	<% if logged_in? %>
+		<div class="Section">
+			<h3>Options</h3>
+		
+			<div id="Options" class="content">
+				<%= link_to "Create a new post", new_post_path, :class => "icon icon_new_post" %>
+			</div>
+		</div>
+	<% end %>
+
+	<div class="Section">
+		<h3>Tags</h3>
+		
+		<div id="Options" class="content">
+			<ul id="Tags">
+				<% tag_cloud @tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4) do |tag, css_style| %>
+					<li><%= link_to tag.name, tag_path(tag), :style => "", :class => "tag" %></li>
+				<% end %>
+			</ul>
+		</div>
+		
+		<div class="clear"></div>
+	</div>
+<% end %>
+
 <div id="Main">
   <div class="inner">
     <%= render :partial => "posts/post", :collection => @posts %>
