@@ -13,11 +13,11 @@
 		<h3>Tags</h3>
 		
 		<div id="Options" class="content">
-			<div class="tag-cloud">
+			<ul id="Tags">
 				<% tag_cloud @tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4) do |tag, css_style| %>
-					<span class="tag"><%= link_to tag.name, tag_path(tag), :style => "", :class => css_style %></span>
+					<li><%= link_to tag.name, tag_path(tag), :style => "", :class => "tag" %></li>
 				<% end %>
-			</div>
+			</ul>
 		</div>
 		
 		<div class="clear"></div>

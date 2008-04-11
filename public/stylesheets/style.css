@@ -138,10 +138,6 @@ input[type="text"], input.text {
 }
 
 /*****[ tags-container ]*****/
-.tag {
-	padding-right: 10px;
-}
-
 .inner #tags-container {
     margin-bottom: 1em;
 }
@@ -256,7 +252,9 @@ input[type="text"], input.text {
     font-size: .8em;
     padding:1em .5em;
 }
+
 #Options a {
+	display: block;
     margin-bottom:5px;
     border:1px solid #e5e5e5;
     padding-top:5px;
@@ -278,13 +276,16 @@ input[type="text"], input.text {
     margin:0;
 }
 #Tags li {
-    padding: 0 8px 0 0;
+    padding: 0 .5em;
     margin: 0;
     display: inline;
 }
 #Tags a {
-    line-height: 20px;
     display:inline;
+}
+#Tags a:hover {
+	background-color: transparent;
+	border-color: transparent;
 }
 #TagApplicator {
     margin:0;
@@ -761,10 +762,6 @@ h1.card-short-description {
     margin-bottom: 1em;
     margin-top: 1em;
     overflow: auto;
-}
-
-.content {
-    margin: 0em 1em;
 }
 
 .card .version-info {
@@ -1244,11 +1241,6 @@ input[type="text"], input.text {
 #Options .buttons a:hover {
     background:transparent;
 }
-
-.tag_cloud1 { font-size: 1em; }
-.tag_cloud2 { font-size: 1.2em; }
-.tag_cloud3 { font-size: 1.4em; }
-.tag_cloud4 { font-size: 1.6em; }
 
 #Tags {
     margin:0;
