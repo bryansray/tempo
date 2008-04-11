@@ -63,6 +63,6 @@ describe Content, "with fixtures loaded" do
   end
   
   it "should have many published pages" do
-    Content.should have(1).published_pages
+    Content.should have(3).published_pages
   end
 end

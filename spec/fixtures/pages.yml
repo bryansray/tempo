@@ -11,3 +11,15 @@ two:
   deprecated: true
   created_at: 2007-10-10 15:42:04
   updated_at: 2007-10-10 15:42:04
+three:
+  user: one
+  description: This is my description for Page 3
+  deprecated: true
+  created_at: 2007-10-10 15:42:04
+  updated_at: 2007-10-10 15:42:04
+four:
+  user: one
+  description: This is my description for Page 4
+  deprecated: true
+  created_at: 2007-10-10 15:42:04
+  updated_at: 2007-10-10 15:42:04

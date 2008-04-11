@@ -98,7 +98,7 @@ describe User, "with fixtures loaded" do
  end
 
   it "should own one published wiki page" do
-    @user.should have(1).published_pages
+    @user.should have(3).published_pages
   end
 
   it "should belong to multiple teams" do

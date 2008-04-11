@@ -20,7 +20,7 @@
 				<h2>Recently Viewed</h2>
 				
 				<% @visits.each do |visit| %>
-					<p><%= link_to visit.content.title, page_path(visit.content	) %></p>
+					<p><%= link_to visit.content.title, page_path(visit.content.owner) %></p>
 				<% end %>
 			</div>
 		</div>
