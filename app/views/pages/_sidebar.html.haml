@@ -1,21 +1,4 @@
-- if controller.action_name == "index"
-  - if logged_in?
-    .Section
-      %h3 Options
-
-      .content#Options
-        = link_to "Create a new page", new_page_path, :class => "icon icon_new_page"
-    .Section
-      %h3 Tags
-
-      .content#Options
-        %div{ :class => 'tag-cloud' }
-          - tag_cloud @tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4) do |tag, css_style|
-
-            %span{ :class => 'tag' }
-              = link_to tag.name, tag_path(tag), :style => "float: left;", :class => css_style
-
-- elsif controller.action_name == "new"
+- if controller.action_name == "new"
   .Section
     %h3 Options
 

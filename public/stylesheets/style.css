@@ -138,6 +138,10 @@ input[type="text"], input.text {
 }
 
 /*****[ tags-container ]*****/
+.tag {
+	padding-right: 10px;
+}
+
 .inner #tags-container {
     margin-bottom: 1em;
 }
@@ -253,7 +257,6 @@ input[type="text"], input.text {
     padding:1em .5em;
 }
 #Options a {
-    display:block;
     margin-bottom:5px;
     border:1px solid #e5e5e5;
     padding-top:5px;
