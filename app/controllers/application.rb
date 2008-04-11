@@ -3,26 +3,26 @@
 
 class ApplicationController < ActionController::Base	
   uses_tiny_mce(
-  	:options => {
-      :apply_source_formatting => true,
+    :options => {
+      :apply_source_formatting => false,
       :convert_urls => true,
       :tab_focus => ":prev, :next",
       :cleanup => false,
       :editor_selector => "editor",
       :mode => "textareas",
       :remove_linebreaks => false,
-  		:theme => "advanced",
-	  	:theme_advanced_toolbar_location => "top",
-	  	:theme_advanced_disable => "styleselect, formatselect, image",
-	  	:theme_advanced_toolbar_align => "left",
-	  	:theme_advanced_resizing => true,
+      :theme => "advanced",
+      :theme_advanced_toolbar_location => "top",
+      :theme_advanced_disable => "styleselect, image",
+      :theme_advanced_toolbar_align => "left",
+      :theme_advanced_resizing => true,
       :plugins => "table, autosave, inlinepopups",
       :theme_advanced_buttons3_add => "tablecontrols",
       :table_styles => "Header 1=header1;Header 2=header2;Header 3=header3",
       :table_cell_styles => "Header 1=header1;Header 2=header2;Header 3=header3;Table Cell=tableCel1",
       :table_row_styles => "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1",
       :table_cell_limit => 100
-  	}
+    }
   )
 
   # Be sure to include AuthenticationSystem in Application Controller instead
@@ -52,11 +52,11 @@ class ApplicationController < ActionController::Base
   protected
   def rescue_action_in_public(exception)
     puts exception
-  	if exception.is_a? ActiveRecord::RecordNotFound
-  		render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
-  	else
-  		super
-  	end
+    if exception.is_a? ActiveRecord::RecordNotFound
+      render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
+    else
+      super
+    end
   end
   
   #def rescue_action_locally(e); rescue_action_in_public(e); end

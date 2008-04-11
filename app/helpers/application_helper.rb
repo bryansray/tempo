@@ -74,10 +74,10 @@ module ApplicationHelper
     if options_list.nil?
       #TODO: this probably shouldn't get ALL the records
       list = nil
-      eval "list = #{field_obj.class}.find(:all)"
+      eval "list = #{field.to_s.capitalize}.find(:all)"
       
       #this creates the list of assignable values
-      options_list = options_for_select( list.collect { |item| [item.to_s, item.id] }, field_obj.id )
+      options_list = options_for_select( list.collect { |item| [item.to_s, item.id] }, field_obj ? field_obj.id : -1  )
     end
     
     #this creates an option to represent a null value
