@@ -1,32 +1,41 @@
 <div id="Main">
 	<div class="inner">
-		<% unless @page.published? && @page.user.id != current_user.id %>
+		<% unless @page.published? %>
 			<p>This page has not yet been published.</p>
 		<% else %>
-			<%= render :partial => 'content', :object => @page.content %>
+			<div id="page-content">
+				<%= render :partial => 'content', :object => @page.content %>
+			</div>
 		<% end %>
+		
+		
+		<div style="display: none;" id="page-content-form">
+			<% form_for(@page) do |f| %>
+			    <input type="hidden" name="tags_to_apply" id="tags_to_apply" />
+
+				<%= error_messages_for :page %>
+
+				<div id="Content_Form">
+					<%= render :partial => "contents/form", :locals => { :form => f, :owner => @page } %>
+				</div>
+
+				<div class="buttons">
+                    <%= if !@page.published? then f.submit "Publish", :class => "default" end %>
+					<%= f.submit "Update" %> | <%= link_to_function "Cancel", "$('page-content-form').hide(); $('page-content').show();" %>
+				</div>
+
+			<% end %>
+		</div>
 		
 		<div id="comments">
 			<h2><%= pluralize @page.comments.count, 'Comment' %></h2>
-			
-			<ol>
+
+			<ol id="comments-list">
 				<%= render :partial => 'comments/comment', :collection => @page.comments %>
 			</ol>
-			
-			<% if logged_in? %>
-				<div id="Comment_Form">
-					<h2>Leave a Comment</h2>
-					<% form_for :comment, :url => page_comments_path(@page) do |f| %>
-						<% fields_for :content do |content| %>
-							<%= content.text_area :text, :cols => 55, :rows => 7 %>
-						<% end %>
-						
-						<div class="buttons">
-							<%= f.submit "Submit Comment" %>
-						</div>
-					<% end %>
-				</div>
-			<% end %>
+
+			<%= render(:partial => "comments/form", :locals => { :url => page_comments_path(@page) }) if logged_in? %>
 		</div>
+
 	</div>
 </div>

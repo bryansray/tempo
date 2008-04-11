@@ -20,4 +20,12 @@ describe Comment, "with fixtures loaded" do
   it "should belong to a user" do
     @comment.user.should eql(users(:one))
   end
+  
+  it "should have a title method that delegates to its content association" do
+    @comment.title.should == contents(:four).title
+  end
+  
+  it "should have a text method that delegates to its content association" do
+    @comment.text.should == contents(:four).text
+  end
 end

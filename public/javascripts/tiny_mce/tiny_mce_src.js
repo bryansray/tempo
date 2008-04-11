@@ -3582,7 +3582,7 @@ TinyMCE_Control.prototype = {
 
 		// If no width/height then default to 320x240, better than nothing
 		if (this.settings['width'] == 0)
-			this.settings['width'] = 320;
+			this.settings['width'] = '100%';
 
 		if (this.settings['height'] == 0)
 			this.settings['height'] = 240;

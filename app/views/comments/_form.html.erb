@@ -1,0 +1,14 @@
+<div id="Comment_Form">
+	<h2>Leave a Comment</h2>
+
+	<% remote_form_for :comment, :url => url, :success => "Comments.addComment('comments'); $('content_text').clear()" do |f| %>
+		<% fields_for :content do |c| %>
+			<%= c.text_area :text, :cols => 55, :rows => 7 %>
+		<% end %>
+
+		<div class="buttons">
+			<%= f.submit "Submit Comment" %>
+		</div>
+	<% end %>
+
+</div>

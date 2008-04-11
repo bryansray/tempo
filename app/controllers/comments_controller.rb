@@ -41,31 +41,36 @@ class CommentsController < ApplicationController
   # POST /users/1/blogs/1/posts/1/comments.xml
   # POST /page/1/comments
   def create
-    comment = Comment.new(:user => current_user, :content => Content.new(params[:content]))
+    @comment = Comment.new(params[:comment])
+    content = @comment.build_content(params[:content])
 
-    comment.content.user = current_user
-    comment.content.published = true
+    @comment.user = current_user
+    @comment.content.user = current_user
+
+    @comment.content.published = true
 
     if !params[:post_id].nil?
       post = Post.find(params[:post_id])
-      post.comments << comment
+      post.comments << @comment
     elsif !params[:page_id].nil?
       page = Page.find(params[:page_id])  
-      page.comments << comment
-	elsif !params[:card_id].nil?
+      page.comments << @comment
+	  elsif !params[:card_id].nil?
       card = Card.find(params[:card_id])  
-      card.comments << comment
+      card.comments << @comment
     end
 
     respond_to do |format|
-      if comment.save #post.save && comment.save && content.save
+      if @comment.save #post.save && comment.save && content.save
         flash[:notice] = 'Comment was successfully created.'
         
-        format.html { redirect_to polymorphic_path(comment.commentable) }
+        format.html { redirect_to polymorphic_path(@comment.commentable) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
+        format.js
       else
-        format.html { redirect_to polymorphic_path(comment.commentable) }
+        format.html { redirect_to polymorphic_path(@comment.commentable) }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -97,6 +102,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(post_path(params[:post_id])) }
       format.xml  { head :ok }
+      format.js
     end
   end
 end

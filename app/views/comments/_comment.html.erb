@@ -1,0 +1,16 @@
+<li id="comment-<%= comment.id %>" class="comment">
+	<%= link_to comment.user, user_path(comment.user) %>
+	-
+	<%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %>  (<%= time_ago_in_words(comment.created_at) %> ago)
+	
+	<div class='content'><%= comment.content.text %></div>
+	
+	<% if current_user == comment.user %>
+		<div class='options'>
+			<%= link_to_remote "Delete", :url => comment_path(comment), 
+				:confirm => "Are you sure you want to remove this comment?", 
+				:method => :delete,
+				:success => "comment = Ext.get('comment-#{comment.id}'); comment.ghost('l', { easing: 'easeOut', duration: .5, remove: true, useDisplay: false })" %>
+		</div>
+	<% end %>
+</li>

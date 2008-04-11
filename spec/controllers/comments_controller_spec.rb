@@ -254,16 +254,20 @@ describe CommentsController, "handling POST /pages/1/comments" do
     @content = mock_model(Content, :to_param => 1)
     @comment = mock_model(Comment, :to_param => "1", :user => @current_user, :content => @content)
     @comments = [@comment, @comment]
-    
-    @comment.stub!(:commentable).and_return(@page)
+
+    controller.stub!(:current_user).and_return(@current_user)
+
+    Comment.stub!(:new).and_return(@comment)
+    @comment.stub!(:build_content).and_return(@content)
+
+    @comment.stub!(:user=)
     @content.stub!(:user=)
     @content.stub!(:published=).and_return(true)
-    Comment.stub!(:new).and_return(@comment)
-    Content.stub!(:new).and_return(@content)
-    controller.stub!(:current_user).and_return(@current_user)
-    
+
     Page.stub!(:find).and_return(@page)
     @page.stub!(:comments).and_return(@comments)
+    
+    @comment.stub!(:commentable).and_return(@page)
   end
   
   def post_with_successful_save
@@ -312,15 +316,20 @@ describe CommentsController, "handling POST /posts/1/comments" do
     @comment = mock_model(Comment, :to_param => "1", :user => @current_user, :content => @content)
     @comments = [@comment, @comment]
 
-    @comment.stub!(:commentable).and_return(@post)
-    @content.stub!(:user=)
-    @content.stub!(:published=).and_return(true)
-    Comment.stub!(:new).and_return(@comment)
-    Content.stub!(:new).and_return(@content)
     controller.stub!(:current_user).and_return(@current_user)
+    
+    Comment.stub!(:new).and_return(@comment)
+    @comment.stub!(:build_content).and_return(@content)
+
+    @content.stub!(:user=)    
+    @comment.stub!(:user=)
+
+    @content.stub!(:published=).and_return(true)
 
     Post.stub!(:find).and_return(@post)
     @post.stub!(:comments).and_return(@comments)
+    
+    @comment.stub!(:commentable).and_return(@post)
   end
   
   def post_with_successful_save

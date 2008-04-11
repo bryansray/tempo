@@ -1,6 +1,0 @@
-%li{ :id => "comment-#{comment.id}" }
-  .author
-    = link_to comment.user, user_path(comment.user)
-    \ -
-    == #{comment.created_at.strftime("%B %d, %Y at %I:%M %p")} (#{time_ago_in_words(comment.created_at)} ago)
-  .content= comment.content.text.gsub(/\n/, '<br />')

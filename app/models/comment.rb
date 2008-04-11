@@ -5,9 +5,11 @@ class Comment < ActiveRecord::Base
   # want user to vote on the quality of comments.
   #acts_as_voteable
   
+  delegate :title, :title=, :text, :text=, :to => :content
+  
   # NOTE: Comments belong to a user
   belongs_to :user
-  has_one :content, :as => :owner
+  has_one :content, :as => :owner, :dependent => :destroy
   
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.

@@ -19,6 +19,8 @@ ActionController::Routing::Routes.draw do |map|
 	cards.resources :comments
   end
   
+  map.resources :comments
+  
   map.resources :iterations
   map.resources :team_users
   

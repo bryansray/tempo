@@ -1,86 +1,3 @@
-html, body {
-    background: #E5E5E5 none repeat scroll 0;
-}
-
-body {
-    font-family: "Lucida Grande", Verdana, Tahoma, Sans-Serif;
-    font-size: 12px;
-    margin: 0pt;
-    line-height:1.6;
-}
-:focus {
-    outline: 0;
-}
-a:link, a:visited {
-    color:#0000EE;
-    padding-bottom:1px;
-    text-decoration:none;
-    padding-bottom:1px;
-}
-a:hover, a:active {
-    border-bottom:1px solid #aac;
-    padding-bottom:0;
-}
-hr {
-    margin-bottom:1em;
-}
-h1, h2, h3, h4, h5 {
-    font-family: Georgia, "Times New Roman", serif;
-    font-weight:normal;
-}
-h1 {
-    font-size:30px;
-    line-height:1.2;
-    text-decoration: none;
-    color:#333;
-}
-h2 {
-    font-size:1.5em;
-    margin-top:.25em;
-}
-label {
-    display: block;
-    padding-bottom: 0.2em;
-}
-strong {
-    font-weight:bold;
-    color:#444;
-}
-ul {
-    list-style-type: disc;
-    margin-left:2em;
-}
-li {
-    margin:.2em 0;
-}
-textarea {
-    width:100%;
-}
-/* tables still need 'cellspacing="0"' in the markup */
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    font-size:1em;
-}
-caption, th, td {
-    padding:2px 4px;
-}
-form table {
-    width:90%;
-    margin:1em;
-}
-form th {
-    text-align:right;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-    content: "";
-}
-blockquote, q {
-    quotes: "" "";
-    margin-left: 3em;
-    
-}
 fieldset {
     margin: 10px 0pt;
     border: medium none;
@@ -142,6 +59,10 @@ input[type="text"], input.text {
 .mceEditor
 {
     width: 95%;
+}
+
+.mceEditorIframe {
+	width: 100%;
 }
 .clear:after {
     content:".";
@@ -627,6 +548,13 @@ a.icon:hover {
     margin-bottom: 8px;
 }
 
+#comments .comment .options {
+	margin-top: 1em;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+	padding: .2em 1em;
+}
+
 
 /******[ user profiles ]******/
 .profile {
@@ -855,7 +783,8 @@ h1.card-short-description {
 
 .drop-list-panel
 {
-  float: left;
+  	float: left;
+  	height: 20px;
 }
 .drop-list-panel input
 {
