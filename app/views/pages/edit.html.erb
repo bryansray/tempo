@@ -1,7 +1,5 @@
 <% form_for(@page, :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" } ) do |f| %>
     <input type="hidden" name="tags_to_apply" id="tags_to_apply" />
-	<div id="Main">
-		<div class="inner">
 			<%= error_messages_for :page %>
 	
 			<div id="Content_Form">
@@ -12,6 +10,4 @@
                                 <%= if !@page.published? then f.submit "Publish", :class => "default" end %>
 				<%= f.submit "Update" %> | <%= link_to "Cancel", page_path(@page) %>
 			</div>
-		</div>
-	</div>
 <% end %>

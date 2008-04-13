@@ -1,8 +1,4 @@
-<div id="Main">
-  <div class="inner">
-    <h1>Teams</h1>
-	<% @teams.each do |team| %>
-		<%= render :partial => "teams/info", :object => team %>
-	<% end %>
-  </div>  
-</div>
+<h1>Teams</h1>
+<% @teams.each do |team| %>
+	<%= render :partial => "teams/info", :object => team %>
+<% end %>

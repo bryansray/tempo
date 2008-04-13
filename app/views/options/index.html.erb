@@ -1,32 +1,30 @@
-<div id="Main">
-	<div class="inner">
-		<div class="inner_left">
-			<div class="panel">
-				<h2>Add New Option</h2>
-				<p>Add new options to this property using the text box below. Click and drag the options to order them in a specific sequence.</p>
-				<% form_remote_tag :url => property_options_path( @property ), :html => {:id => "option_form"} do %>
-					<p><%= text_field :option, :name %></p>
-				<% end %>
-			</div>
-		</div>
-		<div class="inner_right">
-			<div class="panel">
-				<h2>Options for '<%= @property %>' property</h2>
-				<div class="Toolbar">
-					Back to <%= link_to_if( @property.scope, @property.scope, @property.scope ) do 
-						link_to "System Properties", properties_path
-					end	%>
-				</div>
-				<ul class="drag-list" id="vallist" style="width: 50%">
-				<% @options.each do |option| %>
-					<%= render :partial => "options/option_li", :locals => { :option => option } %>
-				<% end %>
-				</ul>
-				<p id="status"></p>
-			</div>
-		</div>
+<div class="inner_left">
+	<div class="panel">
+		<h2>Add New Option</h2>
+		<p>Add new options to this property using the text box below. Click and drag the options to order them in a specific sequence.</p>
+		<% form_remote_tag :url => property_options_path( @property ), :html => {:id => "option_form"} do %>
+			<p><%= text_field :option, :name %></p>
+		<% end %>
 	</div>
 </div>
+
+<div class="inner_right">
+	<div class="panel">
+		<h2>Options for '<%= @property %>' property</h2>
+		<div class="Toolbar">
+			Back to <%= link_to_if( @property.scope, @property.scope, @property.scope ) do 
+				link_to "System Properties", properties_path
+			end	%>
+		</div>
+		<ul class="drag-list" id="vallist" style="width: 50%">
+		<% @options.each do |option| %>
+			<%= render :partial => "options/option_li", :locals => { :option => option } %>
+		<% end %>
+		</ul>
+		<p id="status"></p>
+	</div>
+</div>
+
 <%= sortable_element 'vallist', 
-	:update => 'status',
-	:url => update_order_property_options_path( @property ) %>
+:update => 'status',
+:url => update_order_property_options_path( @property ) %>

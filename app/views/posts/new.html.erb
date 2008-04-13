@@ -1,22 +1,18 @@
-<div id="Main">
-  <div class="inner">
-      <%= error_messages_for :post %>
+<%= error_messages_for :post %>
 
-      <h1>Create a new blog entry</h1>
+<h1>Create a new blog entry</h1>
 
-      <% form_for(:content, @post.build_content, :url => posts_path, :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" } ) do |f| %>
-        <input type="hidden" name="tags_to_apply" id="tags_to_apply" />
+<% form_for(:content, @post.build_content, :url => posts_path, :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" } ) do |f| %>
+  <input type="hidden" name="tags_to_apply" id="tags_to_apply" />
 
-        <div id="Content_Form">
-            <%= render :partial => "contents/form", :locals => { :form => f, :owner => @post } %>
-        </div>
-
-        <div class="buttons">
-            <%= f.submit "Publish", :class => "default" %>
-            <%= f.submit "Save" %>
-            |
-            <%= link_to "Cancel", posts_path %>
-        </div>
-      <% end %>
-    </div>
+  <div id="Content_Form">
+      <%= render :partial => "contents/form", :locals => { :form => f, :owner => @post } %>
   </div>
+
+  <div class="buttons">
+      <%= f.submit "Publish", :class => "default" %>
+      <%= f.submit "Save" %>
+      |
+      <%= link_to "Cancel", posts_path %>
+  </div>
+<% end %>

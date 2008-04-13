@@ -1,18 +1,14 @@
-<div id="Main">
-	<div class="inner">
-		<% form_for(@post, :url => post_path(@post), :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" }) do |f| %>
-			<input type="hidden" name="tags_to_apply" id="tags_to_apply" />
-			
-			<div id="Content_Form">
-				<%= render :partial => "contents/form", :locals => { :form => f, :owner => @post } %>
-			</div>
-
-			<div class="buttons">
-                            <%= if !@post.published? then f.submit "Publish", :class => "default" end %>
-                            <%= f.submit "Update" %>
-                            | 
-                            <%= link_to "Cancel", post_path(@post) %>
-			</div>
-		<% end %>
+<% form_for(@post, :url => post_path(@post), :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" }) do |f| %>
+	<input type="hidden" name="tags_to_apply" id="tags_to_apply" />
+	
+	<div id="Content_Form">
+		<%= render :partial => "contents/form", :locals => { :form => f, :owner => @post } %>
 	</div>
-</div>
+
+	<div class="buttons">
+		<%= if !@post.published? then f.submit "Publish", :class => "default" end %>
+		<%= f.submit "Update" %>
+		| 
+		<%= link_to "Cancel", post_path(@post) %>
+	</div>
+<% end %>

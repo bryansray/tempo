@@ -1,7 +1,6 @@
-#Main
-  .inner.clear#list
-    - @users.each do |user|
-      %div.profile{ :id => "User_#{user.id}" }
-        <img src="/images/person_save.gif" alt="<%= @user %>" />
-        %h2= link_to user, user_path(user)
-        %p= mail_to user.email
+.clear#list
+  - @users.each do |user|
+    %div.profile{ :id => "User_#{user.id}" }
+      <img src="/images/person_save.gif" alt="<%= @user %>" />
+      %h2= link_to user, user_path(user)
+      %p= mail_to user.email

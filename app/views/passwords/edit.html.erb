@@ -1,22 +1,18 @@
-<div id="Main">
-    <div class="inner">
-		<div>
-			<%= flash[:notice] %>
-		</div>
-		<% form_tag url_for(:action => "update", :id => params[:id]), :method => :put do %>
-		
-		<p>
-			<label for="new_password">New Password</label>
-			<%= password_field_tag :password, {}, :size => 45 %>
-		</p>
-		
-		<p>
-			<label for="new_password_confirmation">Password Confirmation</label>
-			<%= password_field_tag :password_confirmation, {}, :size => 45 %>
-		</p>
-		
-		<%= submit_tag 'Reset Password' %> | <%= link_to "Cancel", home_path %>
-		
-		<% end %>
-    </div>
+<div>
+	<%= flash[:notice] %>
 </div>
+<% form_tag url_for(:action => "update", :id => params[:id]), :method => :put do %>
+
+<p>
+	<label for="new_password">New Password</label>
+	<%= password_field_tag :password, {}, :size => 45 %>
+</p>
+
+<p>
+	<label for="new_password_confirmation">Password Confirmation</label>
+	<%= password_field_tag :password_confirmation, {}, :size => 45 %>
+</p>
+
+<%= submit_tag 'Reset Password' %> | <%= link_to "Cancel", home_path %>
+
+<% end %>

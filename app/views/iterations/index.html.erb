@@ -1,27 +1,23 @@
-<div id="Main">
-	<div class="inner">
-		<div class="inner_left">
-			<div class="panel">
-				<% if !@team.nil? %>
-				<h2>Add New Iteration</h2>
-				<div id="form_container">
-					<%= render :partial => "new", :locals => { :team => @team } %>
-				</div>
-				<% end %>
-			</div>
+<div class="inner_left">
+	<div class="panel">
+		<% if !@team.nil? %>
+		<h2>Add New Iteration</h2>
+		<div id="form_container">
+			<%= render :partial => "new", :locals => { :team => @team } %>
 		</div>
-		<div class="inner_right">
-			<div class="panel">
-				<% if @team.nil? %>
-				<h2>ALL iterations</h2>
-				<% else %>
-				<h2>Iterations</h2>
-				<div class="Toolbar">
-					<%= link_to @team.title, team_path(@team) %>
-				</div>
-				<% end %>
-				<%= render :partial => "list", :object => @iterations %>
-			</div>
-		</div>	
-    </div>  
+		<% end %>
+	</div>
+</div>
+<div class="inner_right">
+	<div class="panel">
+		<% if @team.nil? %>
+		<h2>ALL iterations</h2>
+		<% else %>
+		<h2>Iterations</h2>
+		<div class="Toolbar">
+			<%= link_to @team.title, team_path(@team) %>
+		</div>
+		<% end %>
+		<%= render :partial => "list", :object => @iterations %>
+	</div>
 </div>

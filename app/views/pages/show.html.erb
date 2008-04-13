@@ -1,5 +1,3 @@
-<div id="Main">
-	<div class="inner">
 		<% unless @page.published? %>
 			<p>This page has not yet been published.</p>
 		<% else %>
@@ -36,6 +34,3 @@
 
 			<%= render(:partial => "comments/form", :locals => { :url => page_comments_path(@page) }) if logged_in? %>
 		</div>
-
-	</div>
-</div>

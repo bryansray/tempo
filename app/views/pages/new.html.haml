@@ -1,15 +1,13 @@
-#Main
-  .inner
-    = error_messages_for :page
-    
-    %h1 Create a new wiki page
-    
-    - form_for :content, @page.content, :url => pages_path, :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" } do |f|
-      %input#tags_to_apply{:name=>"tags_to_apply", :type=>"hidden"}
-      .Content_Form
-        = render :partial => "contents/form", :locals => { :form => f, :owner => @page }
-      .buttons
-        = f.submit "Publish", :class => "default"
-        = f.submit "Save"
-        | 
-        = link_to "Cancel", pages_path
+= error_messages_for :page
+
+%h1 Create a new wiki page
+
+- form_for :content, @page.content, :url => pages_path, :html => { :onsubmit => "$('tags_to_apply').value = getTagsToApply('TagApplicator');" } do |f|
+  %input#tags_to_apply{:name=>"tags_to_apply", :type=>"hidden"}
+  .Content_Form
+    = render :partial => "contents/form", :locals => { :form => f, :owner => @page }
+  .buttons
+    = f.submit "Publish", :class => "default"
+    = f.submit "Save"
+    | 
+    = link_to "Cancel", pages_path

@@ -1,12 +1,10 @@
-#Main
-  .inner
-    %h1= ["Results for '", params[:terms], "'"].join " "
-    %ul
-      - @results.each do |result|
-        %li
-          == [#{result.owner.class}] 
-          - if result.owner.class == Comment
-            = link_to(result.owner.commentable.content.title, polymorphic_path(result.owner.commentable))
-          - else
-            = link_to(result.title, polymorphic_path(result.owner))
-          = [ result.owner.user, "@", result.created_at.strftime("%B %d, %Y %I:%m %p")].join " "
+%h1= ["Results for '", params[:terms], "'"].join " "
+%ul
+  - @results.each do |result|
+    %li
+      == [#{result.owner.class}] 
+      - if result.owner.class == Comment
+        = link_to(result.owner.commentable.content.title, polymorphic_path(result.owner.commentable))
+      - else
+        = link_to(result.title, polymorphic_path(result.owner))
+      = [ result.owner.user, "@", result.created_at.strftime("%B %d, %Y %I:%m %p")].join " "

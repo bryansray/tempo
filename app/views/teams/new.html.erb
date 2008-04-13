@@ -1,8 +1,6 @@
-<div id="Main">
-  <div class="inner">
-	<h2>New team</h2>
+<h2>New team</h2>
 
-	<%= error_messages_for :team %>
+<%= error_messages_for :team %>
 
 <% form_for(@team, :url => project_teams_path(@project)) do |f| %>
   
@@ -27,6 +25,3 @@
 </table>
 
 <% end %>
-	
-  </div>
-</div>

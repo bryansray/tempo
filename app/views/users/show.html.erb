@@ -1,43 +1,38 @@
-<div id="Main">
-  <div class="inner">
+ <div id="inner_left" class="inner_left">
 
-    <div id="inner_left" class="inner_left">
+   <div class="panel">
+       <h2>Blog Posts</h2>
+       <%= render :partial => "blog_feed", :object => @posts %>
+   </div>
 
-      <div class="panel">
-          <h2>Blog Posts</h2>
-          <%= render :partial => "blog_feed", :object => @posts %>
-      </div>
+   <div class="panel">
+       <h2>Wiki Pages</h2>
+       <%= render :partial => "pages_feed", :object => @pages %>
+   </div>
 
-      <div class="panel">
-          <h2>Wiki Pages</h2>
-          <%= render :partial => "pages_feed", :object => @pages %>
-      </div>
+   <div class="panel" id="visits">
+       <h2>Recently Viewed</h2>
+       <%= render :partial => "visits_feed", :object => @visits %>
+   </div>
 
-      <div class="panel" id="visits">
-          <h2>Recently Viewed</h2>
-          <%= render :partial => "visits_feed", :object => @visits %>
-      </div>
-	  
-	  <div class="panel">
-          <h2>Team Member History</h2>
-          <%= render :partial => "cards/history", :object => @user.team_history %>
-      </div>
-    </div>
+<div class="panel">
+       <h2>Team Member History</h2>
+       <%= render :partial => "cards/history", :object => @user.team_history %>
+   </div>
+ </div>
 
-    <div id="inner_right" class="inner_right">
-      <div class="profile clear">
-        <img src="/images/person_save.gif" alt="<%= @user %>" />
-        <h2><%= @user %></h2>
-        <p>
-          <%= mail_to @user.email %>
-        </p>
-      </div>
+ <div id="inner_right" class="inner_right">
+   <div class="profile clear">
+     <img src="/images/person_save.gif" alt="<%= @user %>" />
+     <h2><%= @user %></h2>
+     <p>
+       <%= mail_to @user.email %>
+     </p>
+   </div>
 
-      <div class="panel" id="recents">
-        <h2>Recent Content</h2>
+   <div class="panel" id="recents">
+     <h2>Recent Content</h2>
 
-        <%= render :partial => "content_feed", :object => @contents %>
-      </div>
-    </div>
-  </div>
-</div>
+     <%= render :partial => "content_feed", :object => @contents %>
+   </div>
+ </div>

@@ -1,22 +1,18 @@
-<div id="Main">
-	<div class="inner">
-		<div id="flash" class="notice" style="display: <%= flash[:notice].nil? ? 'none' : '' %>;">
-                    <%= flash[:notice] %>
-		</div>
-		<% if !@post.published? && @post.user.id != current_user.id then %>
-			<p>This post has not yet been published.</p>
-		<% else %>
-                    <%= render :partial => "post", :object => @post %>
-			
-		    <div id="comments">
-				<h2><%= pluralize @post.comments.count, "Comment" %></h2>
-		  		
-				<ol id='comments-list'>
-					<%= render :partial => "comments/comment", :collection => @post.comments %>
-				</ol>
-		  		
-				<%= render(:partial => "comments/form", :locals => { :url => post_comments_path(@post) }) if logged_in? %>
-		    </div>
-		<% end %>
-	</div>
+<div id="flash" class="notice" style="display: <%= flash[:notice].nil? ? 'none' : '' %>;">
+                  <%= flash[:notice] %>
 </div>
+<% if !@post.published? && @post.user.id != current_user.id then %>
+	<p>This post has not yet been published.</p>
+<% else %>
+	<%= render :partial => "post", :object => @post %>
+
+    <div id="comments">
+		<h2><%= pluralize @post.comments.count, "Comment" %></h2>
+
+		<ol id='comments-list'>
+			<%= render :partial => "comments/comment", :collection => @post.comments %>
+		</ol>
+
+		<%= render(:partial => "comments/form", :locals => { :url => post_comments_path(@post) }) if logged_in? %>
+    </div>
+<% end %>

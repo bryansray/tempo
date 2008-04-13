@@ -1,42 +1,38 @@
-<div id="Main">
-    <div class="inner">
-        <% if !flash[:notice].nil? %>
-          <div id="flash" class="notice"><%= flash[:notice] %></div>
-        <% end %>
-        
-        <% if !flash[:warning].nil? %>
-          <div id="flash" class="warning"><%= flash[:warning] %></div>
-        <% end %>
-        
-        <fieldset id="login">
-          <legend>Sign In to Team Portal</legend>
+<% if !flash[:notice].nil? %>
+  <div id="flash" class="notice"><%= flash[:notice] %></div>
+<% end %>
 
-          <% form_tag session_path do %>
-            <table>
-                <tr>
-                  <th>Login</th>
-                  <td><%= text_field_tag :login %></td>
-                </tr>
+<% if !flash[:warning].nil? %>
+  <div id="flash" class="warning"><%= flash[:warning] %></div>
+<% end %>
 
-                <tr>
-                  <th>Password</th>
-                  <td><%= password_field_tag :password %>
-                </tr>
+<fieldset id="login">
+  <legend>Sign In to Team Portal</legend>
 
-                <tr>
-                    <th></th>
-                    <td>
-                        <%= check_box_tag :remember_me %> Remember Me
-                    </td>
-                </tr>
+  <% form_tag session_path do %>
+    <table>
+        <tr>
+          <th>Login</th>
+          <td><%= text_field_tag :login %></td>
+        </tr>
 
-                <tr>
-                    <th></th>
-                    <td><%= submit_tag "Log In" %> | <%= link_to "Forgot your password?", forgot_password_path %></td>
-                </tr>
-            </table>
-  
-          <% end %>
-        </fieldset>
-    </div>
-</div>
+        <tr>
+          <th>Password</th>
+          <td><%= password_field_tag :password %>
+        </tr>
+
+        <tr>
+            <th></th>
+            <td>
+                <%= check_box_tag :remember_me %> Remember Me
+            </td>
+        </tr>
+
+        <tr>
+            <th></th>
+            <td><%= submit_tag "Log In" %> | <%= link_to "Forgot your password?", forgot_password_path %></td>
+        </tr>
+    </table>
+
+  <% end %>
+</fieldset>
