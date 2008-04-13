@@ -118,6 +118,12 @@
 
 				<div id="Main">
 					<div class="inner">
+						<% flash.each do |key, value| %>
+							<h4 id="flash" class="alert <%= key %>">
+								<%= value %>
+							</h4>
+						<% end -%>
+
 						<%= yield %>
 					</div>
 				</div>

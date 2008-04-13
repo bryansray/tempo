@@ -1,6 +1,3 @@
-<div id="flash" class="notice" style="display: <%= flash[:notice].nil? ? 'none' : '' %>;">
-                  <%= flash[:notice] %>
-</div>
 <% if !@post.published? && @post.user.id != current_user.id then %>
 	<p>This post has not yet been published.</p>
 <% else %>

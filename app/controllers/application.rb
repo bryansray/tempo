@@ -37,6 +37,11 @@ class ApplicationController < ActionController::Base
   
   audit Card, CardProperty, Member
   
+  def notify(type, message)
+    flash[type] = message
+    logger.error("ERROR: #{message}") if type == :error
+  end
+  
   # This action supports the generic_field helpers
   def generic_field_updater
     obj = nil

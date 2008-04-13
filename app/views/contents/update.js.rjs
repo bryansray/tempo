@@ -2,6 +2,3 @@ page['Content_Form'].remove()
 page['Content'].show()
 page['Edit'].show()
 page.replace 'Content', :partial => "pages/content", :object => @content
-
-page['flash'].replace_html flash[:notice]
-page['flash'].toggle('appear')

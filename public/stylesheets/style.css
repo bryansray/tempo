@@ -601,6 +601,22 @@ a.icon:hover {
     padding:5px 12px;
     text-align:left;
 }
+
+h4.alert  {
+   font-size: 0.8em;
+   font-weight:bold;
+   margin:0;
+   padding:5px;
+}
+h4.error  {
+   color:#fff; 
+   background:#c00;
+}
+h4.notice {
+  color:#060;
+  background:#e2f9e3;
+}
+
 #flash.notice {
     background: #DDFFDD none repeat scroll 0%;
     border-color: #BBEEBB;

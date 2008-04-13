@@ -1,26 +1,11 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-
-/*
- * Not going to use this function for now ....
-
-function load_panels(defaultOptions, panelIds) {
-	if (!panelIds)
-		return;
-	
-	for (var i = 0; i < panelIds.length; i++) {
-		options = panelIds[i];
-
-		for (key in defaultOptions)
-		{
-			options[key] = defaultOptions[key];
-		}
-		
-		p = new Ext.Panel(options);
-	}
-}
-
- */	
+Event.observe(window, 'load', function() {
+	$A(document.getElementsByClassName('alert')).each(function(o) {
+		o.opacity = 100;
+		Effect.Fade(o, { duration: 8.0})
+	});
+});
 
 Ext.DataCert = function(){
 	var message_control;
