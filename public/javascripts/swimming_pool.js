@@ -1,6 +1,7 @@
 var Comments = {
 	addComment: function(element_id) {
 		comments = $(element_id);
+		Tempo.notify('New Comment Created', '' )
 	}
 };
 

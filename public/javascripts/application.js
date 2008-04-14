@@ -7,6 +7,12 @@ Event.observe(window, 'load', function() {
 	});
 });
 
+var Tempo = {
+	notify: function(title, message) {
+		Ext.DataCert.msg(title, message);
+	}
+};
+
 Ext.DataCert = function(){
 	var message_control;
 	
