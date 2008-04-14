@@ -171,7 +171,7 @@ describe PasswordsController, "handling POST /passwords" do
   
   it "should set a flash notice to let the user know that email address was not found" do
     post_with_invalid_email_address
-    flash[:notice].should_not be_nil
+    flash[:error].should_not be_nil
   end
   
   it "should render the new template again when it can not find the email address" do
