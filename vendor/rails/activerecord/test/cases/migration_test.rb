@@ -7,6 +7,7 @@ require 'models/topic'
 require MIGRATIONS_ROOT + "/valid/1_people_have_last_names"
 require MIGRATIONS_ROOT + "/valid/2_we_need_reminders"
 require MIGRATIONS_ROOT + "/decimal/1_give_me_big_numbers"
+require MIGRATIONS_ROOT + "/interleaved/pass_3/2_i_raise_on_down"
 
 if ActiveRecord::Base.connection.supports_migrations?
   class BigNumber < ActiveRecord::Base; end
@@ -34,8 +35,8 @@ if ActiveRecord::Base.connection.supports_migrations?
     end
 
     def teardown
-      ActiveRecord::Base.connection.initialize_schema_information
-      ActiveRecord::Base.connection.update "UPDATE #{ActiveRecord::Migrator.schema_info_table_name} SET version = 0"
+      ActiveRecord::Base.connection.initialize_schema_migrations_table
+      ActiveRecord::Base.connection.execute "DELETE FROM #{ActiveRecord::Migrator.schema_migrations_table_name}"
 
       %w(reminders people_reminders prefix_reminders_suffix).each do |table|
         Reminder.connection.drop_table(table) rescue nil
@@ -357,10 +358,16 @@ if ActiveRecord::Base.connection.supports_migrations?
       # Test DateTime column and defaults, including timezone.
       # FIXME: moment of truth may be Time on 64-bit platforms.
       if bob.moment_of_truth.is_a?(DateTime)
-        assert_equal DateTime.local_offset, bob.moment_of_truth.offset
-        assert_not_equal 0, bob.moment_of_truth.offset
-        assert_not_equal "Z", bob.moment_of_truth.zone
-        assert_equal DateTime::ITALY, bob.moment_of_truth.start
+
+        with_env_tz 'US/Eastern' do
+          assert_equal DateTime.local_offset, bob.moment_of_truth.offset
+          assert_not_equal 0, bob.moment_of_truth.offset
+          assert_not_equal "Z", bob.moment_of_truth.zone
+          # US/Eastern is -5 hours from GMT
+          assert_equal Rational(-5, 24), bob.moment_of_truth.offset
+          assert_equal "-05:00", bob.moment_of_truth.zone
+          assert_equal DateTime::ITALY, bob.moment_of_truth.start
+        end
       end
 
       assert_equal TrueClass, bob.male?.class
@@ -757,9 +764,9 @@ if ActiveRecord::Base.connection.supports_migrations?
 
     def test_migrator_one_down
       ActiveRecord::Migrator.up(MIGRATIONS_ROOT + "/valid")
-
+    
       ActiveRecord::Migrator.down(MIGRATIONS_ROOT + "/valid", 1)
-
+    
       Person.reset_column_information
       assert Person.column_methods_hash.include?(:last_name)
       assert !Reminder.table_exists?
@@ -771,6 +778,39 @@ if ActiveRecord::Base.connection.supports_migrations?
 
       assert !Person.column_methods_hash.include?(:last_name)
       assert !Reminder.table_exists?
+    end
+
+    def test_finds_migrations
+      migrations = ActiveRecord::Migrator.new(:up, MIGRATIONS_ROOT + "/valid").migrations
+      [['1', 'people_have_last_names'],
+       ['2', 'we_need_reminders'],
+       ['3', 'innocent_jointable']].each_with_index do |pair, i|
+        migrations[i].version == pair.first
+        migrations[1].name    == pair.last
+      end
+    end
+
+    def test_finds_pending_migrations
+      ActiveRecord::Migrator.up(MIGRATIONS_ROOT + "/interleaved/pass_2", 1)
+      migrations = ActiveRecord::Migrator.new(:up, MIGRATIONS_ROOT + "/interleaved/pass_2").pending_migrations
+      assert_equal 1, migrations.size
+      migrations[0].version == '3'
+      migrations[0].name    == 'innocent_jointable'
+    end
+
+    def test_migrator_interleaved_migrations
+      ActiveRecord::Migrator.up(MIGRATIONS_ROOT + "/interleaved/pass_1")
+
+      assert_nothing_raised do
+        ActiveRecord::Migrator.up(MIGRATIONS_ROOT + "/interleaved/pass_2")
+      end
+
+      Person.reset_column_information
+      assert Person.column_methods_hash.include?(:last_name)
+
+      assert_nothing_raised do
+        ActiveRecord::Migrator.down(MIGRATIONS_ROOT + "/interleaved/pass_3")
+      end
     end
 
     def test_migrator_verbosity
@@ -805,16 +845,43 @@ if ActiveRecord::Base.connection.supports_migrations?
       assert Reminder.create("content" => "hello world", "remind_at" => Time.now)
       assert_equal "hello world", Reminder.find(:first).content
     end
+    
+    def test_migrator_rollback
+      ActiveRecord::Migrator.migrate(MIGRATIONS_ROOT + "/valid")
+      assert_equal(3, ActiveRecord::Migrator.current_version)
+      
+      ActiveRecord::Migrator.rollback(MIGRATIONS_ROOT + "/valid")
+      assert_equal(2, ActiveRecord::Migrator.current_version)
+      
+      ActiveRecord::Migrator.rollback(MIGRATIONS_ROOT + "/valid")
+      assert_equal(1, ActiveRecord::Migrator.current_version)
+      
+      ActiveRecord::Migrator.rollback(MIGRATIONS_ROOT + "/valid")
+      assert_equal(0, ActiveRecord::Migrator.current_version)
+      
+      ActiveRecord::Migrator.rollback(MIGRATIONS_ROOT + "/valid")
+      assert_equal(0, ActiveRecord::Migrator.current_version)
+    end
+    
+    def test_migrator_run
+      assert_equal(0, ActiveRecord::Migrator.current_version)
+      ActiveRecord::Migrator.run(:up, MIGRATIONS_ROOT + "/valid", 3)
+      assert_equal(0, ActiveRecord::Migrator.current_version)
 
-    def test_schema_info_table_name
+      assert_equal(0, ActiveRecord::Migrator.current_version)
+      ActiveRecord::Migrator.run(:down, MIGRATIONS_ROOT + "/valid", 3)
+      assert_equal(0, ActiveRecord::Migrator.current_version)
+    end
+
+    def test_schema_migrations_table_name
       ActiveRecord::Base.table_name_prefix = "prefix_"
       ActiveRecord::Base.table_name_suffix = "_suffix"
       Reminder.reset_table_name
-      assert_equal "prefix_schema_info_suffix", ActiveRecord::Migrator.schema_info_table_name
+      assert_equal "prefix_schema_migrations_suffix", ActiveRecord::Migrator.schema_migrations_table_name
       ActiveRecord::Base.table_name_prefix = ""
       ActiveRecord::Base.table_name_suffix = ""
       Reminder.reset_table_name
-      assert_equal "schema_info", ActiveRecord::Migrator.schema_info_table_name
+      assert_equal "schema_migrations", ActiveRecord::Migrator.schema_migrations_table_name
     ensure
       ActiveRecord::Base.table_name_prefix = ""
       ActiveRecord::Base.table_name_suffix = ""
@@ -892,15 +959,9 @@ if ActiveRecord::Base.connection.supports_migrations?
     end
 
     def test_migrator_with_missing_version_numbers
-      ActiveRecord::Migrator.migrate(MIGRATIONS_ROOT + "/missing", 500)
-      assert !Person.column_methods_hash.include?(:middle_name)
-      assert_equal 4, ActiveRecord::Migrator.current_version
-
-      ActiveRecord::Migrator.migrate(MIGRATIONS_ROOT + "/missing", 2)
-      Person.reset_column_information
-      assert !Reminder.table_exists?
-      assert Person.column_methods_hash.include?(:last_name)
-      assert_equal 2, ActiveRecord::Migrator.current_version
+      assert_raise(ActiveRecord::UnknownMigrationVersionError) do
+        ActiveRecord::Migrator.migrate(MIGRATIONS_ROOT + "/missing", 500)
+      end
     end
 
     def test_create_table_with_custom_sequence_name
@@ -939,6 +1000,15 @@ if ActiveRecord::Base.connection.supports_migrations?
         Person.connection.execute("select suitably_short_seq.nextval from dual")
       end
     end
+
+    protected
+      def with_env_tz(new_tz = 'US/Eastern')
+        old_tz, ENV['TZ'] = ENV['TZ'], new_tz
+        yield
+      ensure
+        old_tz ? ENV['TZ'] = old_tz : ENV.delete('TZ')
+      end
+
   end
 
   uses_mocha 'Sexy migration tests' do

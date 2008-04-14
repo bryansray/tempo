@@ -191,6 +191,10 @@ module ActiveRecord #:nodoc:
   #
   #   Student.find(:all, :conditions => { :grade => 9..12 })
   #
+  # An array may be used in the hash to use the SQL IN operator:
+  #
+  #   Student.find(:all, :conditions => { :grade => [9,11,12] })
+  #
   # == Overwriting default accessors
   #
   # All column values are automatically available through basic accessors on the Active Record object, but sometimes you
@@ -255,7 +259,7 @@ module ActiveRecord #:nodoc:
   # actually Person.find_by_user_name(user_name, options). So you could call <tt>Payment.find_all_by_amount(50, :order => "created_on")</tt>.
   #
   # The same dynamic finder style can be used to create the object if it doesn't already exist. This dynamic finder is called with
-  # <tt>find_or_create_by_</tt> and will return the object if it already exists and otherwise creates it, then returns it. Example:
+  # <tt>find_or_create_by_</tt> and will return the object if it already exists and otherwise creates it, then returns it. Protected attributes won't be set unless they are given in a block. For example:
   #
   #   # No 'Summer' tag exists
   #   Tag.find_or_create_by_name("Summer") # equal to Tag.create(:name => "Summer")
@@ -263,7 +267,10 @@ module ActiveRecord #:nodoc:
   #   # Now the 'Summer' tag does exist
   #   Tag.find_or_create_by_name("Summer") # equal to Tag.find_by_name("Summer")
   #
-  # Use the <tt>find_or_initialize_by_</tt> finder if you want to return a new record without saving it first. Example:
+  #   # Now 'Bob' exist and is an 'admin'
+  #   User.find_or_create_by_name('Bob', :age => 40) { |u| u.admin = true }
+  #
+  # Use the <tt>find_or_initialize_by_</tt> finder if you want to return a new record without saving it first. Protected attributes won't be setted unless they are given in a block. For example:
   #
   #   # No 'Winter' tag exists
   #   winter = Tag.find_or_initialize_by_name("Winter")
@@ -428,7 +435,7 @@ module ActiveRecord #:nodoc:
     # adapters for, e.g., your development and test environments.
     cattr_accessor :schema_format , :instance_writer => false
     @@schema_format = :ruby
-
+    
     class << self # Class methods
       # Find operates with four different retrieval approaches:
       #
@@ -485,6 +492,7 @@ module ActiveRecord #:nodoc:
       # Examples for find all:
       #   Person.find(:all) # returns an array of objects for all the rows fetched by SELECT * FROM people
       #   Person.find(:all, :conditions => [ "category IN (?)", categories], :limit => 50)
+      #   Person.find(:all, :conditions => { :friends => ["Bob", "Steve", "Fred"] }
       #   Person.find(:all, :offset => 10, :limit => 10)
       #   Person.find(:all, :include => [ :account, :friends ])
       #   Person.find(:all, :group => "category")
@@ -511,7 +519,19 @@ module ActiveRecord #:nodoc:
           else             find_from_ids(args, options)
         end
       end
+      
+      # This is an alias for find(:first).  You can pass in all the same arguments to this method as you can
+      # to find(:first)
+      def first(*args)
+        find(:first, *args)
+      end
 
+      # This is an alias for find(:last).  You can pass in all the same arguments to this method as you can
+      # to find(:last)
+      def last(*args)
+        find(:last, *args)
+      end
+      
       #
       # Executes a custom sql query against your database and returns all the results.  The results will
       # be returned as an array with columns requested encapsulated as attributes of the model you call
@@ -1243,6 +1263,13 @@ module ActiveRecord #:nodoc:
         defined?(@abstract_class) && @abstract_class == true
       end
 
+      def respond_to?(method_id, include_private = false)
+        if match = matches_dynamic_finder?(method_id) || matches_dynamic_finder_with_initialize_or_create?(method_id)
+          return true if all_attributes_exists?(extract_attribute_names_from_match(match))
+        end
+        super
+      end
+
       private
         def find_initial(options)
           options.update(:limit => 1) unless options[:include]
@@ -1426,6 +1453,20 @@ module ActiveRecord #:nodoc:
          (safe_to_array(first) + safe_to_array(second)).uniq
         end
 
+        # Merges conditions so that the result is a valid +condition+
+        def merge_conditions(*conditions)
+          segments = []
+
+          conditions.each do |condition|
+            unless condition.blank?
+              sql = sanitize_sql(condition)
+              segments << sql unless sql.blank?
+            end
+          end
+
+          "(#{segments.join(') AND (')})" unless segments.empty?
+        end
+
         # Object#to_a is deprecated, though it does have the desired behavior
         def safe_to_array(o)
           case o
@@ -1498,12 +1539,11 @@ module ActiveRecord #:nodoc:
         # The optional scope argument is for the current :find scope.
         def add_conditions!(sql, conditions, scope = :auto)
           scope = scope(:find) if :auto == scope
-          segments = []
-          segments << sanitize_sql(scope[:conditions]) if scope && !scope[:conditions].blank?
-          segments << sanitize_sql(conditions) unless conditions.blank?
-          segments << type_condition if finder_needs_type_condition?
-          segments.delete_if{|s| s.blank?}
-          sql << "WHERE (#{segments.join(") AND (")}) " unless segments.empty?
+          conditions = [conditions]
+          conditions << scope[:conditions] if scope
+          conditions << type_condition if finder_needs_type_condition?
+          merged_conditions = merge_conditions(*conditions)
+          sql << "WHERE #{merged_conditions} " unless merged_conditions.blank?
         end
 
         def type_condition
@@ -1535,7 +1575,7 @@ module ActiveRecord #:nodoc:
         # Each dynamic finder or initializer/creator is also defined in the class after it is first invoked, so that future
         # attempts to use it do not run through method_missing.
         def method_missing(method_id, *arguments)
-          if match = /^find_(all_by|by)_([_a-zA-Z]\w*)$/.match(method_id.to_s)
+          if match = matches_dynamic_finder?(method_id)
             finder = determine_finder(match)
 
             attribute_names = extract_attribute_names_from_match(match)
@@ -1559,14 +1599,17 @@ module ActiveRecord #:nodoc:
               end
             }, __FILE__, __LINE__
             send(method_id, *arguments)
-          elsif match = /^find_or_(initialize|create)_by_([_a-zA-Z]\w*)$/.match(method_id.to_s)
+          elsif match = matches_dynamic_finder_with_initialize_or_create?(method_id)
             instantiator = determine_instantiator(match)
             attribute_names = extract_attribute_names_from_match(match)
             super unless all_attributes_exists?(attribute_names)
 
             self.class_eval %{
               def self.#{method_id}(*args)
+                guard_protected_attributes = false
+                
                 if args[0].is_a?(Hash)
+                  guard_protected_attributes = true
                   attributes = args[0].with_indifferent_access
                   find_attributes = attributes.slice(*[:#{attribute_names.join(',:')}])
                 else
@@ -1577,8 +1620,10 @@ module ActiveRecord #:nodoc:
                 set_readonly_option!(options)
 
                 record = find_initial(options)
-                if record.nil?
-                  record = self.new { |r| r.send(:attributes=, attributes, false) }
+                 
+                 if record.nil?
+                  record = self.new { |r| r.send(:attributes=, attributes, guard_protected_attributes) }
+                  #{'yield(record) if block_given?'}
                   #{'record.save' if instantiator == :create}
                   record
                 else
@@ -1590,6 +1635,14 @@ module ActiveRecord #:nodoc:
           else
             super
           end
+        end
+
+        def matches_dynamic_finder?(method_id)
+          /^find_(all_by|by)_([_a-zA-Z]\w*)$/.match(method_id.to_s)
+        end
+
+        def matches_dynamic_finder_with_initialize_or_create?(method_id)
+          /^find_or_(initialize|create)_by_([_a-zA-Z]\w*)$/.match(method_id.to_s)
         end
 
         def determine_finder(match)
@@ -1745,7 +1798,7 @@ module ActiveRecord #:nodoc:
                     (hash[method].keys + params.keys).uniq.each do |key|
                       merge = hash[method][key] && params[key] # merge if both scopes have the same key
                       if key == :conditions && merge
-                        hash[method][key] = [params[key], hash[method][key]].collect{ |sql| "( %s )" % sanitize_sql(sql) }.join(" AND ")
+                        hash[method][key] = merge_conditions(params[key], hash[method][key])
                       elsif key == :include && merge
                         hash[method][key] = merge_includes(hash[method][key], params[key]).uniq
                       else
@@ -1939,7 +1992,7 @@ module ActiveRecord #:nodoc:
         #   { :status => nil, :group_id => 1 }
         #     # => "status = NULL , group_id = 1"
         def sanitize_sql_hash_for_assignment(attrs)
-          conditions = attrs.map do |attr, value|
+          attrs.map do |attr, value|
             "#{connection.quote_column_name(attr)} = #{quote_bound_value(value)}"
           end.join(', ')
         end
@@ -2374,8 +2427,8 @@ module ActiveRecord #:nodoc:
 
       # Updates the associated record with values matching those of the instance attributes.
       # Returns the number of affected rows.
-      def update
-        quoted_attributes = attributes_with_quotes(false, false)
+      def update(attribute_names = @attributes.keys)
+        quoted_attributes = attributes_with_quotes(false, false, attribute_names)
         return 0 if quoted_attributes.empty?
         connection.update(
           "UPDATE #{self.class.quoted_table_name} " +
@@ -2467,10 +2520,10 @@ module ActiveRecord #:nodoc:
 
       # Returns a copy of the attributes hash where all the values have been safely quoted for use in
       # an SQL statement.
-      def attributes_with_quotes(include_primary_key = true, include_readonly_attributes = true)
+      def attributes_with_quotes(include_primary_key = true, include_readonly_attributes = true, attribute_names = @attributes.keys)
         quoted = {}
         connection = self.class.connection
-        @attributes.each_pair do |name, value|
+        attribute_names.each do |name|
           if column = column_for_attribute(name)
             quoted[name] = connection.quote(read_attribute(name), column) unless !include_primary_key && column.primary
           end

@@ -24,6 +24,9 @@ class TextHelperTest < Test::Unit::TestCase
 
     text = "A\r\n  \nB\n\n\r\n\t\nC\nD".freeze
     assert_equal "<p>A\n<br />  \n<br />B</p>\n\n<p>\t\n<br />C\n<br />D</p>", simple_format(text)
+    
+     assert_equal %q(<p class="test">This is a classy test</p>), simple_format("This is a classy test", :class => 'test')
+     assert_equal %Q(<p class="test">para 1</p>\n\n<p class="test">para 2</p>), simple_format("para 1\n\npara 2", :class => 'test')     
   end
 
   def test_truncate
@@ -133,16 +136,16 @@ class TextHelperTest < Test::Unit::TestCase
   if RUBY_VERSION < '1.9'
     def test_excerpt_with_utf8
       with_kcode('u') do
-        assert_equal("...ﬃciency could not be...", excerpt("That's why eﬃciency could not be helped", 'could', 8))
+        assert_equal("...\357\254\203ciency could not be...", excerpt("That's why e\357\254\203ciency could not be helped", 'could', 8))
       end
       with_kcode('none') do
-        assert_equal("...\203ciency could not be...", excerpt("That's why eﬃciency could not be helped", 'could', 8))
+        assert_equal("...\203ciency could not be...", excerpt("That's why e\357\254\203ciency could not be helped", 'could', 8))
       end
     end
   else
     def test_excerpt_with_utf8
-      assert_equal("...ﬃciency could not be...".force_encoding('UTF-8'), excerpt("That's why eﬃciency could not be helped".force_encoding('UTF-8'), 'could', 8))
-      assert_equal("...\203ciency could not be...", excerpt("That's why eﬃciency could not be helped", 'could', 8))
+      assert_equal("...\357\254\203ciency could not be...".force_encoding('UTF-8'), excerpt("That's why e\357\254\203ciency could not be helped".force_encoding('UTF-8'), 'could', 8))
+      assert_equal("...\203ciency could not be...", excerpt("That's why e\357\254\203ciency could not be helped", 'could', 8))
     end
   end
 

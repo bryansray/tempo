@@ -16,10 +16,12 @@ module ActiveSupport #:nodoc:
         end
 
         module ClassMethods
+          # Returns a new Date representing the date 1 day ago (i.e. yesterday's date).
           def yesterday
             ::Date.today.yesterday
           end
           
+          # Returns a new Date representing the date 1 day after today (i.e. tomorrow's date).
           def tomorrow
             ::Date.today.tomorrow
           end

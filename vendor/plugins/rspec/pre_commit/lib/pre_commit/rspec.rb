@@ -12,7 +12,7 @@ class PreCommit::Rspec < PreCommit
   def check_for_gem_dependencies
     require "rubygems"
     gem 'rake'
-    gem 'webby'
+    # gem 'webby'
     gem 'coderay'
     gem 'RedCloth'
     gem 'syntax'
@@ -44,7 +44,7 @@ class PreCommit::Rspec < PreCommit
   def touch_revision_storing_files
     files = [
       'rspec/lib/spec/version.rb',
-      'rspec_on_rails/lib/spec/rails/version.rb'
+      'rspec-rails/lib/spec/rails/version.rb'
     ]
     build_time_utc = Time.now.utc.strftime('%Y%m%d%H%M%S')
     files.each do |path|
@@ -58,7 +58,7 @@ class PreCommit::Rspec < PreCommit
   end
   
   def pre_commit_core
-    Dir.chdir 'rspec' do
+    Dir.chdir 'example_rails_app/vendor/plugins/rspec' do
       rake = (PLATFORM == "i386-mswin32") ? "rake.bat" : "rake"
       system("#{rake} pre_commit --verbose --trace")
       raise "RSpec Core pre_commit failed" if error_code?

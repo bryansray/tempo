@@ -176,11 +176,11 @@ end
 # Some times you don't care about the content of the fixtures as much as you care about the volume. In these cases, you can
 # mix ERb in with your YAML or CSV fixtures to create a bunch of fixtures for load testing, like:
 #
-# <% for i in 1..1000 %>
-# fix_<%= i %>:
-#   id: <%= i %>
-#   name: guy_<%= 1 %>
-# <% end %>
+#   <% for i in 1..1000 %>
+#   fix_<%= i %>:
+#     id: <%= i %>
+#     name: guy_<%= 1 %>
+#   <% end %>
 #
 # This will create 1000 very simple YAML fixtures.
 #
@@ -561,7 +561,11 @@ class Fixtures < (RUBY_VERSION < '1.9' ? YAML::Omap : Hash)
     now = now.to_s(:db)
 
     # allow a standard key to be used for doing defaults in YAML
-    delete(assoc("DEFAULTS"))
+    if is_a?(Hash)
+      delete('DEFAULTS')
+    else
+      delete(assoc('DEFAULTS'))
+    end
 
     # track any join tables we need to insert later
     habtm_fixtures = Hash.new do |h, habtm|

@@ -8,7 +8,7 @@ class PreCommit::Core < PreCommit
     clobber
     rake_invoke :verify_rcov
     rake_invoke :spec_html
-    webby
+    # webby
     rake_invoke :failing_examples_with_html
     rdoc
     rdoc_rails
@@ -42,7 +42,7 @@ class PreCommit::Core < PreCommit
   end
 
   def rdoc_rails
-    Dir.chdir '../rspec_on_rails' do
+    Dir.chdir '../rspec-rails' do
       rake = (PLATFORM == "i386-mswin32") ? "rake.cmd" : "rake"
       `#{rake} rdoc`
     end

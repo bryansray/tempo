@@ -143,6 +143,14 @@ class FinderTest < ActiveRecord::TestCase
     first = Topic.find(:first, :conditions => "title = 'The First Topic!'")
     assert_nil(first)
   end
+  
+  def test_first
+    assert_equal topics(:second).title, Topic.first(:conditions => "title = 'The Second Topic of the day'").title
+  end
+  
+  def test_first_failing
+    assert_nil Topic.first(:conditions => "title = 'The Second Topic of the day!'")
+  end
 
   def test_unexisting_record_exception_handling
     assert_raises(ActiveRecord::RecordNotFound) {
@@ -408,15 +416,15 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_by_one_attribute_caches_dynamic_finder
     # ensure this test can run independently of order
-    class << Topic; self; end.send(:remove_method, :find_by_title) if Topic.respond_to?(:find_by_title)
-    assert !Topic.respond_to?(:find_by_title)
+    class << Topic; self; end.send(:remove_method, :find_by_title) if Topic.public_methods.any? { |m| m.to_s == 'find_by_title' }
+    assert !Topic.public_methods.any? { |m| m.to_s == 'find_by_title' }
     t = Topic.find_by_title("The First Topic")
-    assert Topic.respond_to?(:find_by_title)
+    assert Topic.public_methods.any? { |m| m.to_s == 'find_by_title' }
   end
 
   def test_dynamic_finder_returns_same_results_after_caching
     # ensure this test can run independently of order
-    class << Topic; self; end.send(:remove_method, :find_by_title) if Topic.respond_to?(:find_by_title)
+    class << Topic; self; end.send(:remove_method, :find_by_title) if Topic.public_method_defined?(:find_by_title)
     t = Topic.find_by_title("The First Topic")
     assert_equal t, Topic.find_by_title("The First Topic") # find_by_title has been cached
   end
@@ -466,15 +474,15 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_dynamic_finder_on_one_attribute_with_conditions_caches_method
     # ensure this test can run independently of order
-    class << Account; self; end.send(:remove_method, :find_by_credit_limit) if Account.respond_to?(:find_by_credit_limit)
-    assert !Account.respond_to?(:find_by_credit_limit)
+    class << Account; self; end.send(:remove_method, :find_by_credit_limit) if Account.public_methods.any? { |m| m.to_s == 'find_by_credit_limit' }
+    assert !Account.public_methods.any? { |m| m.to_s == 'find_by_credit_limit' }
     a = Account.find_by_credit_limit(50, :conditions => ['firm_id = ?', 6])
-    assert Account.respond_to?(:find_by_credit_limit)
+    assert Account.public_methods.any? { |m| m.to_s == 'find_by_credit_limit' }
   end
 
   def test_dynamic_finder_on_one_attribute_with_conditions_returns_same_results_after_caching
     # ensure this test can run independently of order
-    class << Account; self; end.send(:remove_method, :find_by_credit_limit) if Account.respond_to?(:find_by_credit_limit)
+    class << Account; self; end.send(:remove_method, :find_by_credit_limit) if Account.public_methods.any? { |m| m.to_s == 'find_by_credit_limit' }
     a = Account.find_by_credit_limit(50, :conditions => ['firm_id = ?', 6])
     assert_equal a, Account.find_by_credit_limit(50, :conditions => ['firm_id = ?', 6]) # find_by_credit_limit has been cached
   end
@@ -542,7 +550,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_all_by_array_attribute
-    assert_equal 2, Topic.find_all_by_title(["The First Topic", "The Second Topic's of the day"]).size
+    assert_equal 2, Topic.find_all_by_title(["The First Topic", "The Second Topic of the day"]).size
   end
 
   def test_find_all_by_boolean_attribute
@@ -551,7 +559,7 @@ class FinderTest < ActiveRecord::TestCase
     assert topics.include?(topics(:first))
 
     topics = Topic.find_all_by_approved(true)
-    assert_equal 1, topics.size
+    assert_equal 3, topics.size
     assert topics.include?(topics(:second))
   end
 
@@ -563,8 +571,8 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_all_by_nil_attribute
     topics = Topic.find_all_by_last_read nil
-    assert_equal 1, topics.size
-    assert_nil topics[0].last_read
+    assert_equal 3, topics.size
+    assert topics.collect(&:last_read).all?(&:nil?)
   end
 
   def test_find_by_nil_and_not_nil_attributes
@@ -645,6 +653,22 @@ class FinderTest < ActiveRecord::TestCase
     assert new_customer.new_record?
   end
 
+  def test_find_or_initialize_from_one_attribute_should_not_set_attribute_even_when_protected
+    c = Company.find_or_initialize_by_name({:name => "Fortune 1000", :rating => 1000})
+    assert_equal "Fortune 1000", c.name
+    assert_not_equal 1000, c.rating
+    assert c.valid?
+    assert c.new_record?
+  end
+
+  def test_find_or_create_from_one_attribute_should_set_not_attribute_even_when_protected
+    c = Company.find_or_create_by_name({:name => "Fortune 1000", :rating => 1000})
+    assert_equal "Fortune 1000", c.name
+    assert_not_equal 1000, c.rating
+    assert c.valid?
+    assert !c.new_record?
+  end
+
   def test_find_or_initialize_from_one_attribute_should_set_attribute_even_when_protected
     c = Company.find_or_initialize_by_name_and_rating("Fortune 1000", 1000)
     assert_equal "Fortune 1000", c.name
@@ -661,11 +685,27 @@ class FinderTest < ActiveRecord::TestCase
     assert !c.new_record?
   end
 
+  def test_find_or_initialize_should_set_protected_attributes_if_given_as_block
+    c = Company.find_or_initialize_by_name(:name => "Fortune 1000") { |f| f.rating = 1000 }
+    assert_equal "Fortune 1000", c.name
+    assert_equal 1000.to_f, c.rating.to_f
+    assert c.valid?
+    assert c.new_record?
+  end
+
+  def test_find_or_create_should_set_protected_attributes_if_given_as_block
+    c = Company.find_or_create_by_name(:name => "Fortune 1000") { |f| f.rating = 1000 }
+    assert_equal "Fortune 1000", c.name
+    assert_equal 1000.to_f, c.rating.to_f
+    assert c.valid?
+    assert !c.new_record?
+  end
+  
   def test_dynamic_find_or_initialize_from_one_attribute_caches_method
-    class << Company; self; end.send(:remove_method, :find_or_initialize_by_name) if Company.respond_to?(:find_or_initialize_by_name)
-    assert !Company.respond_to?(:find_or_initialize_by_name)
+    class << Company; self; end.send(:remove_method, :find_or_initialize_by_name) if Company.public_methods.any? { |m| m.to_s == 'find_or_initialize_by_name' }
+    assert !Company.public_methods.any? { |m| m.to_s == 'find_or_initialize_by_name' }
     sig38 = Company.find_or_initialize_by_name("38signals")
-    assert Company.respond_to?(:find_or_initialize_by_name)
+    assert Company.public_methods.any? { |m| m.to_s == 'find_or_initialize_by_name' }
   end
 
   def test_find_or_initialize_from_two_attributes

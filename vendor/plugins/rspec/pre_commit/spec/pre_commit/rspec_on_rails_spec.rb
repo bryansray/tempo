@@ -9,18 +9,13 @@ include FileUtils
 describe "PreCommit::RSpecOnRails" do
   before do
     @original_dir = File.expand_path(FileUtils.pwd)
-    @rails_app_dir = File.expand_path(File.dirname(__FILE__) + "/../../../example_rails_app/")
+    @rails_app_dir = File.expand_path(File.dirname(__FILE__) + "/../../../../../..")
 
     Dir.chdir(@rails_app_dir)
     @pre_commit = PreCommit::RspecOnRails.new(nil)
   end
   
   describe "pre_commit" do
-    before(:each) do
-      rm_rf('vendor/plugins/rspec_on_rails')
-      system("svn export ../rspec_on_rails vendor/plugins/rspec_on_rails")
-    end
-
     after do
       rm('db/migrate/888_create_purchases.rb', :force => true)
       @pre_commit.destroy_purchase
@@ -37,15 +32,17 @@ describe "PreCommit::RSpecOnRails" do
       lambda { @pre_commit.generate_purchase }.should_not raise_error
     end
   end
-  
-  describe "install_plugin" do
-    before(:each) do
-      rm_rf('vendor/plugins')
-    end
 
-    it "should create the plugins dir if none exists" do
-      @pre_commit.install_plugin :rspec_on_rails
-      File.directory?('vendor/plugins/rspec_on_rails').should be_true
+  describe "rm_generated_purchase_files" do
+    before(:each) do
+      Dir['db/migrate/*_create_purchases.rb'].each {|f| rm_rf f}
+      @pre_commit.generate_purchase
+    end
+    
+    it "should remove the migration file" do
+      lambda {
+        @pre_commit.rm_generated_purchase_files
+      }.should change { Dir['db/migrate/*'].size }.by(-1)
     end
   end
 end

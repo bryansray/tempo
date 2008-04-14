@@ -10,11 +10,11 @@ module ActiveSupport #:nodoc:
           # string overrides can also be called through the +chars+ proxy.
           #
           #   name = 'Claus Müller'
-          #   name.reverse #=> "rell??M sualC"
-          #   name.length #=> 13
+          #   name.reverse  #=> "rell??M sualC"
+          #   name.length   #=> 13
           #
-          #   name.chars.reverse.to_s #=> "rellüM sualC"
-          #   name.chars.length #=> 12
+          #   name.chars.reverse.to_s   #=> "rellüM sualC"
+          #   name.chars.length         #=> 12
           #   
           #
           # All the methods on the chars proxy which normally return a string will return a Chars object. This allows
@@ -27,7 +27,7 @@ module ActiveSupport #:nodoc:
           # object. Interoperability problems can be resolved easily with a +to_s+ call.
           #
           # For more information about the methods defined on the Chars proxy see ActiveSupport::Multibyte::Chars and
-          # ActiveSupport::Multibyte::Handlers::UTF8Handler
+          # ActiveSupport::Multibyte::Handlers::UTF8Handler.
           def chars
             ActiveSupport::Multibyte::Chars.new(self)
           end

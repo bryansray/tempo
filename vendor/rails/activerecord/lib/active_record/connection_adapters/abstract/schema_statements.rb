@@ -161,12 +161,12 @@ module ActiveRecord
       # an Array of Symbols.
       #
       # The index will be named after the table and the first column name,
-      # unless you pass +:name+ as an option.
+      # unless you pass <tt>:name</tt> as an option.
       #
       # When creating an index on multiple columns, the first column is used as a name
       # for the index. For example, when you specify an index on two columns
-      # [+:first+, +:last+], the DBMS creates an index for both columns as well as an
-      # index for the first column +:first+. Using just the first name for this index
+      # [<tt>:first</tt>, <tt>:last</tt>], the DBMS creates an index for both columns as well as an
+      # index for the first column <tt>:first</tt>. Using just the first name for this index
       # makes sense, because you will never have to create a singular index with this
       # name.
       #
@@ -232,25 +232,41 @@ module ActiveRecord
 
       # Should not be called normally, but this operation is non-destructive.
       # The migrations module handles this automatically.
-      def initialize_schema_information
-        begin
-          execute "CREATE TABLE #{quote_table_name(ActiveRecord::Migrator.schema_info_table_name)} (version #{type_to_sql(:integer)})"
-          execute "INSERT INTO #{quote_table_name(ActiveRecord::Migrator.schema_info_table_name)} (version) VALUES(0)"
-        rescue ActiveRecord::StatementInvalid
-          # Schema has been initialized
-        end
-      end
+      def initialize_schema_migrations_table
+        sm_table = ActiveRecord::Migrator.schema_migrations_table_name
 
-      def dump_schema_information #:nodoc:
-        begin
-          if (current_schema = ActiveRecord::Migrator.current_version) > 0
-            return "INSERT INTO #{quote_table_name(ActiveRecord::Migrator.schema_info_table_name)} (version) VALUES (#{current_schema})" 
+        unless tables.detect { |t| t == sm_table }
+          create_table(sm_table, :id => false) do |schema_migrations_table|
+            schema_migrations_table.column :version, :string, :null => false
           end
-        rescue ActiveRecord::StatementInvalid 
-          # No Schema Info
+          add_index sm_table, :version, :unique => true,
+            :name => 'unique_schema_migrations'
+
+          # Backwards-compatibility: if we find schema_info, assume we've
+          # migrated up to that point:
+          si_table = Base.table_name_prefix + 'schema_info' + Base.table_name_suffix
+
+          if tables.detect { |t| t == si_table }
+
+            old_version = select_value("SELECT version FROM #{quote_table_name(si_table)}").to_i
+            assume_migrated_upto_version(old_version)
+            drop_table(si_table)
+          end
         end
       end
 
+      def assume_migrated_upto_version(version)
+        sm_table = quote_table_name(ActiveRecord::Migrator.schema_migrations_table_name)
+        migrated = select_values("SELECT version FROM #{sm_table}").map(&:to_i)
+        versions = Dir['db/migrate/[0-9]*_*.rb'].map do |filename|
+          filename.split('/').last.split('_').first.to_i
+        end
+
+        execute "INSERT INTO #{sm_table} (version) VALUES ('#{version}')" unless migrated.include?(version.to_i)
+        (versions - migrated).select { |v| v < version.to_i }.each do |v|
+          execute "INSERT INTO #{sm_table} (version) VALUES ('#{v}')"
+        end
+      end
 
       def type_to_sql(type, limit = nil, precision = nil, scale = nil) #:nodoc:
         if native = native_database_types[type]
