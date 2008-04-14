@@ -23,7 +23,7 @@ class CardTypesController < ApplicationController
     
     respond_to do |format|
       if @card_type.save
-        flash[:notice] = "Card type was successfully created"
+        notify :notice, "Card type was successfully created"
         format.html { redirect_to(project_card_types_path(@project)) }
       end
     end

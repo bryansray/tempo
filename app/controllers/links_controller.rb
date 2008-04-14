@@ -48,7 +48,7 @@ class LinksController < ApplicationController
     
     respond_to do |format|
       if @link.save
-        flash[:notice] = 'Link was successfully updated.'
+        notify :notice, 'Link was successfully updated.'
         format.html { redirect_to(@link) }
         format.xml  { head :ok }
       else

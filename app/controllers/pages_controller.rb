@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   before_filter :login_required, :only => [ :edit, :new ]
 
   def access_denied
-    flash[:notice] = "You must login to access that page."
+    notify :notice, "You must login to access that page."
     super
   end
 
@@ -110,7 +110,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.save
-        flash[:notice] = 'Page was successfully created.'
+        notify :notice, 'Page was successfully created.'
 
         format.html { redirect_to(@page) }
         format.xml  { render :xml => @page, :status => :created, :location => @page }
@@ -133,13 +133,13 @@ class PagesController < ApplicationController
 	
     respond_to do |format|
       if @page.update_attributes(params[:page]) && @page.content.update_attributes(params[:content])
-        flash[:notice] = 'Page was successfully updated.'
+        notify :notice, 'Page was successfully updated.'
         
         format.html { redirect_to(@page) }
         format.xml  { head :ok }
         format.js
       else
-		flash[:notice] = "There was an error updating the page."
+		    notify :error, "There was an error updating the page."
 
         format.html { render :action => "edit" }
         format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
@@ -153,7 +153,7 @@ class PagesController < ApplicationController
     
     respond_to do |format|
       if @page.save
-        flash[:notice] = "Tags were successfully updated."
+        notify :notice, "Tags were successfully updated."
         format.js
       end
     end

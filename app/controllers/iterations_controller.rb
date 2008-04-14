@@ -40,7 +40,7 @@ class IterationsController < ApplicationController
 
     respond_to do |format|
       if @iteration.update_attributes(params[:iteration])
-        flash[:notice] = 'Iteration was successfully updated.'
+        notify :notice, 'Iteration was successfully updated.'
         format.html { redirect_to(@iteration) }
         format.xml  { head :ok }
       else

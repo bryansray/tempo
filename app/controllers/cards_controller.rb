@@ -88,7 +88,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.update_attributes(params[:card])
-        flash[:notice] = 'Card was successfully updated.'
+        notify :notice, 'Card was successfully updated.'
         format.html { redirect_to(@card) }
         format.xml  { head :ok }
       else

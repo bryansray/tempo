@@ -12,9 +12,9 @@ class AttachmentsController < ApplicationController
               # see http://railsforum.com/viewtopic.php?id=6307 for why I had to do this
 	  @attachment = Attachment.new(params[:attachment])
 	  if @attachment.save
-	    flash[:notice] = 'Attachment was successfully added.'
+	    notify :notice, 'Attachment was successfully added.'
 	  else
-	    flash[:notice] = 'Adding attachment failed.'
+	    notify :error, 'Adding attachment failed.'
 	  end
       redirect_to content_url(:id => params[:attachment][:content_id])
 	end

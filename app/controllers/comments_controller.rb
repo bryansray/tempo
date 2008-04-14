@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save #post.save && comment.save && content.save
-        flash[:notice] = 'Comment was successfully created.'
+        notify :notice, 'Comment was successfully created.'
         
         format.html { redirect_to polymorphic_path(@comment.commentable) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
@@ -82,7 +82,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        flash[:notice] = 'Comment was successfully updated.'
+        notify :notice, 'Comment was successfully updated.'
         format.html { redirect_to polymorphic_path(@comment.commentable) }
         format.xml  { head :ok }
       else

@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
   
   def access_denied
-    flash[:notice] = "Login is required."
+    notify :notice, "Login is required."
     store_location
     redirect_to login_path
   end
@@ -92,7 +92,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        flash[:notice] = 'Post was successfully created.'
+        notify :notice, 'Post was successfully created.'
         format.html { redirect_to post_path(@post) }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
       else
@@ -117,7 +117,7 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       if @post.update_attributes(params[:post]) && @post.content.update_attributes(params[:content])
-        flash[:notice] = 'Post was successfully updated.'
+        notify :notice, 'Post was successfully updated.'
 
         format.html { redirect_to post_path(@post) }
         format.xml  { head :ok }
@@ -135,7 +135,7 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       if @post.save
-        flash[:notice] = "Tags were successfully updated."
+        notify :notice, "Tags were successfully updated."
         format.js
       end
     end

@@ -75,7 +75,7 @@ class OptionsController < ApplicationController
 
     respond_to do |format|
       if @option.update_attributes(params[:option])
-        flash[:notice] = 'Option was successfully updated.'
+        notify :notice, 'Option was successfully updated.'
         format.html { redirect_to(@option) }
         format.xml  { head :ok }
       else

@@ -15,9 +15,9 @@ class SessionsController < ApplicationController
 
       redirect_back_or_default(home_path)
       
-      flash[:notice] = "Logged in successfully"
+      notify :notice, "Logged in successfully"
     else
-	  flash[:warning] = "Incorrect username or password"
+	    notify :error, "Incorrect username or password"
       render :action => 'new'
     end
   end
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = "You have been logged out."
+    notify :notice, "You have been logged out."
     redirect_back_or_default('/')
   end
 end

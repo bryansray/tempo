@@ -45,7 +45,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        flash[:notice] = 'TeamUser was successfully created.'
+        notify :notice, 'TeamUser was successfully created.'
         format.html { redirect_to(@member) }
         format.xml  { render :xml => @member, :status => :created, :location => @member }
       else
@@ -62,7 +62,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.update_attributes(params[:member])
-        flash[:notice] = 'TeamUser was successfully updated.'
+        notify :notice, 'TeamUser was successfully updated.'
         format.html { redirect_to(@member) }
         format.xml  { head :ok }
       else

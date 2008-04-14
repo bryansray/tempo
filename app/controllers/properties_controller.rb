@@ -60,7 +60,7 @@ class PropertiesController < ApplicationController
 
     respond_to do |format|
       if @property.update_attributes(params[:property])
-        flash[:notice] = 'Property was successfully updated.'
+        notify :notice, 'Property was successfully updated.'
         format.html { redirect_to(@property) }
         format.xml  { head :ok }
       else

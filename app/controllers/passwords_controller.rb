@@ -14,10 +14,10 @@ class PasswordsController < ApplicationController
     if @user = User.find_for_forget(params[:email])
       @user.forgot_password
       @user.save
-      flash[:notice] = "A password reset email has been sent to the email address"
+      notify :notice, "A password reset email has been sent to the email address"
       redirect_to login_path
     else
-      flash[:notice] = "Could not find a user with that email address"
+      notify :error, "Could not find a user with that email address"
       render :template => "passwords/new"
     end
   end
@@ -31,7 +31,7 @@ class PasswordsController < ApplicationController
     end
     
     if params[:password].blank?
-      flash[:notice] = "Password field can not be blank."
+      notify :error, "Password field can not be blank."
       render :action => "edit", :id => params[:id]
       return
     end
@@ -43,10 +43,10 @@ class PasswordsController < ApplicationController
       @user.password = params[:password]
       @user.reset_password
       
-      flash[:notice] = @user.save ? "Password reset." : "Password not reset."
+      notify :notice, @user.save ? "Password reset." : "Password not reset."
       redirect_to login_path
     else
-      flash[:notice] = "Password mismatched."
+      notify :notice, "Password mismatched."
       render :action => "edit", :id => params[:id]
       return
     end
