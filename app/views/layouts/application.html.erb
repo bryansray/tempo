@@ -10,8 +10,8 @@
 		<meta http-equiv="Content-Language" content="English" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-		<meta name="description" content="DataCert Engineering Portal" />
-		<meta name="keywords" content="datacert, engineering, development, portal" />	
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />	
 		<meta name="Robots" content="index,follow" />
 
 		<%= stylesheet_link_tag "ext/css/ext-all", "ext/css/xtheme-gray", "base", "style" %>
@@ -54,13 +54,7 @@
 							end
 						end %>
 				</li>
-				<li>
-					<%= 
-						if (controller.controller_name == "users")
-							link_to "Users", users_path, :class => "current"
-						end
-					%>
-				</li>
+
 				<li>
 					<%= 
 						if (controller.controller_name == "pages")
