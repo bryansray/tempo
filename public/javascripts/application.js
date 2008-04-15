@@ -39,12 +39,6 @@ Ext.DataCert = function(){
 	}
 }();
 
-function msg(title) {
-	var message_alert;
-	
-
-}
-
 function getTagsToApply(tagPickerId)
 {
 	var s = [];
