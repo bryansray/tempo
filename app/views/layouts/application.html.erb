@@ -81,9 +81,9 @@
 				<li>
 					<%= 
 						if (["teams","iterations","cards","properties","options","projects"].include?(controller.controller_name))
-							link_to "TPS<sup>BETA</sup>", projects_path, :class => "current"
+							link_to "TPM", projects_path, :class => "current", :title => "Tempo Project Management"
 						else 
-							link_to "TPS<sup>BETA</sup>", projects_path
+							link_to "TPM", projects_path, :title => "Tempo Project Management"
 						end
 					%>
 				</li>
@@ -125,6 +125,8 @@
 						<% end -%>
 
 						<%= yield %>
+						
+						<div class="clear-both"></div>
 					</div>
 				</div>
 
