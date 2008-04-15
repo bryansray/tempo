@@ -34,7 +34,7 @@ Ext.DataCert = function(){
 			var s = String.format.apply(String, Array.prototype.slice.call(arguments, 1));
 			var m = Ext.DomHelper.append(message_control, {html: create_box(title, s)}, true);
 
-			m.slideIn('t').pause(3).ghost('t', {remove:true});			
+			m.slideIn('t').pause(3.5).ghost('t', {remove:true});			
 		}
 	}
 }();
