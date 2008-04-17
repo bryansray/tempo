@@ -16,8 +16,6 @@ class Admin::ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         format.js
-      else
-        format.js { render :text => "error" }
       end
     end
   end

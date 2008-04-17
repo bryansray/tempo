@@ -24,7 +24,7 @@ describe User, "with fixtures loaded" do
   end
 
   it "should have a blogs assigned to them" do
-    @user.should have(2).blogs
+    @user.should have(1).blogs
   end
 
   it "should not be valid if login is nil" do
