@@ -1,5 +1,7 @@
 		<% unless @page.published? %>
-			<p>This page has not yet been published.</p>
+      <div id="page-content">
+        <p>This page has not yet been published.</p>
+      </div>
 		<% else %>
 			<div id="page-content">
 				<%= render :partial => 'content', :object => @page.content %>
