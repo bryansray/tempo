@@ -2,8 +2,8 @@ class BlogsController < ApplicationController
   # GET /blogs
   # GET /blogs.xml
   def index
-	@posts = Post.find_published(:all, :limit => 10, :order => "contents.published_at DESC")
-
+    @posts = Post.find_published(:all, :limit => 10, :order => "contents.published_at DESC")
+    @tags = Content.tag_counts
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @posts }

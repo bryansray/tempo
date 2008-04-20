@@ -15,6 +15,11 @@ class Project < ActiveRecord::Base
   # Validations
   validates_presence_of :name
   
+  # HACK : This needs to be re-factored, the only reason it is here is to acts as an Interface for Tag#show
+  def title
+    name
+  end
+  
   def to_s
     self.name
   end

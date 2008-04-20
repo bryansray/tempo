@@ -12,17 +12,18 @@ class TagsController < ApplicationController
   # GET /tags/1
   # GET /tags/1.xml
   def show
+    @tag = Tag.find params[:id]
     taggings = Tagging.find(:all, :conditions => ["tag_id = ?", params[:id]] )
-	@content = {}
+  	@content = {}
 	
-	#group the taggings
-	taggings.each do |tagging|
-		if @content[tagging.taggable_type].nil?
-			@content[tagging.taggable_type] = []
-		end
+  	#group the taggings
+  	taggings.each do |tagging|
+  		if @content[tagging.taggable_type].nil?
+  			@content[tagging.taggable_type] = []
+  		end
 	
-		@content[tagging.taggable_type] << tagging
-	end
+  		@content[tagging.taggable_type] << tagging
+  	end
 	
     respond_to do |format|
       format.html # show.html.erb

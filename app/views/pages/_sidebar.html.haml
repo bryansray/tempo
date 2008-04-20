@@ -1,12 +1,4 @@
-- if controller.action_name == "index"
-  - if logged_in?
-    .Section
-      %h3 Options
-
-      .content#Options
-        = link_to "Create a new page", new_page_path, :class => "icon icon_new_page"
-
-- elsif controller.action_name == "new"
+- if controller.action_name == "new"
   .Section
     %h3 Options
 

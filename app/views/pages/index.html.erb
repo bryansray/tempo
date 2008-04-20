@@ -1,24 +1,50 @@
-		<p>This section will eventually contain random statistics about current Wiki pages. Recently updated pages, most commented pages, most edited pages, etc ...</p>		
-		<p>You can also change this page by going to a specific Wiki page and clicking the "Set this page as default" link on the sidebar.</p>
-
-		<br/>
-
-		<div class="inner_left">		
-		<div class="panel">
-			<h2>Recently Updated</h2>
-			
-			<% @recent_changes.each do |page| %>
-				<p><%= link_to page.title, page_path(page) %></p>
-			<% end %>
-		</div>
-		</div>
-
-		<div class="inner_right">
-			<div class="panel">
-				<h2>Recently Viewed</h2>
-				
-				<% @visits.each do |visit| %>
-					<p><%= link_to visit.content.title, page_path(visit.content.owner) %></p>
-				<% end %>
+<% content_for :sidebar do %>
+	<% if logged_in? %>
+		<div class="Section">
+			<h3>Options</h3>
+		
+			<div id="Options" class="content">
+				<%= link_to "Create a new page", new_page_path, :class => "icon icon_new_page" %>
 			</div>
 		</div>
+	<% end %>
+
+	<div class="Section">
+		<h3>Tags</h3>
+		
+		<div id="Options" class="content">
+			<ul id="Tags">
+				<% tag_cloud @tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4) do |tag, css_style| %>
+					<li><%= link_to tag.name, tag_path(tag), :style => "", :class => "tag" %></li>
+				<% end %>
+			</ul>
+		</div>
+		
+		<div class="clear"></div>
+	</div>
+<% end %>
+
+<p>This section will eventually contain random statistics about current Wiki pages. Recently updated pages, most commented pages, most edited pages, etc ...</p>		
+<p>You can also change this page by going to a specific Wiki page and clicking the "Set this page as default" link on the sidebar.</p>
+
+<br/>
+
+<div class="inner_left">		
+<div class="panel">
+	<h2>Recently Updated</h2>
+	
+	<% @recent_changes.each do |page| %>
+		<p><%= link_to page.title, page_path(page) %></p>
+	<% end %>
+</div>
+</div>
+
+<div class="inner_right">
+	<div class="panel">
+		<h2>Recently Viewed</h2>
+		
+		<% @visits.each do |visit| %>
+			<p><%= link_to visit.content.title, page_path(visit.content.owner) %></p>
+		<% end %>
+	</div>
+</div>
