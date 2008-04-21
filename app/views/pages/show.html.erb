@@ -1,12 +1,14 @@
-		<% unless @page.published? %>
-      <div id="page-content">
-        <p>This page has not yet been published.</p>
-      </div>
-		<% else %>
-			<div id="page-content">
-				<%= render :partial => 'content', :object => @page.content %>
-			</div>
-		<% end %>
+<% unless @page.published? %>
+	<div id="page-content">
+		<p>This page has not yet been published.</p>
+	</div>
+<% else %>
+	<%= render :partial => "tags/applicator", :object => @page.content, :locals => { :url => update_tags_admin_page_path(@page) } %>
+	
+	<div id="page-content">
+		<%= render :partial => 'content', :object => @page.content %>
+	</div>
+<% end %>
 		
 		
 		<div style="display: none;" id="page-content-form">

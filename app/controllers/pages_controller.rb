@@ -149,8 +149,9 @@ class PagesController < ApplicationController
   end
   #TODO: Do we need the following two blocks any more?
   def update_tags
+    puts "---- #{params.inspect}"
     @page = Page.find(params[:id])
-    apply_tags( @page, params[:tags][:name] )
+    apply_tags( @page, params[:tags][:tag_list] )
     
     respond_to do |format|
       if @page.save

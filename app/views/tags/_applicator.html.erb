@@ -1,4 +1,4 @@
-<% remote_form_for(:tags, applicator, :url => update_tags_admin_project_path(applicator)) do |f| %>
+<% remote_form_for(:tags, applicator, :url => url) do |f| %>
 	<div id="tags-container" name="tags-container">
 		<div id="tag-list-panel">
 			<img src="/images/icons/tag_blue.png" align="absmiddle" />
@@ -14,10 +14,13 @@
 		
 		<div id="tag-editor-inputs" style="display: none;">
 			<div id="tag_list-removeable-tag-list-panel">
-				<% applicator.tags.each do |tag| %>
-					<span id="delete-<%= tag.name %>" class="removeable-tag" style="background-image: none; background-color: transparent;">
-						<%= tag.name %>
-						<%= link_to_remote image_tag("/images/icon-remove.gif", :align => "absmiddle"), :url => update_tags_admin_project_path(applicator, :tag_id => tag), :complete => "$('delete-#{tag.name}').remove();" %>
+				<% applicator.taggings.each do |tagging| %>
+					<span id="delete-<%= tagging.tag.name %>" class="removeable-tag" style="background-image: none; background-color: transparent;">
+						<%= tagging.tag.name %>
+						<%= link_to_remote image_tag("/images/icon-remove.gif", :align => "absmiddle"), 
+																	:url => admin_tagging_path(tagging), 
+																	:complete => "$('delete-#{tagging.tag.name}').remove();", 
+																	:method => :delete %>
 					</span>
 				<% end %>
 			</div>

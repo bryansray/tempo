@@ -67,7 +67,9 @@ ActionController::Routing::Routes.draw do |map|
   
   map.namespace :admin do |admin|
     admin.resources :projects, :member => { :update_tags => :post }
+    admin.resources :pages, :member => { :update_tags => :post }
     admin.resources :cards, :member => { :set_value_for => :post }
+    admin.resources :taggings
   end
   
   map.resource :home
