@@ -1,5 +1,6 @@
 index/*
 config/database.yml
+coverage/*
 log/*.log
 db/*.sqlite3
 .DS_Store
