@@ -21,7 +21,9 @@ class ApplicationController < ActionController::Base
       :table_styles => "Header 1=header1;Header 2=header2;Header 3=header3",
       :table_cell_styles => "Header 1=header1;Header 2=header2;Header 3=header3;Table Cell=tableCel1",
       :table_row_styles => "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1",
-      :table_cell_limit => 100
+      :table_cell_limit => 100,
+      :width => "100%",
+      :height => "450px"
     }
   )
 
