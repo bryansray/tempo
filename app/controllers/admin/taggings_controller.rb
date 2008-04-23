@@ -1,6 +1,7 @@
 class Admin::TaggingsController < ApplicationController
   def destroy
     @tagging = Tagging.find params[:id]
+    @object = @tagging.taggable
     @tagging.destroy
   end
   
@@ -13,7 +14,7 @@ class Admin::TaggingsController < ApplicationController
     @object.tag_list.add params[:tags][:tag_list], :parse => true
     
     respond_to do |format|
-      if @object.save
+      if @object.save_tags
         format.js
       end
     end
