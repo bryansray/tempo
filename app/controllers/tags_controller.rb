@@ -3,6 +3,9 @@ class TagsController < ApplicationController
   # GET /tags.xml
   def index
     @tags = Content.tag_counts
+    @tags.sort! { |x,y| x.name <=> y.name }
+    
+    @untagged = Content.find(:all, :joins => "LEFT JOIN taggings ON taggable_id = contents.id AND taggable_type = 'Content'", :conditions => "taggings.id IS NULL AND contents.owner_type <> 'Card'" )
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,22 +15,24 @@ class TagsController < ApplicationController
   # GET /tags/1
   # GET /tags/1.xml
   def show
-    @tag = Tag.find params[:id]
+    @content = {}
+    @tag = Tag.find(params[:id])
+    
     taggings = Tagging.find(:all, :conditions => ["tag_id = ?", params[:id]] )
-  	@content = {}
-	
-  	#group the taggings
-  	taggings.each do |tagging|
-  		if @content[tagging.taggable_type].nil?
-  			@content[tagging.taggable_type] = []
-  		end
-	
-  		@content[tagging.taggable_type] << tagging
-  	end
-	
+
+    #group the taggings
+    taggings.each do |tagging|
+      if @content[tagging.taggable_type].nil?
+        @content[tagging.taggable_type] = []
+      end
+
+      @content[tagging.taggable_type] << tagging
+    end
+
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @tag }
+      format.js { render :partial => "tag_show.html.erb", :locals => { :content => @content } }
+      #format.xml  { render :xml => @tag }
     end
   end
 

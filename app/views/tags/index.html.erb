@@ -1,5 +1,17 @@
-<ul>
-  <% tag_cloud @tags, %w(css1) do |tag, css| %>
-    <li id="tag-<%= tag.id %>"><%= link_to tag.name, tag_path(tag) %></li>
+<h1>Site Index</h1>
+<p>This page uses the tags placed on various content (e.g. posts and wiki pages) to create an index. The number in parentheses represents the quantity of content with that particular tag.</p>
+<ol class="site-index">
+  <% @tags.each do |tag| %>
+    <li><%= link_to_remote tag.name, :url => tag_path(tag), :method => :get, :update => { :success => "tag-content-#{tag.id}" } %> (<%= tag.count %>)<div id="tag-content-<%= tag.id %>"></div></li>
   <% end %>
-</ul>
+</ol>
+<h2>Untagged</h2>
+<p>The following items are not tagged. They are in danger of being lost forever. (Cards from the project management component are not included in this list.)</p>
+<br />
+<ol>
+  <% @untagged.each do |item| %>
+  <li><%= link_to item.title, polymorphic_path(item) %>
+by <%= link_to item.user, user_path(item.user) %>
+on <%= item.created_at.strftime("%B %d, %Y %I:%m %p") %></li>
+<% end %>
+</ol>
