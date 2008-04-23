@@ -4,27 +4,16 @@ class Admin::TaggingsController < ApplicationController
     @tagging.destroy
   end
   
-  def update
-    puts "--- #{params.inspect}"
-    type = params[:tags][:taggable_type].constantize
-    @content =  type.find params[:id]
-    @content.tag_list.add params[:tags][:tag_list], :parse => true
-    
-    respond_to do |format|
-      if @content.save
-        format.js
-      end
-    end    
+  def update    
   end
   
   def create
-    puts "--- #{params.inspect}"
     type = params[:tags][:taggable_type].constantize
-    @content =  type.find params[:id]
-    @content.tag_list.add params[:tags][:tag_list], :parse => true
+    @object = type.find params[:id]
+    @object.tag_list.add params[:tags][:tag_list], :parse => true
     
     respond_to do |format|
-      if @content.save
+      if @object.save
         format.js
       end
     end
