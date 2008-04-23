@@ -139,7 +139,7 @@ input[type="text"], input.text {
 
 /*****[ tags-container ]*****/
 .inner #tags-container {
-    margin-bottom: 1em;
+    margin: .5em 0;
 }
 .tag-list {
     display: inline;

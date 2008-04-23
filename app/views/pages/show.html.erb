@@ -3,8 +3,6 @@
 		<p>This page has not yet been published.</p>
 	</div>
 <% else %>
-	<%= render :partial => "tags/applicator", :object => @page.content, :locals => { :url => admin_taggings_path(:id => @page.content) } %>
-	
 	<div id="page-content">
 		<%= render :partial => 'content', :object => @page.content %>
 	</div>

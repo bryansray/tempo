@@ -2,9 +2,11 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Admin::TaggingsController, "handling DELETE /admin/taggings/1" do
   before(:each) do
+    @content = mock_model(Content)
     @tagging = mock_model(Tagging, :to_param => 1)
     
     Tagging.stub!(:find).and_return(@tagging)
+    @tagging.stub!(:taggable).and_return(@content)
     @tagging.stub!(:destroy)
   end
   
@@ -17,7 +19,12 @@ describe Admin::TaggingsController, "handling DELETE /admin/taggings/1" do
     response.should be_success
   end
   
-  it "should find the taggings that was requested" do
+  it "should assign the taggable object to the associated view" do
+    do_delete
+    assigns[:object].should == @content
+  end
+  
+  it "should find the tagging that was requested" do
     Tagging.should_receive(:find).with('1').and_return(@tagging)
     do_delete
   end
@@ -42,7 +49,7 @@ describe Admin::TaggingsController, "handling POST /admin/taggings" do
   end
   
   def post_with_successful_save
-    @content.should_receive(:save).and_return(true)
+    @content.should_receive(:save_tags).and_return(true)
     do_post
   end
   
