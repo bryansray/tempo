@@ -1,38 +1,31 @@
-<% remote_form_for(:tags, applicator, :url => url) do |f| %>
-	<%= f.hidden_field :taggable_type, :value => applicator.class %>
+<script language="javascript">
+var TagApplicator = {
+	editTags: function() {
+		$('tag-list-panel').toggle();
+		$('tag-editor-inputs').toggle();
+		$('tags_tag_list').focus();
+	}
+}
+</script>
 	<div id="tags-container" name="tags-container">
 		<div id="tag-list-panel">
-			<img src="/images/icons/tag_blue.png" align="absmiddle" />
-			<div id="tag_list-tag-list-div" class="tag-list"><%= applicator.tag_list %></div>
-			<div id="tag-editor-actions">
-				<% if applicator.tags.empty? %>
-					<%= link_to_function "Add tags", "$('tag-list-panel').hide(); $('tag-editor-inputs').show(); $('tags_tag_list').focus();" %>
-				<% else %>
-					(<%= link_to_function "edit tags", "$('tag-list-panel').hide(); $('tag-editor-inputs').show(); $('tags_tag_list').focus();" %>)
-				<% end %>
-			</div>
+			<%= render :partial => "tags/tag_list_panel", :object => applicator %>
 		</div>
 		
 		<div id="tag-editor-inputs" style="display: none;">
 			<div id="tag_list-removeable-tag-list-panel">
-				<% applicator.taggings.each do |tagging| %>
-					<span id="delete-<%= tagging.tag.name %>" class="removeable-tag" style="background-image: none; background-color: transparent;">
-						<%= tagging.tag.name %>
-						<%= link_to_remote image_tag("/images/icon-remove.gif", :align => "absmiddle"), 
-																	:url => admin_tagging_path(tagging), 
-																	:complete => "$('delete-#{tagging.tag.name}').remove();", 
-																	:method => :delete %>
-					</span>
-				<% end %>
+				<%= render :partial => 'tags/edit_tag_panel', :object => applicator.taggings %>
 			</div>
 			<div id="tag-editor-actions">
 				<div class="notes">(separate multiple tags with commas)</div>
 				<div>
-					<%= f.text_field :tag_list, :value => "", :class => "input-type-text" %>
-					<input type="submit" value="Add Tags" />
-					<input type="button" onclick="$('tag-editor-inputs').hide(); $('tag-list-panel').show();" value="Close" />
+					<% remote_form_for(:tags, applicator, :url => url, :success => '$("tags_tag_list").clear()') do |f| %>
+						<%= f.hidden_field :taggable_type, :value => applicator.class %>
+						<%= f.text_field :tag_list, :value => "", :class => "input-type-text" %>
+						<input type="submit" value="Add Tags" />
+						<input type="button" onclick="TagApplicator.editTags();" value="Close" />
+					<% end %>
 				</div>
 			</div>
 		</div>
 	</div>
-<% end %>

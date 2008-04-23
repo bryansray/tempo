@@ -1,0 +1,9 @@
+<img src="/images/icons/tag_blue.png" align="absmiddle" />
+<div id="tag_list-tag-list-div" class="tag-list"><%= tag_list_panel.tag_list.sort %></div>
+<div id="tag-editor-actions">
+	<% if tag_list_panel.tags.empty? %>
+		<%= link_to_function "Add tags", "TagApplicator.editTags()" %>
+	<% else %>
+		(<%= link_to_function "edit tags", "TagApplicator.editTags()" %>)
+	<% end %>
+</div>

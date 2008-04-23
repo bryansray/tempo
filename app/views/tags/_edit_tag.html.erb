@@ -1,0 +1,7 @@
+<span id="delete-<%= edit_tag.id %>" class="removeable-tag" style="background-image: none; background-color: transparent;">
+	<%= edit_tag.name %>
+	<%= link_to_remote image_tag("/images/icon-remove.gif", :align => "absmiddle"), 
+												:url => url, 
+												:complete => "$('delete-#{edit_tag.id}').remove();", 
+												:method => :delete %>
+</span>

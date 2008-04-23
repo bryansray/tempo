@@ -1,0 +1,3 @@
+<% edit_tag_panel.each do |tagging| %>
+	<%= render :partial => 'tags/edit_tag', :object => tagging.tag, :locals => { :url => admin_tagging_path(tagging) } %>
+<% end %>
