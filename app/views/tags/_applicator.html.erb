@@ -1,4 +1,5 @@
 <% remote_form_for(:tags, applicator, :url => url) do |f| %>
+	<%= f.hidden_field :taggable_type, :value => applicator.class %>
 	<div id="tags-container" name="tags-container">
 		<div id="tag-list-panel">
 			<img src="/images/icons/tag_blue.png" align="absmiddle" />
