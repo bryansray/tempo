@@ -1,9 +1,0 @@
-.Section 
-  %h3
-    = h puts(owner.class)
-    %div#tag_edit= link_to_remote "Edit", :url => { :controller => "tags", :action => "edit_tags", :owner => owner }, :complete => "$('Tags_Form').blindDown();", :method => :get
-    %div#tag_cancel{:style => "display:none"}= link_to_function "Cancel", "$('tag_edit').toggle();$('tag_cancel').toggle();$('Tags_Form').remove(); $('Tags').blindDown();"
-    Tags
-
-  .content
-    = render :partial => "tags/tags", :object => owner.tags

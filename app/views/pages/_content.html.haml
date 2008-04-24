@@ -6,4 +6,5 @@
 
   .SubTitle
     == This page has #{content.versions.count} versions and #{content.owner.comments.count} comments.
+  = render :partial => "tags/applicator", :object => @page.content
   .Text= content.text

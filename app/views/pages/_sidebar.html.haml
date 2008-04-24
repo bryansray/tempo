@@ -6,17 +6,6 @@
       = link_to_remote "Copy from OpenWiki", {:method => :get, :url => import_pages_path, :complete => "$('import_link').toggle()"}, :class => "icon icon_copy_page", :id => "import_link"
       #import_form
 
-  .Section
-    %h3 Tags
-    .content
-      = render :partial => "tags/tag_applicator"
-
-- elsif controller.action_name == "edit"
-  .Section
-    %h3 Tags
-    .content
-      = render :partial => "tags/tag_applicator", :locals => { :selected => @page.content.tag_list.to_a }
-
 - elsif controller.action_name == "show"
   .Section
     %h3 Options
@@ -25,15 +14,6 @@
       = link_to "Create a new page", new_page_path, :class => "icon icon_new_page"
       = link_to_function("Edit this page", "$('page-content').hide(); $('page-content-form').show();", :class => "icon icon_edit_page")
       = link_to_remote("Set this page as default", {:url => set_default_page_path(@page), :complete => "Ext.DataCert.msg('Preferences', 'Default Page Set.');"}, :class => "icon icon_star_page")
-
-  .Section 
-    %h3
-      %div#tag_edit= link_to_remote "Edit", :url => edit_tags_page_path(@page), :complete => "$('Tags_Form').blindDown();", :method => :get
-      %div#tag_cancel{:style => "display:none"}= link_to_function "Cancel", "$('tag_edit').toggle();$('tag_cancel').toggle();$('Tags_Form').remove(); $('Tags').blindDown();"
-      Tags
-
-    .content
-      = render :partial => "tags/tags", :object => @page.tags
 
   = render :partial => "attachments/sidebar_section", :locals => {:content => @page.content}
 

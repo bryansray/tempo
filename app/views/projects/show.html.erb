@@ -1,4 +1,4 @@
-<%= render :partial => "tags/applicator", :object => @project, :locals => { :url => update_tags_admin_project_path(@project) } %>
+<%= render :partial => "tags/applicator", :object => @project, :locals => { :url => admin_taggings_path(:id => @project) } %>
 
 <h2><%= @project.name %></h2>
 

@@ -1,0 +1,7 @@
+<span id="delete-<%= edit_tag_panel.id %>" class="removeable-tag" style="background-image: none; background-color: transparent;">
+	<%= edit_tag_panel.tag.name %>
+	<%= link_to_remote image_tag("/images/icon-remove.gif", :align => "absmiddle"), 
+												:url => admin_tagging_path(edit_tag_panel), 
+												:complete => "$('delete-#{edit_tag_panel.id}').remove();", 
+												:method => :delete %>
+</span>

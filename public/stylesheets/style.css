@@ -139,7 +139,7 @@ input[type="text"], input.text {
 
 /*****[ tags-container ]*****/
 .inner #tags-container {
-    margin-bottom: 1em;
+    margin: .5em 0;
 }
 .tag-list {
     display: inline;
@@ -148,6 +148,7 @@ input[type="text"], input.text {
     display: inline;
     margin-right: 1em;
     white-space: nowrap;
+		line-height: 1.8em;
 }
 .inner #tag-editor-actions {
     display: inline;
