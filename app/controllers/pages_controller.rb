@@ -85,15 +85,6 @@ class PagesController < ApplicationController
   def edit
     @page = Page.find(params[:id])
   end
-  
-  # GET /pages/1/edit_tags
-  def edit_tags
-    @page = Page.find(params[:id])
-    
-    respond_to do |format|
-      format.js #{ render :partial => "tags/tag_applicator.html.haml" }
-    end
-  end
 
   # POST /pages
   # POST /pages.xml
@@ -146,29 +137,6 @@ class PagesController < ApplicationController
         format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
       end
     end
-  end
-  #TODO: Do we need the following two blocks any more?
-  def update_tags
-    puts "---- #{params.inspect}"
-    @page = Page.find(params[:id])
-    apply_tags( @page, params[:tags][:tag_list] )
-    
-    respond_to do |format|
-      if @page.save
-        notify :notice, "Tags were successfully updated."
-        format.js
-      end
-    end
-  end
-  
-  def apply_tags( page, new_tag_list )
-    page_tags = page.tag_list
-    form_tags = new_tag_list.split(",")
-    
-    remove_tags = page_tags# - form_tags
-    print "\n\n"<<remove_tags<<"\n\n"
-    page.tag_list.remove(remove_tags)
-    page.tag_list.add(new_tag_list, :parse => true)
   end
 
   # DELETE /pages/1

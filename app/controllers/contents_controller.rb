@@ -31,10 +31,6 @@ class ContentsController < ApplicationController
       format.html #edit.html.erb
     end
   end
-  
-  def edit_tags
-    @content = Content.find(params[:id])
-  end
 	
   # POST /users
   # POST /users.xml
@@ -50,18 +46,6 @@ class ContentsController < ApplicationController
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @content.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  def update_tags
-    @content = Content.find(params[:id])
-    @content.tag_list.remove(@content.tag_list)
-    @content.tag_list.add(params[:tags][:name], :parse => true)
-    
-    respond_to do |format|
-      if @content.save
-        format.js
       end
     end
   end

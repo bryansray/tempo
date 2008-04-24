@@ -29,12 +29,12 @@ ActionController::Routing::Routes.draw do |map|
 	teams.resources :iterations
   end
 
-  map.resources :pages, :collection => { :import => :get }, :member => { :edit_tags => :get, :update_tags => :post, :set_default => :post } do |pages|
+  map.resources :pages, :collection => { :import => :get }, :member => { :set_default => :post } do |pages|
     pages.resources :comments
     pages.resources :versions, :controller => :pages
   end
   
-  map.resources :posts, :member => { :edit_tags => :get, :update_tags => :post } do |posts|
+  map.resources :posts do |posts|
     posts.resources :comments
     posts.resources :versions, :controller => :posts
   end
@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
     blogs.resources :posts
   end
 
-  map.resources :contents, :member => { :update_tags => :put } do |contents|
+  map.resources :contents do |contents|
     contents.resources :versions
   end
 
@@ -61,13 +61,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :members
   map.resources :users
   map.resources :departments
-  map.resources :tags, :member => { :edit_tags => :get }
+  map.resources :tags
   map.resources :links
   map.resources :attachments
   
   map.namespace :admin do |admin|
-    admin.resources :projects, :member => { :update_tags => :post }
-    admin.resources :pages, :member => { :update_tags => :post }
+    admin.resources :projects
+    admin.resources :pages
     admin.resources :cards, :member => { :set_value_for => :post }
     admin.resources :taggings
   end

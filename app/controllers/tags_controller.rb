@@ -51,12 +51,6 @@ class TagsController < ApplicationController
       format.js
     end
   end
-  
-  def edit_tags
-    respond_to do |format|
-      format.js
-    end
-  end
 
   # POST /tags
   # POST /tags.xml

@@ -72,15 +72,6 @@ class PostsController < ApplicationController
     end
   end
   
-  # GET /posts/1/edit_tags.js
-  def edit_tags
-    @post = Post.find(params[:id])
-    
-    respond_to do |format|
-      format.js
-    end
-  end
-
   # POST /posts
   # POST /posts.xml
   def create
@@ -126,29 +117,6 @@ class PostsController < ApplicationController
         format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
       end
     end
-  end
-
-  # PUT /posts/1/update_tags.js
-  def update_tags
-    @post = Post.find(params[:id])
-    apply_tags( @post, params[:tags][:name] )
-    
-    respond_to do |format|
-      if @post.save
-        notify :notice, "Tags were successfully updated."
-        format.js
-      end
-    end
-  end
-  
-  def apply_tags( post, new_tag_list )
-    post_tags = post.tag_list
-    form_tags = new_tag_list.split(",")
-    
-    remove_tags = post_tags - form_tags
-    
-    post.tag_list.remove(remove_tags)
-    post.tag_list.add(new_tag_list, :parse => true)
   end
 
   # DELETE /posts/1

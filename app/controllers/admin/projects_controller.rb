@@ -7,16 +7,4 @@ class Admin::ProjectsController < ApplicationController
       format.html { redirect_to(projects_path)}
     end
   end
-
-  def update_tags
-    @project = Project.find(params[:id])
-    @project.tag_list.remove(Tag.find(params[:tag_id]).name) if params[:tag_id]
-    @project.tag_list.add(params[:tags][:tag_list], :parse => true) if params[:tags]
-    
-    respond_to do |format|
-      if @project.save
-        format.js
-      end
-    end
-  end
 end

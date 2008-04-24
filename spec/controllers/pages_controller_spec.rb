@@ -199,35 +199,6 @@ describe PagesController, "handling GET /pages/new" do
   end
 end
 
-
-# TODO - I'm pretty sure this can be refactored back in to the "edit" method
-describe PagesController, "handling GET /pages/1/edit_tags" do
-  before(:each) do
-    @page = mock_model(Page, :to_param => 1)
-    
-    Page.stub!(:find).and_return(@page)
-  end
-  
-  def do_get
-    get :edit_tags, :id => 1
-  end
-  
-  it "should be successful" do
-    do_get
-    response.should be_success
-  end
-  
-  it "should find the requested page" do
-    Page.should_receive(:find).and_return(@page)
-    do_get
-  end
-  
-  it "should assign the found page to the view" do
-    do_get
-    assigns[:page].should == @page
-  end
-end
-
 describe PagesController, "handling GET /pages/1/edit" do
   before(:each) do
   	@page = mock_model(Page, :to_param => 1)
