@@ -1,2 +1,2 @@
-page['tag_list-removeable-tag-list-panel'].replace_html :partial => 'tags/edit_tag_panel', :object => @object.taggings
-page['tag-list-panel'].replace_html :partial => "tags/tag_list_panel", :object => @object
+page["tag_list-removeable-tag-list-panel-#{@object.id}"].replace_html :partial => 'tags/edit_tag_panel', :collection => @object.taggings
+page["tag-list-panel-#{@object.id}"].replace_html :partial => "tags/tag_list_panel", :object => @object

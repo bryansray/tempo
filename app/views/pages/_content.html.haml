@@ -6,5 +6,5 @@
 
   .SubTitle
     == This page has #{content.versions.count} versions and #{content.owner.comments.count} comments.
-  = render :partial => "tags/applicator", :object => @page.content, :locals => { :url => admin_taggings_path(:id => @page.content) } 
+  = render :partial => "tags/applicator", :object => @page.content
   .Text= content.text

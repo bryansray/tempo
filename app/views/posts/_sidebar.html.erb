@@ -11,26 +11,5 @@
       <% end %>
     </div>
   </div>
-      
-  <div class="Section">
-    <h3>
-      <div id="tag_edit"><%= link_to_remote "Edit", :url => edit_tags_post_path(params[:id]), :complete => "$('Tags_Form').blindDown();", :method => :get %></div>
-      <div id="tag_cancel" style="display:none"><%= link_to_function "Cancel", "$('tag_edit').toggle();$('tag_cancel').toggle();$('Tags_Form').remove(); $('Tags').blindDown();" %></div>
-      Tags
-    </h3>
-    
-    <div class="content"><%= render :partial => "tags/tags", :object => @post.tags %></div>
-  </div>
-
-<% elsif controller.action_name == "new" %>
-  <div class="Section">
-    <h3> Tags</h3>
-    <div class="content"><%= render :partial => "tags/tag_applicator" %></div>
-  </div>
-<% elsif controller.action_name == "edit" %>
-  <div class="Section">
-    <h3>Tags</h3>
-    <div class="content"><%= render :partial => "tags/tag_applicator", :locals => { :selected => @post.content.tag_list.to_a } %></div>
-  </div>
 <% end %>
 

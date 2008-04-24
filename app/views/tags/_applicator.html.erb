@@ -3,22 +3,24 @@
 <% end %>
 
 <div id="tags-container" name="tags-container">
-	<div id="tag-list-panel">
+	<div id="tag-list-panel-<%= applicator.id %>">
 		<%= render :partial => "tags/tag_list_panel", :object => applicator %>
 	</div>
 	
-	<div id="tag-editor-inputs" style="display: none;">
-		<div id="tag_list-removeable-tag-list-panel">
+	<div id="tag-editor-inputs-<%= applicator.id %>" style="display: none;">
+		<div id="tag_list-removeable-tag-list-panel-<%= applicator.id %>">
 			<%= render :partial => 'tags/edit_tag_panel', :collection => applicator.taggings %>
 		</div>
 		<div id="tag-editor-actions">
 			<div class="notes">(separate multiple tags with commas)</div>
 			<div>
-				<% remote_form_for(:tags, applicator, :url => url, :success => '$("tags_tag_list").clear()') do |f| %>
-					<%= f.hidden_field :taggable_type, :value => applicator.class %>
-					<%= f.text_field :tag_list, :value => "", :class => "input-type-text" %>
-					<input type="submit" value="Add Tags" />
-					<input type="button" onclick="TagApplicator.editTags();" value="Close" />
+				<% remote_form_for(:tags, applicator, :url => admin_taggings_path, :success => "$('tag_list_text-#{applicator.id}').clear()") do |f| %>
+					<%= hidden_field :applicator, :id, :value => applicator.id %>
+					<%= hidden_field :applicator, :class, :value => applicator.class %>
+					<%= f.text_field :tag_list, :value => "", :id => "tag_list_text-#{applicator.id}", :class => "input-type-text" %>
+					
+					<%= f.submit "Add Tags" %> | 
+					<%= link_to_function "Close", "TagApplicator.editTags(#{applicator.id})"%>
 				<% end %>
 			</div>
 		</div>

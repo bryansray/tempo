@@ -108,7 +108,7 @@
 					</div>
 
 					<%= yield :sidebar %>
-					<%= render(:partial => "sidebar") %>
+					<%= render(:partial => "sidebar") rescue nil %>
 				</div>
 
 				<div id="Main">

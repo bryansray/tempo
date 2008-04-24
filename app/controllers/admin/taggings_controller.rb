@@ -9,8 +9,8 @@ class Admin::TaggingsController < ApplicationController
   end
   
   def create
-    type = params[:tags][:taggable_type].constantize
-    @object = type.find params[:id]
+    type = params[:applicator][:class].constantize
+    @object = type.find params[:applicator][:id]
     @object.tag_list.add params[:tags][:tag_list], :parse => true
     
     respond_to do |format|

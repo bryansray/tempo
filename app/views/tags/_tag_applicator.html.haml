@@ -1,9 +1,0 @@
-- tags = Tag.find(:all, :order => "name")
-- selected = [] if selected.nil?
-%p Create new tags (hit enter to add)
-- form_remote_for :tag, :url => { :controller => 'tags', :action => :create }, :position => "bottom" do |f|
-  = f.text_field :name
-%p Choose from existing tags
-%ul#TagApplicator
-  - tags.each do |tag|
-    = render :partial => "tags/tagli", :locals => { :tag => tag, :is_selected => !selected.index( tag.name ).nil?  }

@@ -45,26 +45,31 @@ describe Admin::TaggingsController, "handling POST /admin/taggings" do
   end
   
   def do_post
-    post :create, :id => 1, :tags => { :taggable_type => 'Content', :tag_list => "Tag 1" }
+    post :create, :applicator => { :id => '1', :class => 'Content' }, :tags => { :tag_list => "Tag 1" }
   end
   
-  def post_with_successful_save
+  def post_with_successfully_saving_tags
     @content.should_receive(:save_tags).and_return(true)
     do_post
   end
   
   it "should be successful" do
-    post_with_successful_save
+    post_with_successfully_saving_tags
     response.should be_success
   end
   
-  it "should find the taggable type" do
+  it "should assign the taggable object to the associated view" do
+    post_with_successfully_saving_tags
+    assigns[:object].should == @content
+  end
+  
+  it "should find the taggable type by the taggable id" do
     Content.should_receive(:find).with('1').and_return(@content)
-    post_with_successful_save
+    post_with_successfully_saving_tags
   end
   
   it "should add the new tags to the taggable type" do
     @tag_list.should_receive(:add).with("Tag 1", :parse => true).and_return(@tag_list)
-    post_with_successful_save
+    post_with_successfully_saving_tags
   end
 end

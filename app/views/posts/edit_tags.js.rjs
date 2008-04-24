@@ -1,4 +1,3 @@
 page['tag_edit'].toggle()
 page['tag_cancel'].toggle()
 page['Tags'].toggle()
-page.insert_html(:after, "Tags", { :partial => 'tags/tags_form', :object => @post })

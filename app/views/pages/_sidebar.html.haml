@@ -6,17 +6,6 @@
       = link_to_remote "Copy from OpenWiki", {:method => :get, :url => import_pages_path, :complete => "$('import_link').toggle()"}, :class => "icon icon_copy_page", :id => "import_link"
       #import_form
 
-  .Section
-    %h3 Tags
-    .content
-      = render :partial => "tags/tag_applicator"
-
-- elsif controller.action_name == "edit"
-  .Section
-    %h3 Tags
-    .content
-      = render :partial => "tags/tag_applicator", :locals => { :selected => @page.content.tag_list.to_a }
-
 - elsif controller.action_name == "show"
   .Section
     %h3 Options
