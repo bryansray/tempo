@@ -1,5 +1,6 @@
 index/*
 config/database.yml
+public/attachments/*
 coverage/*
 log/*.log
 db/*.sqlite3
