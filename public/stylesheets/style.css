@@ -402,6 +402,11 @@ input[type="text"], input.text {
     padding-left: 35px;
 }
 
+.panel div div.body {
+	padding-left: 0;
+	margin-top: 5px;
+}
+
 .panel p {
     border-top: 1px solid #D8DFEA;
     color: #333333;
