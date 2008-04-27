@@ -196,10 +196,8 @@ input[type="text"], input.text {
 }
 
 .FilterTabs {
-	background-color: #efefef;
 	height: 26px;
 	margin-left: 0;
-	padding-left: 15px;
 	float: none;
 }
 

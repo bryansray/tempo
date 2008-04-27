@@ -5,12 +5,14 @@
 <% if content_feed.empty? %>
   <p><strong>Nothing to see here</strong><br/></p>
 <% else %>
+	<div class="Toolbar">
 		<ul class="FilterTabs">
 			<li><%= link_to_function "All", "FeedReader.show()" %></li>
 			<li><%= link_to_function "Posts", "FeedReader.show('Post')" %></li>
 			<li><%= link_to_function "Pages", "FeedReader.show('Page')" %></li>
 			<li><%= link_to_function "Comments", "FeedReader.show('Comment')" %></li>
 		</ul>
+	</div>
 
   <% content_feed.each do |content| %>
 		<div id="<%= content.owner.class %>-<%= content.owner.id %>" class="<%= content.owner.class %> FeedItem">
