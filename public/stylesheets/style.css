@@ -1,3 +1,7 @@
+.panel div.Filter {
+	padding-left: 1em;
+}
+
 fieldset {
     margin: 10px 0pt;
     border: medium none;
@@ -179,7 +183,7 @@ input[type="text"], input.text {
 #Header a:link, #Header a:visited {
     color: #fff;
 }
-#Header li {
+#Header li, .FilterTabs li {
     border: medium none;
     display: inline;
     list-style-image: none;
@@ -187,18 +191,31 @@ input[type="text"], input.text {
     list-style-type: none;
 }
 
-#MainTabs {
+#MainTabs, .FilterTabs {
     float: left;
-    width: 450px;
-    margin-left: 30px;
 }
-#MainTabs a:link, #MainTabs a:visited {
+
+.FilterTabs {
+	background-color: #efefef;
+	height: 26px;
+	margin-left: 0;
+	padding-left: 15px;
+	float: none;
+}
+
+#MainTabs a:link, #MainTabs a:visited, .FilterTabs a:link, .FilterTabs a:visited {
     float: left;
     font-size: 12px;
     font-weight: normal;
     padding: 3px 8px 9px;
     border: none;
 }
+
+.FilterTabs a:link, .FilterTabs a:visited {
+	padding: 7px 8px 5px;
+	font-size: 10px;
+}
+                    
 #MainTabs a.current:link, #MainTabs a.current:visited 
 {
     background: white;
@@ -230,7 +247,6 @@ input[type="text"], input.text {
 #AccountTabs a:link, #AccountTabs a:visited {	
     color: #C0C5E1;
 }
-
 
 /******[ sidebar items ]******/
 #Sidebar .Section h3 {
@@ -393,7 +409,7 @@ input[type="text"], input.text {
     margin-bottom: 10px;
 }
 
-.panel  div {
+.panel div {
     border-top: 1px solid #D8DFEA;
     color: #333333;
     font-weight: normal;
