@@ -1,9 +1,2 @@
 <h1><%= @tag.name %></h1>
-<% current_type = '' %>
-<% @content.each do |key, value| %>
-	<h2><%= key %></h2>
-	
-	<% value.each do |item| %>
-		<p><%= link_to item.taggable.title, polymorphic_path(item.taggable) %> was last updated <%= item.taggable.updated_at.strftime("%B %d, %Y %I:%m %p") %></p>
-	<% end %>
-<% end %>
+<%= render :partial => "tag_show" %>

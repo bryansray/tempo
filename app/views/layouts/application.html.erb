@@ -1,42 +1,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>
+  <head>
+    <title>
                    Tempo <%= "- #{controller.controller_name} - #{controller.action_name}" if RAILS_ENV == "development" %>
                     <%= "- #{@page.title}" if controller.controller_name == "pages" && controller.action_name == "show" %>
                     <%= "- #{@post.title}" if controller.controller_name == "posts" && controller.action_name == "show" %>
                 </title>
 
-		<meta http-equiv="Content-Language" content="English" />
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="English" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />	
-		<meta name="Robots" content="index,follow" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />	
+    <meta name="Robots" content="index,follow" />
 
-		<%= stylesheet_link_tag "ext/css/ext-all", "ext/css/xtheme-gray", "base", "style" %>
-	    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss/" />
-    	<%= stylesheet_link_tag "SyntaxHighlighter" %>
+    <%= stylesheet_link_tag "ext/css/ext-all", "ext/css/xtheme-gray", "base", "style" %>
+      <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss/" />
+      <%= stylesheet_link_tag "SyntaxHighlighter" %>
 
-    	<%# Include TinyMCE before other JS to avoid problems -%>
-		<%= javascript_include_tiny_mce_if_used %>
-		<%= tiny_mce if using_tiny_mce? %>
+      <%# Include TinyMCE before other JS to avoid problems -%>
+    <%= javascript_include_tiny_mce_if_used %>
+    <%= tiny_mce if using_tiny_mce? %>
 
-		<%= javascript_include_tag :defaults, "adapter/ext/ext-base", "ext-all" %>
-		<%= javascript_include_tag "styleScripts", "styles", "swimming_pool" %>
+    <%= javascript_include_tag :defaults, "adapter/ext/ext-base", "ext-all" %>
+    <%= javascript_include_tag "styleScripts", "styles", "swimming_pool" %>
 
-    	<%= javascript_include_tag "SyntaxHighlighter/shCore", "SyntaxHighlighter/shBrushCSharp", "SyntaxHighlighter/shBrushXml", "SyntaxHighlighter/shBrushCss", "SyntaxHighlighter/shBrushJScript", "SyntaxHighlighter/shBrushRuby", "SyntaxHighlighter/shBrushSql" %>
-	    <script type="text/javascript">
-	      Ext.onReady(function(){
-	        dp.SyntaxHighlighter.ClipboardSwf = '/javascripts/SyntaxHighlighter/clipboard.swf';
-	        dp.SyntaxHighlighter.HighlightAll('code');
-	      });
-	
-	      var win;
-	    </script>
-		
-		<%= yield :javascript %>
-		
+      <%= javascript_include_tag "SyntaxHighlighter/shCore", "SyntaxHighlighter/shBrushCSharp", "SyntaxHighlighter/shBrushXml", "SyntaxHighlighter/shBrushCss", "SyntaxHighlighter/shBrushJScript", "SyntaxHighlighter/shBrushRuby", "SyntaxHighlighter/shBrushSql" %>
+      <script type="text/javascript">
+        Ext.onReady(function(){
+          dp.SyntaxHighlighter.ClipboardSwf = '/javascripts/SyntaxHighlighter/clipboard.swf';
+          dp.SyntaxHighlighter.HighlightAll('code');
+        });
+
+        var win;
+      </script>
+    
+    <%= yield :javascript %>
+
   </head>
 
 	<body id="body" class="<%= controller.controller_name %>">

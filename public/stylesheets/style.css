@@ -904,3 +904,15 @@ span.group {
     width:120px;
     height:80px;
 }
+/********* Site Index *********/
+.site-index {
+  list-style-type: upper-roman;
+  list-style-position: outside;
+  margin: 1.5em 0pt 1.5em 2em;
+}
+
+.site-index ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 2em;
+}
