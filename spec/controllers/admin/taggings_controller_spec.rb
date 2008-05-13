@@ -45,7 +45,7 @@ describe Admin::TaggingsController, "handling POST /admin/taggings" do
   end
   
   def do_post
-    post :create, :applicator => { :id => '1', :class => 'Content' }, :tags => { :tag_list => "Tag 1" }
+    post :create, :applicator => { :id => '1', :class => 'Content' }, :tag => { :name => "Tag 1" }
   end
   
   def post_with_successfully_saving_tags
