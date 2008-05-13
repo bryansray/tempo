@@ -351,7 +351,6 @@ input[type="text"], input.text {
 .Content .Footer {
     color: #aaa;
     font-size: 11px;
-    border-bottom: 1px solid #eee;
 }
 .Content .Footer .Tags {
     background: url(/images/icons/tag_blue.png) no-repeat left center;

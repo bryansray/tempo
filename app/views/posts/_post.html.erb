@@ -17,10 +17,9 @@
         <% end %>
      </div>
 
-	<%= render :partial => "tags/applicator", :object => post.content %>
-
 	<div class="Text"><%= post.text %></div>
 
     <div class="Footer">
+		<%= render :partial => "tags/applicator", :object => post.content %>
     </div>
 </div>
