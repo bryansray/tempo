@@ -14,10 +14,11 @@
 		<div id="tag-editor-actions">
 			<div class="notes">(separate multiple tags with commas)</div>
 			<div>
-				<% remote_form_for(:tags, applicator, :url => admin_taggings_path, :success => "$('tag_list_text-#{applicator.id}').clear()") do |f| %>
+				<% remote_form_for(:tags, applicator, :url => admin_taggings_path, 
+					:success => "$('tag_name').clear()") do |f| %>
 					<%= hidden_field :applicator, :id, :value => applicator.id %>
 					<%= hidden_field :applicator, :class, :value => applicator.class %>
-					<%= f.text_field :tag_list, :value => "", :id => "tag_list_text-#{applicator.id}", :class => "input-type-text" %>
+					<%= text_field_with_auto_complete :tag, :name, { :size => 15}, {:tokens => ','} %>
 					
 					<%= f.submit "Add Tags" %> | 
 					<%= link_to_function "Close", "TagApplicator.editTags(#{applicator.id})"%>

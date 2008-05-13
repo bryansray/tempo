@@ -2,6 +2,16 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base	
+  auto_complete_for :tag, :name
+  
+  # def auto_complete_for_tag_name
+  #     re = Regexp.new("^#{params[:tag][:name]}", "i")
+  #     
+  #     find_options = { :order => "name ASC" }
+  #     @tags = Tag.find(:all, find_options).collect(&:name).select { |tag| tag.match re }
+  #     
+  #     render :inline => "<%= content_tag(:ul, @tags.map { |tag| content_tag(:li, h(tag)) }) %>"
+  #   end
   uses_tiny_mce(
     :options => {
       :apply_source_formatting => false,

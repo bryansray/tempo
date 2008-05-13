@@ -9,9 +9,10 @@ class Admin::TaggingsController < ApplicationController
   end
   
   def create
+    puts "--- #{params.inspect}"
     type = params[:applicator][:class].constantize
     @object = type.find params[:applicator][:id]
-    @object.tag_list.add params[:tags][:tag_list], :parse => true
+    @object.tag_list.add params[:tag][:name], :parse => true
     
     respond_to do |format|
       if @object.save_tags
