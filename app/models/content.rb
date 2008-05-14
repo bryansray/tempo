@@ -3,7 +3,7 @@ class Content < ActiveRecord::Base
   
   # Acts As ...
   acts_as_taggable
-  acts_as_ferret
+  acts_as_ferret(:fields => [:title, :text])
 
   # Associations
   belongs_to :owner, :polymorphic => true

@@ -103,8 +103,13 @@
 					<div class="Section" id="search">
 						<h3>Search</h3>
 						<div class="content">
-							<%= render :partial => "/contents/search_box" %>
-              <br />Go to <%= link_to "Site Index", tags_url %>
+							<form action="/search">
+								<input id="terms" name="terms">
+							</form>
+
+              				<br />
+
+							Go to <%= link_to "Site Index", tags_url %>
 						</div>
 					</div>
 

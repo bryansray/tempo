@@ -81,11 +81,11 @@ class ContentsController < ApplicationController
   end
 
   def search
-    @results = Content.find_by_contents( params[:terms] ) unless params[:terms].nil?
+    @search = Search.new params[:terms], params[:page]
+    @results = @search.execute if @search.valid?
 
     respond_to do |format|
-      format.html # index.rhtml
-      format.xml  { render :xml => @contents.to_xml }
+      format.html
     end
   end
   
