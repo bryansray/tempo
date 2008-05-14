@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Post, "with fixtures loaded" do
-  fixtures :posts, :contents, :blogs, :users, :content_versions
+  fixtures :posts, :contents, :blogs, :users
   
   before(:each) do
     @post = posts(:one)

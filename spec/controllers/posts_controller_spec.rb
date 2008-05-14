@@ -63,25 +63,11 @@ describe PostsController, "handling GET /posts/1 with a user that is not logged 
   before(:each) do
     @post = mock_model(Post, :to_param => 1)
     @comment = mock_model(Comment, :to_param => 1)
-    @version = mock_model(Content, :to_param => 1)
-    @versions = [@version]
     
     Post.stub!(:find).and_return(@post)
     @post.stub!(:comments).and_return([@comment])
-    @post.stub!(:versions).and_return(@versions)
-    @versions.stub!(:find).and_return(@versions)
-    
-    controller.stub!(:logged_in?).and_return(false)
-  end
   
-  describe PostsController, "with ?version_id=1" do
-    before(:each) do
-      
-    end
-    
-    it "should be successful"
-    it "should find the requested version of the post"
-    it "should assign the correct version to the requesting view"
+    controller.stub!(:logged_in?).and_return(false)
   end
   
   def do_get
@@ -116,14 +102,12 @@ describe PostsController, "handling GET /posts/1 with a user that is logged in" 
     @comment = mock_model(Comment, :to_param => 1)
     @visit = mock_model(Visit, :to_param => 1)
     @content = mock_model(Content, :to_param => 1)
-    @versions = [@content]
     
     @visits = [@visit]
     
     Post.stub!(:find).and_return(@post)
     @post.stub!(:comments).and_return([@comment])
-    @post.stub!(:versions).and_return(@versions)
-    @versions.stub!(:find).and_return(@versions)
+
     @post.stub!(:published?).and_return(true)
     @post.stub!(:content).and_return(@content)
     @user.stub!(:visits).and_return(@visits)

@@ -68,38 +68,13 @@ describe PagesController, "handling GET /pages/1" do
     @page = mock_model(Page, :to_param => 1)
     @comment = mock_model(Comment, :to_param => 1)
     @content = mock_model(Content, :to_param => 1)
-    @versions = [@content]
 
     Page.stub!(:find).and_return(@page)
     @page.stub!(:comments).and_return([@comment])
     @page.stub!(:content).and_return(@content)
-    @versions.stub!(:find).and_return(@versions)
-    @content.stub!(:versions).and_return(@versions)
     @page.stub!(:published?).and_return(true)
   end
-  
-  describe PagesController, "with ?version_id=1" do
-    before(:each) do
-      @old_content = mock_model(Content, :to_param => 2)
-      
-      @content.stub!(:revert_to!).and_return(@old_content)
-    end
     
-    def do_get
-      get :show, :id => 1, :version_id => 1
-    end
-    
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-    
-    it "should assign the requested version to the view" do
-      do_get
-      @page.content.should eql(@content)
-    end
-  end
-  
   def do_get
     get :show, :id => 1
   end
