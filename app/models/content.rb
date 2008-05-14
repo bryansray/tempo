@@ -10,8 +10,6 @@ class Content < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   belongs_to :user
   
-  scope_out :published, :conditions => ["contents.published = ?", true]
-  
   has_many :attachments, :order => "attachments.filename"
   
   protected

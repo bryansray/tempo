@@ -15,9 +15,7 @@ class User < ActiveRecord::Base
   has_many :members, :dependent => :destroy
   has_many :teams, :through => :members
   has_many :projects, :through => :members
-  
-  #scope_out :content, :conditions => ["contents.published = ?", true]
-  
+    
   def published_pages(options = {})
     options.merge!(:include => :content, :conditions => ["pages.user_id = ? AND contents.published = ?", id, true])
     Page.find(:all, options)    
