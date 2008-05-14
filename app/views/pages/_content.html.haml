@@ -5,6 +5,6 @@
       %strong= link_to "Edit Draft", edit_page_path(content.owner)
 
   .SubTitle
-    == This page has #{content.versions.count} versions and #{content.owner.comments.count} comments.
+    == This page has #{content.owner.comments.count} comments.
   = render :partial => "tags/applicator", :object => @page.content
   .Text= content.text

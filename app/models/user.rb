@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :blogs
   has_many :pages
   has_many :visits
-  has_many :contents, :extend => Content::AssociationMethods
+  has_many :contents#, :extend => Content::AssociationMethods
   has_many :members, :dependent => :destroy
   has_many :teams, :through => :members
   has_many :projects, :through => :members

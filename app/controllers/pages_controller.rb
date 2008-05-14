@@ -36,7 +36,6 @@ class PagesController < ApplicationController
     end
     
     @comments = @page.comments(:order => "created_at ASC")
-    @versions = @page.content.versions.find(:all, :limit => 5, :order => "updated_at DESC")
     
     @page.content.revert_to!(params[:id]) if params[:page_id]
     

@@ -11,9 +11,9 @@ describe Page do
     @page.text.should == contents(:five).text
   end
   
-  it "should have a text property that will set content.text" do
+  xit "should have a text property that will set content.text" do
     @page.text = "Testing"
-    @page.text.should == "Testing"
+    @page.content.text.should == "Testing"
   end
   
   it "should have a title property that returns content.title" do

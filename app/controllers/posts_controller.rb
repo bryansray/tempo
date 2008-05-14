@@ -37,7 +37,6 @@ class PostsController < ApplicationController
     end
     
     @comments = @post.comments(:order => "created_at ASC")
-    @versions = @post.versions.find(:all, :limit => 5, :order => "updated_at DESC")
     
     @post.content.revert_to!(params[:id]) if params[:post_id]
 

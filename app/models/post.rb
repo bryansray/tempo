@@ -48,10 +48,6 @@ class Post < ActiveRecord::Base
 	content.tag_list
   end
   
-  def versions
-    content.versions
-  end
-  
   def build_comment(*args)
     comments.build(*args)
   end

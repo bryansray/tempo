@@ -11,7 +11,6 @@
 		<%=	content.updated_at == content.created_at ? "created" : "updated" %> a <%= content.owner.class %> titled 
  		
 		"<i><%= link_to content.title, user_blog_post_path(content.owner.blog.user, content.owner.blog, content.owner) %></i>"
- 		<small>(Revision: <%= content.versions.size %>)</small>
 	<% elsif content.owner.class == Comment %>
 		<%= link_to "#{content.owner.name}", user_path(content.user) %> 
 		<%=	content.updated_at == content.created_at ? "left" : "modified" %> a Comment on, 

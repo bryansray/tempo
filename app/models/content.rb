@@ -2,7 +2,6 @@ class Content < ActiveRecord::Base
   before_save :set_published_at
   
   # Acts As ...
-  acts_as_versioned
   acts_as_taggable
   acts_as_ferret
 

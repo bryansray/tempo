@@ -31,21 +31,17 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :pages, :collection => { :import => :get }, :member => { :set_default => :post } do |pages|
     pages.resources :comments
-    pages.resources :versions, :controller => :pages
   end
   
   map.resources :posts do |posts|
     posts.resources :comments
-    posts.resources :versions, :controller => :posts
   end
 
   map.resources :blogs do |blogs|
     blogs.resources :posts
   end
 
-  map.resources :contents do |contents|
-    contents.resources :versions
-  end
+  map.resources :contents
 
   map.resources :projects do |projects|
     projects.resources :cards, :collection => { :set_property => :post }
