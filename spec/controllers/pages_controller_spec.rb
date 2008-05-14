@@ -119,12 +119,7 @@ describe PagesController, "handling GET /pages/1" do
     Page.should_receive(:find).and_return(@page)
     do_get
   end
-  
-  it "should find the last five versions that this page has" do
-    @versions.should_receive(:find).with(:all, :limit => 5, :order => "updated_at DESC")
-    do_get
-  end
-  
+    
   it "should log a visit if the user is logged in and the page is published" do
     current_user = mock_model(User, :to_param => 1)
     visit = mock_model(Visit, :to_param => 1)

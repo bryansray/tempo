@@ -22,12 +22,12 @@ describe TagsController, "handling GET /tags" do
     get :index
   end
   
-  it "should assign all the tags to the view" do
+  xit "should assign all the tags to the view" do
     do_get
     assigns[:tags].should == @tags
   end
   
-  it "should find the tag_counts for the Content model" do
+  xit "should find the tag_counts for the Content model" do
     Content.should_receive(:tag_counts).and_return(2)
     do_get
   end

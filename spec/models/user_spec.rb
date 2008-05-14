@@ -5,7 +5,7 @@ describe User do
 end
 
 describe User, "with fixtures loaded" do
-  fixtures :users, :blogs, :pages, :visits, :contents, :members, :teams
+  fixtures :users, :blogs, :pages, :visits, :contents, :members, :teams, :projects
 	
   before(:each) do
     @user = users(:one) #User.new
