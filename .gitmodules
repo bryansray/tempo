@@ -31,3 +31,6 @@
 [submodule "vendor/plugins/restful-authentication"]
 	path = vendor/plugins/restful-authentication
 	url = git://github.com/technoweenie/restful-authentication.git
+[submodule "vendor/plugins/exception_notification"]
+	path = vendor/plugins/exception_notification
+	url = git://github.com/pager/exception_notification.git
