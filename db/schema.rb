@@ -12,24 +12,24 @@
 ActiveRecord::Schema.define(:version => 39) do
 
   create_table "attachments", :force => true do |t|
-    t.integer "content_id"
+    t.integer "content_id",   :limit => 11
     t.string  "content_type"
     t.string  "filename"
     t.string  "thumbnail"
-    t.integer "size"
-    t.integer "width"
-    t.integer "height"
+    t.integer "size",         :limit => 11
+    t.integer "width",        :limit => 11
+    t.integer "height",       :limit => 11
   end
 
   create_table "audits", :force => true do |t|
-    t.integer  "auditable_id"
+    t.integer  "auditable_id",   :limit => 11
     t.string   "auditable_type"
-    t.integer  "user_id"
+    t.integer  "user_id",        :limit => 11
     t.string   "user_type"
     t.string   "username"
     t.string   "action"
     t.text     "changes"
-    t.integer  "version",        :default => 0
+    t.integer  "version",        :limit => 11, :default => 0
     t.datetime "created_at"
   end
 
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 39) do
   add_index "audits", ["created_at"], :name => "index_audits_on_created_at"
 
   create_table "blogs", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",        :limit => 11
     t.string   "name"
     t.text     "description"
     t.boolean  "allow_comments"
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(:version => 39) do
   end
 
   create_table "card_properties", :force => true do |t|
-    t.integer  "card_id"
-    t.integer  "property_id"
-    t.integer  "option_id"
+    t.integer  "card_id",     :limit => 11
+    t.integer  "property_id", :limit => 11
+    t.integer  "option_id",   :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -62,21 +62,21 @@ ActiveRecord::Schema.define(:version => 39) do
   end
 
   create_table "cards", :force => true do |t|
-    t.integer  "project_id"
-    t.integer  "iteration_id"
-    t.integer  "team_id"
+    t.integer  "project_id",   :limit => 11
+    t.integer  "iteration_id", :limit => 11
+    t.integer  "team_id",      :limit => 11
     t.float    "estimated"
     t.float    "actual"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "number"
+    t.integer  "number",       :limit => 11
   end
 
   create_table "comments", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",          :limit => 11
     t.string   "name"
     t.string   "email"
-    t.integer  "commentable_id"
+    t.integer  "commentable_id",   :limit => 11
     t.string   "commentable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -85,14 +85,14 @@ ActiveRecord::Schema.define(:version => 39) do
   add_index "comments", ["user_id"], :name => "fk_comments_user"
 
   create_table "content_versions", :force => true do |t|
-    t.integer  "content_id"
-    t.integer  "version"
-    t.integer  "status_id"
-    t.integer  "user_id"
+    t.integer  "content_id",     :limit => 11
+    t.integer  "version",        :limit => 11
+    t.integer  "status_id",      :limit => 11
+    t.integer  "user_id",        :limit => 11
     t.string   "title"
     t.string   "keywords"
     t.text     "text"
-    t.integer  "owner_id"
+    t.integer  "owner_id",       :limit => 11
     t.string   "owner_type"
     t.boolean  "allow_comments"
     t.boolean  "is_think_box"
@@ -103,24 +103,24 @@ ActiveRecord::Schema.define(:version => 39) do
   end
 
   create_table "contents", :force => true do |t|
-    t.integer  "status_id"
-    t.integer  "user_id"
+    t.integer  "status_id",      :limit => 11
+    t.integer  "user_id",        :limit => 11
     t.string   "title"
     t.string   "keywords"
     t.text     "text"
-    t.integer  "owner_id"
+    t.integer  "owner_id",       :limit => 11
     t.string   "owner_type"
     t.boolean  "allow_comments"
     t.boolean  "is_think_box"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "version"
+    t.integer  "version",        :limit => 11
     t.boolean  "published"
     t.datetime "published_at"
   end
 
   create_table "departments", :force => true do |t|
-    t.integer  "content_id"
+    t.integer  "content_id", :limit => 11
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -129,37 +129,37 @@ ActiveRecord::Schema.define(:version => 39) do
   create_table "iterations", :force => true do |t|
     t.date     "started_at"
     t.date     "ended_at"
-    t.integer  "team_id"
+    t.integer  "team_id",    :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "links", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",    :limit => 11
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position"
+    t.integer  "position",   :limit => 11
   end
 
   create_table "members", :force => true do |t|
-    t.integer  "team_id"
-    t.integer  "user_id"
-    t.integer  "project_id"
+    t.integer  "team_id",    :limit => 11
+    t.integer  "user_id",    :limit => 11
+    t.integer  "project_id", :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "options", :force => true do |t|
     t.string   "name"
-    t.integer  "property_id"
-    t.integer  "sequence"
+    t.integer  "property_id", :limit => 11
+    t.integer  "sequence",    :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "pages", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",     :limit => 11
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -167,9 +167,9 @@ ActiveRecord::Schema.define(:version => 39) do
   end
 
   create_table "posts", :force => true do |t|
-    t.integer  "blog_id"
-    t.integer  "user_id"
-    t.integer  "status_id"
+    t.integer  "blog_id",        :limit => 11
+    t.integer  "user_id",        :limit => 11
+    t.integer  "status_id",      :limit => 11
     t.string   "permalink"
     t.boolean  "allow_comments"
     t.datetime "created_at"
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(:version => 39) do
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "user_id"
+    t.integer  "user_id",     :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -187,16 +187,16 @@ ActiveRecord::Schema.define(:version => 39) do
   create_table "properties", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "scope_id"
+    t.integer  "scope_id",       :limit => 11
     t.string   "scope_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "default_option"
+    t.integer  "default_option", :limit => 11
   end
 
   create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
+    t.integer  "tag_id",        :limit => 11
+    t.integer  "taggable_id",   :limit => 11
     t.string   "taggable_type"
     t.datetime "created_at"
   end
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(:version => 39) do
 
   create_table "tags", :force => true do |t|
     t.string  "name"
-    t.integer "count"
+    t.integer "count", :limit => 11
   end
 
   create_table "teams", :force => true do |t|
@@ -214,11 +214,11 @@ ActiveRecord::Schema.define(:version => 39) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "project_id"
+    t.integer  "project_id",  :limit => 11
   end
 
   create_table "types", :force => true do |t|
-    t.integer  "project_id"
+    t.integer  "project_id",  :limit => 11
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(:version => 39) do
   end
 
   create_table "users", :force => true do |t|
-    t.integer  "department_id"
+    t.integer  "department_id",             :limit => 11
     t.string   "login"
     t.string   "first_name"
     t.string   "last_name"
@@ -238,13 +238,13 @@ ActiveRecord::Schema.define(:version => 39) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "google_number"
-    t.integer  "default_page"
-    t.integer  "password_reset_code"
+    t.integer  "default_page",              :limit => 11
+    t.integer  "password_reset_code",       :limit => 11
   end
 
   create_table "visits", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "content_id"
+    t.integer  "user_id",    :limit => 11
+    t.integer  "content_id", :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end

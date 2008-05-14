@@ -10,7 +10,11 @@ class Page < ActiveRecord::Base
   # Validations
   validates_associated :content
   
-  delegate :published?, :tags, :tag_list, :text, :text=, :to => :content
+  delegate :published?, :tags, :tag_list, to => :content
+  
+  def text=(value)
+    content.text = value if content
+  end
   
   def title=(value)
     if content.nil?
