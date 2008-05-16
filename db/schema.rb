@@ -84,24 +84,6 @@ ActiveRecord::Schema.define(:version => 39) do
 
   add_index "comments", ["user_id"], :name => "fk_comments_user"
 
-  create_table "content_versions", :force => true do |t|
-    t.integer  "content_id",     :limit => 11
-    t.integer  "version",        :limit => 11
-    t.integer  "status_id",      :limit => 11
-    t.integer  "user_id",        :limit => 11
-    t.string   "title"
-    t.string   "keywords"
-    t.text     "text"
-    t.integer  "owner_id",       :limit => 11
-    t.string   "owner_type"
-    t.boolean  "allow_comments"
-    t.boolean  "is_think_box"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "published"
-    t.datetime "published_at"
-  end
-
   create_table "contents", :force => true do |t|
     t.integer  "status_id",      :limit => 11
     t.integer  "user_id",        :limit => 11
@@ -114,7 +96,6 @@ ActiveRecord::Schema.define(:version => 39) do
     t.boolean  "is_think_box"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "version",        :limit => 11
     t.boolean  "published"
     t.datetime "published_at"
   end
