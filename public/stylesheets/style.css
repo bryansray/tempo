@@ -43,7 +43,7 @@ input.default {
 }
 
 input[type="text"], input.text {
-    width:90%;
+    width:98%;
     padding-left:5px;
     padding-right:5px;
 }
@@ -157,9 +157,11 @@ input[type="text"], input.text {
 .inner #tag-editor-actions {
     display: inline;
 }
-#tag-editor-actions {
-    
+
+#tag-editor-actions #tag_name {
+    margin: 5px 0;
 }
+
 .notes {
     color: #888888;
     font-size: 92%;
