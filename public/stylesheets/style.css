@@ -261,6 +261,10 @@ input[type="text"], input.text {
     border-top: 1px solid #ddd;
     border-right: 2px solid #cfcfcf;
     border-bottom: 2px solid #cfcfcf;
+		-moz-border-radius-topright: 5px;
+		-moz-border-radius-bottomright: 5px;
+		-webkit-border-top-right-radius: 5px;
+		-webkit-border-bottom-right-radius: 5px;
 }
 #Sidebar .Section h3 a {
     float:right;
